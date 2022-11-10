@@ -1,0 +1,1 @@
+Qui dentro sono contentute tutte le informazioni relative alla rete neurale impiegata insieme alle istruzioni e al dataset usati per trainarla.
