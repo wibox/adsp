@@ -104,12 +104,13 @@ class DatasetFormatter():
 
     def log_dict_info(self,
     act_id : str,
-    tiles_info : List[str],
+    idx : int,
+    tile_info : List[str],
     subitem : str
      ) -> Dict:
         logging_info = {
-            f"{act_id}" : {
-                f"tiles_info_{subitem}" : tiles_info
+            f"{act_id}_{idx}" : {
+                f"tile_info_{subitem}" : tile_info
             }
         }
         self.master_dict_info["processing_info"].append(logging_info)
@@ -135,13 +136,8 @@ class DatasetFormatter():
 
     def tiling(self) -> List[str]:
         #input_path = os.join.path(self.master_folder_path, act_path)
+        master_index = 0
         input_paths = list()
-
-        #log_info
-        # per act_paths usiamo direttamente input_paths
-        tiles_info_pre_list = list()
-        tiles_info_post_list = list()
-        tiles_info_mask_list = list()
 
         if self.use_pre:
             input_paths_subitems = ["pre/", "post/", "mask/"]
@@ -159,7 +155,7 @@ class DatasetFormatter():
                 print("Finished building input paths list. Proceeding.")
 
         for idx in tqdm(range(len(input_paths))):
-            tiles_info = list()
+            tile_info = list()
             current_processing_folder=f"processed_{input_paths[idx]}"
             os.mkdir(f"processed_{input_paths[idx]}")
             if self.verbose==1:
@@ -178,20 +174,22 @@ class DatasetFormatter():
                     output_filename = 'tile_{}_{}.tif'
 
                 for window, transform in self.get_tiles(inds):
+                    master_index += 1
                     print(window)
                     meta['transform'] = transform
                     meta['width'], meta['height'] = window.width, window.height
                     outpath = os.path.join(output_path,output_filename.format(int(window.col_off), int(window.row_off)))
                     with rio.open(outpath, 'w', **meta) as outds:
                         outds.write(inds.read(window=window))
-                        tiles_info.append(inds.read(window=window))
+                        tile_info.append(inds.read(window=window))
 
 
-                self.log_dict_info(
-                    act_id=input_paths[idx],
-                    tiles_info=tiles_info,
-                    subitem=subitem
-                )
+                    self.log_dict_info(
+                        act_id=input_paths[idx],
+                        idx = master_index,
+                        tiles_info=tile_info,
+                        subitem=subitem
+                    )
 
                     #qui cancello la cartella originale dopo aver fatto la lavorazione
                 os.rmdir(input_paths[idx])
@@ -207,7 +205,9 @@ class ImageDataset(Dataset):
         self.transform=transform
         self.use_pre=use_pre
         self.verbose=verbose
-    
+
+        self.master_dict = json.load(self.master_dict_path)
+
     def __len__(self) -> int:
         try:
             with open(f"{self.master_dict_path}", "r") as jsonfp:
@@ -217,5 +217,24 @@ class ImageDataset(Dataset):
         finally:
             return len(info_dict)
 
-    def __getitem__(self):
-        pass
+    def __getitem__(self, idx):
+        """
+        Questa funzione prende in input un indice relativo all'immagine e alla maschera che vogliamo caricare sull'algoritmo da trainare
+        e, tramite l'indice, carica la relativa immagine e maschera e le ritorna in un dizionario.
+        """
+        local_dict = dict()
+
+        local_dict['post_image_tile'] = self.master_dict[f"act_id_{idx}"]["tile_info_post"]
+        local_dict['mask_tile'] = self.master_dict[f"act_id_{idx}"]["tile_info_mask"]
+        if self.use_pre:
+            local_dict['pre_image_tile'] = self.master_dict[f"act_id_{idx}"]["tile_info_pre"]
+
+        return local_dict
+
+
+        """
+        Dataset è in terfaccia per i dati. Nella __init__ di solito ho sempre la lista dei file a cui ha accesso quel dataset. La __Get_item__ serve a caricare un sample alla volta
+        Un DataLoader è solo un wrapper intorno a dataset di pytorch. QUando instanzio dataloader, gli do come primo argomento
+        il dataset, num_worker (drop_last = True/False !!!!!!!!!! solo nel training) etc..etc..
+        L'index di __get_item__ viene dal dataloader.
+        """
