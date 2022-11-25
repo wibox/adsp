@@ -106,12 +106,13 @@ class DatasetFormatter():
 
     def log_dict_info(self,
     act_id : str,
-    tiles_info : List[str],
+    idx : int,
+    tile_info : List[str],
     subitem : str
      ) -> Dict:
         logging_info = {
-            f"{act_id}" : {
-                f"tiles_info_{subitem}" : tiles_info
+            f"{act_id}_{idx}" : {
+                f"tile_info_{subitem}" : tile_info
             }
         }
         self.master_dict_info["processing_info"].append(logging_info)
@@ -202,13 +203,8 @@ class DatasetFormatter():
 
     def tiling(self) -> List[str]:
         #input_path = os.join.path(self.master_folder_path, act_path)
+        master_index = 0
         input_paths = list()
-
-        #log_info
-        # per act_paths usiamo direttamente input_paths
-        tiles_info_pre_list = list()
-        tiles_info_post_list = list()
-        tiles_info_mask_list = list()
 
         if self.use_pre:
             input_paths_subitems = ["pre/", "post/", "mask/"]
@@ -226,7 +222,7 @@ class DatasetFormatter():
                 print("Finished building input paths list. Proceeding.")
 
         for idx in tqdm(range(len(input_paths))):
-            tiles_info = list()
+            tile_info = list()
             current_processing_folder=f"processed_{input_paths[idx]}"
             os.mkdir(f"processed_{input_paths[idx]}")
             if self.verbose==1:
@@ -245,20 +241,22 @@ class DatasetFormatter():
                     output_filename = 'tile_{}_{}.tif'
 
                 for window, transform in self.get_tiles(inds):
+                    master_index += 1
                     print(window)
                     meta['transform'] = transform
                     meta['width'], meta['height'] = window.width, window.height
                     outpath = os.path.join(output_path,output_filename.format(int(window.col_off), int(window.row_off)))
                     with rio.open(outpath, 'w', **meta) as outds:
                         outds.write(inds.read(window=window))
-                        tiles_info.append(inds.read(window=window))
+                        tile_info.append(inds.read(window=window))
 
 
-                self.log_dict_info(
-                    act_id=input_paths[idx],
-                    tiles_info=tiles_info,
-                    subitem=subitem
-                )
+                    self.log_dict_info(
+                        act_id=input_paths[idx],
+                        idx = master_index,
+                        tiles_info=tile_info,
+                        subitem=subitem
+                    )
 
                     #qui cancello la cartella originale dopo aver fatto la lavorazione
                 os.rmdir(input_paths[idx])
@@ -274,7 +272,9 @@ class ImageDataset(Dataset):
         self.transform=transform
         self.use_pre=use_pre
         self.verbose=verbose
-    
+
+        self.master_dict = json.load(self.master_dict_path)
+
     def __len__(self) -> int:
         try:
             with open(f"{self.master_dict_path}", "r") as jsonfp:
