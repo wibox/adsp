@@ -61,7 +61,8 @@ class DatasetScanner():
         try:
             if not self.valid_list:
                 with open(f"{self.log_file_path}", "a") as log_file:
-                    for path in self.scan_master_folder().filter(lambda folder : os.isdir(folder)):
+                    #self.scan_master_folder().
+                    for path in list(filter(lambda folder : os.isdir(folder), self.scan_master_folder())):
                         if self.verbose==1:
                             print(f"Writing {path} record into log file: {self.log_file_path}")
                     log_file.write(f"{path}")
