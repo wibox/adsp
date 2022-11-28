@@ -18,13 +18,14 @@ class DatasetScanner():
     In questo modo evitiamo di mantenere in memoria a runtime 520 giga di informazioni sul path assoluto
     E processiamo riga per riga il csv risultate. (generato da log_to_file()).
     """
-    def __init__(self, master_folder_path=None, log_file_path=None, validation_file_path=None, valid_list=None, ignore_list=None, verbose=0):
+    def __init__(self, master_folder_path=None, log_file_path=None, validation_file_path=None, valid_list=None, ignore_list=None, dataset=None, verbose=0):
         self.master_folder_path=master_folder_path
         self.log_file_path=log_file_path
         self.validation_file_path=validation_file_path
-        self.verbose=verbose
         self.valid_list=valid_list
         self.ignore_list=ignore_list
+        self.dataset=dataset
+        self.verbose=verbose
 
     def scan_master_folder(self) -> List[str]:
         return os.listdir(self.master_folder_path)
@@ -91,7 +92,7 @@ class DatasetFormatter():
                 - mask:
                     - mask_tiles
     """
-    def __init__(self, master_folder_path=None, log_file_path=None, log_filename=None, master_dict_path=None, valid_list=None, tile_height=512, tile_width=512, thr_pixels = 112, use_pre=False, verbose=0):
+    def __init__(self, master_folder_path=None, log_file_path=None, log_filename=None, master_dict_path=None, valid_list=None, tile_height=512, tile_width=512, thr_pixels = 112, use_pre=False, dataset=None, verbose=0):
         self.master_folder_path=master_folder_path
         self.log_file_path=log_file_path
         self.log_filename=log_filename
@@ -101,6 +102,7 @@ class DatasetFormatter():
         self.tile_width=tile_width
         self.thr_pixels = thr_pixels
         self.use_pre=use_pre
+        self.dataset=dataset
         self.verbose=verbose
 
         self.master_dict_info = {"processing_info": []}
@@ -134,7 +136,7 @@ class DatasetFormatter():
     # fine dell'ultima tile intera - i pixel di overlapping. 
 
     
-    def offset_tiles(self, img: np.ndarray, tile_dim= [512, 512]) -> Tuple[List[float], List[float]]:
+    def offset_tiles(self, img: np.ndarray, tile_dim = [512, 512]) -> Tuple[List[float], List[float]]:
         """
         Suppose to have arrays formatted as channel first
         Questa funzione controlla le dimensioni dell'immagine data in ingresso, nel caso in cui il numero della dimensione
