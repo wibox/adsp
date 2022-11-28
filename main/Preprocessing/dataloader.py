@@ -134,7 +134,7 @@ class DatasetFormatter():
     # fine dell'ultima tile intera - i pixel di overlapping. 
 
     
-    def offset_tiles(self, img: np.ndarrary, tile_dim= [512, 512]) -> Tuple[List[float], List[float]]:
+    def offset_tiles(self, img: np.ndarray, tile_dim= [512, 512]) -> Tuple[List[float], List[float]]:
         """
         Suppose to have arrays formatted as channel first
         Questa funzione controlla le dimensioni dell'immagine data in ingresso, nel caso in cui il numero della dimensione
@@ -166,7 +166,7 @@ class DatasetFormatter():
             else:
                 num_tile_h = int(np.floor(heigth/tile_h))
             offsets_h = [i*tile_h for i in range(num_tile_h-1)]
-            offsets_h.append(offsets_h[-1] - (tile_h - remaining_h))
+            offsets_h.append(heigth - tile_h)
         
         # check for the width
         # dato che abbiamo immagini minimo di 512 x 512 non ci preoccupiamo di fare un upsampling
@@ -181,7 +181,7 @@ class DatasetFormatter():
             else:
                 num_tile_w = int(np.floor(width/tile_w))
             offsets_w = [i*tile_w for i in range(num_tile_w-1)]
-            offsets_w.append(offsets_w[-1] - (tile_w - remaining_w))
+            offsets_w.append(width - tile_w)
 
         return offsets_w, offsets_h
 
