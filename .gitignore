@@ -4,4 +4,4 @@
 *.onnx
 *.xml
 *.aux
-.DS_STORE/
+.DS_STORE
