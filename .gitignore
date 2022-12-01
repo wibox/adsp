@@ -4,5 +4,6 @@
 *.onnx
 *.xml
 *.aux
-.DS_STORE
+*.DS_STORE
 __pycache__
+*.csv
