@@ -32,7 +32,7 @@ class DatasetScanner():
         # this function works with all three datasets, no modifications needed
         return os.listdir(self.master_folder_path)
 
-    def trim_master_folder(self) -> Tuple(List[str], List[str]):
+    def trim_master_folder(self) -> Tuple[List[str], List[str]]:
         # to be called ONLY on complete effis with provided validated.json
         try:
             with open(f"{self.validation_file_path}") as val_file:
@@ -54,7 +54,7 @@ class DatasetScanner():
         try:
             with open(f"{self.log_file_path}", "w") as log_file:
                 if self.verbose==1:
-                    print(f"Writing header into log file: {self.log_file_path}")
+                    print(f"Writing header into log file: {self.log_file_path}...")
                 log_file.write(header + "\n")
         except:
             print(f"Error writing header into log file: {self.log_file_path}")
@@ -85,21 +85,23 @@ class DatasetScanner():
             # logghiamo act_id, path_pre, path_post, path_mask
             try:
                 with open(f"{self.log_file_path}", "a") as log_file:
-                    for path in os.listdir(self.master_folder_path):
+                    print(f"Logging info into log file {self.log_file_path}...")
+                    for idx in tqdm(range(len(os.listdir(self.master_folder_path)))):
+                        path = os.listdir(self.master_folder_path)[idx]
                         pre = None
                         post = None
                         mask = None
                         tmp = None
-                        for item in glob.glob(".tiff"):
-                            if item.startswith("EMS"):
+                        for item in glob.glob(f"{self.master_folder_path}/{path}/*.tiff"):
+                            if item.split("/")[-1].startswith("EMS"):
                                 mask = item
                             else:
                                 if tmp == None:
-                                    tmp = item.split("_")[1]
-                                if item.split("_")[1] > tmp:
+                                    tmp = item.split("/")[-1].split("_")[1]
+                                if item.split("/")[-1].split("_")[1] > tmp:
                                     post = item
                                     pre = tmp
-                    log_file.write(f"{path},{pre},{post},{mask}\n")             
+                        log_file.write(f"{path},{pre},{post},{mask}\n")             
             except:
                 print(f"Error writing data info into log file: {self.log_file_path}")
             finally:
@@ -305,7 +307,7 @@ class ImageDataset(Dataset):
         self.use_pre=use_pre
         self.verbose=verbose
 
-        self.master_dict = json.load(self.master_dict_path)
+        self.master_dict = json.loads(self.master_dict_path)
 
     def __len__(self) -> int:
         try:

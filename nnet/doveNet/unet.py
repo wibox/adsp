@@ -1,5 +1,5 @@
 from torch import nn
-from unet_scraps import *
+from . import unet_scraps as scraps
 
 class UNet(nn.Module):
     def __init__(self, n_channels, n_classes, act, first_ch_out=64, alpha=1.0, dropout=True, gradcam=False):
@@ -10,16 +10,16 @@ class UNet(nn.Module):
         self.alpha = alpha
         self.gradcam = gradcam
         self.gradients = None
-        self.inc = inconv(n_channels, first_ch_out)
-        self.down1 = down(first_ch_out, first_ch_out * 2, act=act, alpha=alpha)
-        self.down2 = down(first_ch_out * 2, first_ch_out * 4, act=act, alpha=alpha)
-        self.down3 = down(first_ch_out * 4, first_ch_out * 8, act=act, alpha=alpha)
-        self.down4 = down(first_ch_out * 8, first_ch_out * 16, act=act, alpha=alpha)
-        self.up1 = up(first_ch_out * 16, first_ch_out * 8, act=act, alpha=alpha, dropout=dropout)
-        self.up2 = up(first_ch_out * 8, first_ch_out * 4, act=act, alpha=alpha, dropout=dropout)
-        self.up3 = up(first_ch_out * 4, first_ch_out * 2, act=act, alpha=alpha, dropout=dropout)
-        self.up4 = up(first_ch_out * 2, first_ch_out, act=act, alpha=alpha, dropout=dropout)
-        self.outc = outconv(first_ch_out, n_classes)
+        self.inc = scraps.inconv(n_channels, first_ch_out)
+        self.down1 = scraps.down(first_ch_out, first_ch_out * 2, act=act, alpha=alpha)
+        self.down2 = scraps.down(first_ch_out * 2, first_ch_out * 4, act=act, alpha=alpha)
+        self.down3 = scraps.down(first_ch_out * 4, first_ch_out * 8, act=act, alpha=alpha)
+        self.down4 = scraps.down(first_ch_out * 8, first_ch_out * 16, act=act, alpha=alpha)
+        self.up1 = scraps.up(first_ch_out * 16, first_ch_out * 8, act=act, alpha=alpha, dropout=dropout)
+        self.up2 = scraps.up(first_ch_out * 8, first_ch_out * 4, act=act, alpha=alpha, dropout=dropout)
+        self.up3 = scraps.up(first_ch_out * 4, first_ch_out * 2, act=act, alpha=alpha, dropout=dropout)
+        self.up4 = scraps.up(first_ch_out * 2, first_ch_out, act=act, alpha=alpha, dropout=dropout)
+        self.outc = scraps.outconv(first_ch_out, n_classes)
 
     def forward(self, x):
         x1 = self.inc(x)

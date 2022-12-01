@@ -5,3 +5,4 @@
 *.xml
 *.aux
 .DS_STORE
+__pycache__

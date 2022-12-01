@@ -1,8 +1,11 @@
 from Preprocessing import dataloader as dl
-from nnet.argoNet import argoNET
+from nnet.argoNet import argoNET, moco
 from nnet.doveNet import unet
 
 import argparse
+from copy import deepcopy
+
+import torch.nn as nn
 
 if __name__ == "__main__":
     # Parser configuration
@@ -16,7 +19,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dataset",
         type=str,
-        defualt="colombaset",
+        default="colombaset",
         help="Dataset to be used either for training, testing or validation. Use colombaset/full-effis/sub-effis"
     )
     parser.add_argument(
@@ -68,24 +71,25 @@ if __name__ == "__main__":
         help="Activation function to be used through torch utilities: ReLU, Tanh, LeakyReLU"
     )
     args = parser.parse_args()
-
-    # Inserire la logica di inizializzazione degli oggetti
+    
         # nn logic
-    if args.net_type == "argo":
+    if args.net_type == "argonet":
         #use argonet
+        model = moco.MocoV2.load_from_checkpoint(args.ckpt_path)
+        backbone = deepcopy(model.encoder_q)
         net = argoNET.get_segmentation_model(
-            backbone="path",
-            feature_indices=None,
-            feature_channels=12
+            backbone=nn.Sequential(*list(backbone.children())[:-1], nn.Flatten()),
+            feature_indices=(4, 3, 2),
+            feature_channels=(64, 64, 128, 256, 512)
         )
-    elif args.net_type == "dove":
+    elif args.net_type == "dovenet":
         #use colomba nn
         if args.activation_function.lower() == "relu":
-            act=None
+            act=nn.ReLU
         elif args.activation_function.lower() == "tanh":
-            act=None
+            act=nn.Tanh
         elif args.activation_function.lower() == "leakyrelu":
-            act=None
+            act=nn.LeakyReLU
         else:
             raise Exception("Invalid activation function selected, please select one among: ReLU, LeakyReLU, Tanh")
 
@@ -100,11 +104,11 @@ if __name__ == "__main__":
         )
     else:
         raise Exception("Invalid Neural Network model selected, please use python3 interface.py --help")
-    ### QUI INIZIA IL MAIN ###
+
         # General structures initialization
     ds = dl.DatasetScanner(
         master_folder_path=args.master_folder,
-        log_file_path="log/",
+        log_file_path=f"log/master_folder_log_{args.dataset}.csv",
         validation_file_path=args.validation_file,
         dataset=args.dataset,
         verbose=1
@@ -132,16 +136,37 @@ if __name__ == "__main__":
         use_pre=args.use_pre,
         verbose=1
     )
+        # actions to be performed by up-initialized classes for each dataset
+    
+    if args.dataset == "colombaset":
+        # logging actions
+        ds.scan_master_folder()
+        ds.log_header_to_file(header="act_id,pre,post,mask")
+        ds.log_to_file()
+        # formatting actions
 
-    # train_dataset = SatelliteDataset(self.master_folder, self.mask_intervals, self.mask_one_hot, self.height, self.width, self.product_list, self.mode, self.filter_validity_mask, self.train_transforms, self.process_dict, self.csv_path, train_set, self.ignore_list, self.mask_filtering, self.only_burnt, mask_postfix=mask_postfix)
-        # here we decide the logic for the selected op mode.
+        # dataset initialisation
+    elif args.dataset == "full-effis":
+        # logging actions
+
+        # formatting actions
+
+        # dataset initialisation
+        pass
+    elif args.dataset == "sub-effis":
+        # logging actions
+
+        # formatting actions
+
+        # dataset initialisation
+        pass
+    else:
+        raise Exception("Dataset not found! Please use python3 interface.py --help")
+
     if args.op == "train":
-        # Inizializzare i vari dataset con i vari split (per il dataset che abbiamo scelto dal parser)
         pass
     elif args.op == "test":
-        # Inizializzare i vari dataset con i vari split (per il dataset che abbiamo scelto dal parser)
         pass
     elif args.op == "val":
-        # Inizializzare i vari dataset con i vari split (per il dataset che abbiamo scelto dal parser)
         pass
     # Computare le metriche in output
