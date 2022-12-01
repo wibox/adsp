@@ -1,6 +1,7 @@
 import os
 import itertools
 import json
+import glob
 
 from typing import *
 
@@ -28,9 +29,11 @@ class DatasetScanner():
         self.verbose=verbose
 
     def scan_master_folder(self) -> List[str]:
+        # this function works with all three datasets, no modifications needed
         return os.listdir(self.master_folder_path)
 
     def trim_master_folder(self) -> Tuple(List[str], List[str]):
+        # to be called ONLY on complete effis with provided validated.json
         try:
             with open(f"{self.validation_file_path}") as val_file:
                 self.valid_list = json.load(val_file)
@@ -46,7 +49,7 @@ class DatasetScanner():
 
     def log_header_to_file(self, header="act_id") -> bool:
         """
-        csv_header = act_id
+        csv_header = act_id -> da arricchire
         """
         try:
             with open(f"{self.log_file_path}", "w") as log_file:
@@ -59,24 +62,51 @@ class DatasetScanner():
             return True
 
     def log_to_file(self) -> bool:
-        try:
-            if not self.valid_list:
+        if self.dataset == "full-effis":
+            try:
+                if not self.valid_list:
+                    with open(f"{self.log_file_path}", "a") as log_file:
+                        #self.scan_master_folder().
+                        for path in list(filter(lambda folder : os.isdir(folder), self.scan_master_folder())):
+                            if self.verbose==1:
+                                print(f"Writing {path} record into log file: {self.log_file_path}")
+                        log_file.write(f"{path}")
+                else:
+                    with open(f"{self.log_file_path}", "a") as log_file:
+                        for path in self.valid_list:
+                            if self.verbose==1:
+                                print(f"Writing {path} record into log file: {self.log_file_path}")
+                        log_file.write(f"{path}")
+            except:
+                print(f"Error writing act_id info into log file: {self.log_file_path}")
+            finally:
+                return True
+        elif self.dataset == "colombaset":
+            # logghiamo act_id, path_pre, path_post, path_mask
+            try:
                 with open(f"{self.log_file_path}", "a") as log_file:
-                    #self.scan_master_folder().
-                    for path in list(filter(lambda folder : os.isdir(folder), self.scan_master_folder())):
-                        if self.verbose==1:
-                            print(f"Writing {path} record into log file: {self.log_file_path}")
-                    log_file.write(f"{path}")
-            else:
-                with open(f"{self.log_file_path}", "a") as log_file:
-                    for path in self.valid_list:
-                        if self.verbose==1:
-                            print(f"Writing {path} record into log file: {self.log_file_path}")
-                    log_file.write(f"{path}")
-        except:
-            print(f"Error writing act_id info into log file: {self.log_file_path}")
-        finally:
-            return True
+                    for path in os.listdir(self.master_folder_path):
+                        pre = None
+                        post = None
+                        mask = None
+                        tmp = None
+                        for item in glob.glob(".tiff"):
+                            if item.startswith("EMS"):
+                                mask = item
+                            else:
+                                if tmp == None:
+                                    tmp = item.split("_")[1]
+                                if item.split("_")[1] > tmp:
+                                    post = item
+                                    pre = tmp
+                    log_file.write(f"{path},{pre},{post},{mask}\n")             
+            except:
+                print(f"Error writing data info into log file: {self.log_file_path}")
+            finally:
+                return True
+        elif self.dataset == "sub-effis":
+            pass
+
 
 class DatasetFormatter():
     """
@@ -252,7 +282,6 @@ class DatasetFormatter():
                     with rio.open(outpath, 'w', **meta) as outds:
                         outds.write(inds.read(window=window))
                         tile_info.append(inds.read(window=window))
-
 
                     self.log_dict_info(
                         act_id=input_paths[idx],
