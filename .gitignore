@@ -6,4 +6,3 @@
 *.aux
 *.DS_STORE
 __pycache__
-*.csv
