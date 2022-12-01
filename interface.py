@@ -1,6 +1,8 @@
-from Preprocessing import dataloader as dl
-from nnet.argoNet import argoNET, moco
-from nnet.doveNet import unet
+from Preprocessing import datasetformatter as df
+from Preprocessing import datasetscanner as ds
+from Preprocessing import imagedataset as id
+from Nnet.argoNet import argoNET, moco
+from Nnet.doveNet import unet
 
 import argparse
 from copy import deepcopy
@@ -106,7 +108,7 @@ if __name__ == "__main__":
         raise Exception("Invalid Neural Network model selected, please use python3 interface.py --help")
 
         # General structures initialization
-    ds = dl.DatasetScanner(
+    datascanner = ds.DatasetScanner(
         master_folder_path=args.master_folder,
         log_file_path=f"log/master_folder_log_{args.dataset}.csv",
         validation_file_path=args.validation_file,
@@ -114,7 +116,7 @@ if __name__ == "__main__":
         verbose=1
     )
 
-    df = dl.DatasetFormatter(
+    dataformatter = df.DatasetFormatter(
         master_folder_path=args.master_folder,
         log_file_path="log/",
         log_filename="activations.csv",
@@ -127,7 +129,7 @@ if __name__ == "__main__":
         verbose=1
     )
 
-    id = dl.ImageDataset(
+    imagedataset = id.ImageDataset(
         processed_master_folder_path=args.master_folder,
         master_dict_path="log/",
         tile_width=args.tile_size,
@@ -140,9 +142,9 @@ if __name__ == "__main__":
     
     if args.dataset == "colombaset":
         # logging actions
-        ds.scan_master_folder()
-        ds.log_header_to_file(header="act_id,pre,post,mask")
-        ds.log_to_file()
+        datascanner.scan_master_folder()
+        datascanner.log_header_to_file(header="act_id,pre,post,mask")
+        datascanner.log_to_file()
         # formatting actions
 
         # dataset initialisation
