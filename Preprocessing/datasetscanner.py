@@ -6,6 +6,8 @@ from typing import *
 
 from tqdm import tqdm
 
+from datetime import datetime
+
 class DatasetScanner():
     """
     Legge dalla master folder le cartelle all'interno delle quali ci sono pre, post e mask.
@@ -86,13 +88,14 @@ class DatasetScanner():
                         post = None
                         mask = None
                         tmp = None
-                        for item in glob.glob(f"{self.master_folder_path}/{path}/*.tiff"):
+                        sorted_item_list = sorted(glob.glob(f"{self.master_folder_path}/{path}/*.tiff"), key = lambda x : x.split("/")[-1].split("_")[1].split(".")[0])
+                        for item in sorted_item_list:
                             if item.split("/")[-1].startswith("EMS"):
                                 mask = item
                             else:
                                 if tmp == None:
-                                    tmp = item.split("/")[-1].split("_")[1]
-                                if item.split("/")[-1].split("_")[1] > tmp:
+                                    tmp = item.split("/")[-1].split("_")[1].split(".")[0]
+                                if item.split("/")[-1].split("_")[1].split(".")[0] > tmp:
                                     post = item
                                     pre = "sentinel2_" + tmp
                         complete_pre = os.path.join(self.master_folder_path, path, pre)
