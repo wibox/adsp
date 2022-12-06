@@ -167,26 +167,27 @@ class DatasetFormatter():
                 print(f"Creating processing folder: processed_{activations[idx]}")
 
             for subitem in self.input_paths_subitems:
-                print(input_paths[activations[idx]][subitem])
-                with rio.open(input_paths[activations[idx]][subitem]) as inds:
-                    meta = inds.meta.copy()
-                    #qui creo la cartella di output delle tiles
-                    os.mkdir(f"{self.master_folder_path}/{current_processing_folder}/{subitem}")
-                    output_path = f"{self.master_folder_path}/{current_processing_folder}/{subitem}"
-                    output_filename = 'tile_{}_{}.tif'
+                # print(input_paths[activations[idx]][subitem])
+                if os.path.isfile(input_paths[activations[idx]][subitem]):
+                    with rio.open(input_paths[activations[idx]][subitem]) as inds:
+                        meta = inds.meta.copy()
+                        #qui creo la cartella di output delle tiles
+                        os.mkdir(f"{self.master_folder_path}/{current_processing_folder}/{subitem}")
+                        output_path = f"{self.master_folder_path}/{current_processing_folder}/{subitem}"
+                        output_filename = 'tile_{}_{}.tif'
 
-                    for window, transform in self.get_tiles(inds):
-                        master_index += 1
-                        meta['transform'] = transform
-                        meta['width'], meta['height'] = window.width, window.height
-                        outpath = os.path.join(output_path,output_filename.format(int(window.col_off), int(window.row_off)))
-                        with rio.open(outpath, 'w', **meta) as outds:
-                            outds.write(inds.read(window=window))
-                            tile_info.append(inds.read(window=window))
+                        for window, transform in self.get_tiles(inds):
+                            master_index += 1
+                            meta['transform'] = transform
+                            meta['width'], meta['height'] = window.width, window.height
+                            outpath = os.path.join(output_path,output_filename.format(int(window.col_off), int(window.row_off)))
+                            with rio.open(outpath, 'w', **meta) as outds:
+                                outds.write(inds.read(window=window))
+                                tile_info.append(inds.read(window=window))
 
-                        self.log_dict_info(
-                            act_id=activations[idx],
-                            idx = master_index,
-                            tile_info=tile_info,
-                            subitem=subitem
-                        )
+                            self.log_dict_info(
+                                act_id=activations[idx],
+                                idx = master_index,
+                                tile_info=tile_info,
+                                subitem=subitem
+                            )

@@ -27,7 +27,7 @@ dataformatter = df.DatasetFormatter(
         thr_pixels=112,
         use_pre=False,
         dataset="colombaset",
-        verbose=1
+        verbose=0
 )
 
 dataformatter.tiling()

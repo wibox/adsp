@@ -28,6 +28,9 @@ class DatasetScanner():
         # this function works with all three datasets, no modifications needed
         return os.listdir(self.master_folder_path)
 
+    def sort_tmp_items(self, items : List[str]) -> List[str]:
+        return sorted(items, key = lambda x : x.split("/")[-1].split("_")[1].split(".")[0])
+
     def trim_master_folder(self) -> Tuple[List[str], List[str]]:
         # to be called ONLY on complete effis with provided validated.json
         try:
@@ -88,7 +91,7 @@ class DatasetScanner():
                         post = None
                         mask = None
                         tmp = None
-                        sorted_item_list = sorted(glob.glob(f"{self.master_folder_path}/{path}/*.tiff"), key = lambda x : x.split("/")[-1].split("_")[1].split(".")[0])
+                        sorted_item_list = self.sort_tmp_items(items = glob.glob(f"{self.master_folder_path}/{path}/*.tiff"))
                         for item in sorted_item_list:
                             if item.split("/")[-1].startswith("EMS"):
                                 mask = item
