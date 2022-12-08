@@ -1,5 +1,0 @@
-DATASET DA USARE:
-    PER 19/12
-    - COLOMBA DATASET + PRE-TRAINED di EDOARDO (RES-UNIT)
-    PER CONSEGNA FINALE:
-    - EFFIS per train base + fine tuning con precedente. (da vedere)

@@ -1,6 +1,5 @@
 from Preprocessing import datasetformatter as df
 from Preprocessing import datasetscanner as ds
-# from Preprocessing import imagedataset as id
 
 INITIAL_DATASET_PATH = "/home/francesco/Desktop/colomba_dataset"
 FORMATTED_DATASET_PATH = "/home/francesco/Desktop/formatted_colombaset"
@@ -21,13 +20,14 @@ dataformatter = df.DatasetFormatter(
         master_folder_path=FORMATTED_DATASET_PATH,
         log_file_path="Log/",
         log_filename="master_folder_log_colombaset.csv",
-        master_dict_path="Log/",
+        master_dict_path="/home/francesco/Desktop/adsp/Log/",
+        master_dict_filename="master_dict.json",
         tile_height=512,
         tile_width=512,
         thr_pixels=112,
-        use_pre=False,
+        use_pre=True,
         dataset="colombaset",
-        verbose=0
+        verbose=1
 )
 
 dataformatter.tiling()

@@ -1,4 +1,5 @@
 *.tif
+*.tiff
 *.png
 *.jpg
 *.onnx
