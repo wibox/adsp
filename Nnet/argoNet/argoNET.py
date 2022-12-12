@@ -34,6 +34,7 @@ class SegmentationEncoder(torch.nn.Module):
 
         self.diff = diff
 
+    @torch.no_grad()
     def forward(self, x1, x2):
         """Produce list of features of different spatial resolutions, each feature is a 4D torch.tensor of
         shape NCHW (features should be sorted in descending order according to spatial resolution, starting
@@ -82,18 +83,18 @@ class DoubleConv(nn.Module):
         return self.double_conv(x)
 
 
-class Down(nn.Module):
-    """Downscaling with maxpool then double conv"""
+# class Down(nn.Module):
+#     """Downscaling with maxpool then double conv"""
 
-    def __init__(self, in_channels, out_channels):
-        super().__init__()
-        self.maxpool_conv = nn.Sequential(
-            nn.MaxPool2d(2),
-            DoubleConv(in_channels, out_channels)
-        )
+#     def __init__(self, in_channels, out_channels):
+#         super().__init__()
+#         self.maxpool_conv = nn.Sequential(
+#             nn.MaxPool2d(2),
+#             DoubleConv(in_channels, out_channels)
+#         )
 
-    def forward(self, x):
-        return self.maxpool_conv(x)
+#     def forward(self, x):
+#         return self.maxpool_conv(x)
 
 
 class Up(nn.Module):

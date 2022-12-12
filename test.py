@@ -1,5 +1,14 @@
 from Preprocessing import datasetformatter as df
 from Preprocessing import datasetscanner as ds
+from Preprocessing import imagedataset as image_dataset
+
+from Trainer import trainer
+
+from Nnet.argoNet import argoNET, moco
+
+from torch import nn
+
+from copy import deepcopy
 
 INITIAL_DATASET_PATH = "/home/francesco/Desktop/colomba_dataset"
 FORMATTED_DATASET_PATH = "/home/francesco/Desktop/formatted_colombaset"
@@ -31,4 +40,37 @@ dataformatter = df.DatasetFormatter(
 )
 
 dataformatter.tiling()
+
+# adesso provo se funziona l'imagedatset_class
+train_ds = image_dataset.ImageDataset(
+        formatted_folder_path="/home/francesco/Desktop/formatted_colombaset",
+        log_folder="Log",
+        master_dict="master_dict.json",
+        transform=None,
+        use_pre=False,
+        verbose=1
+)
+
+train_ds._load_tiles()
+
+model = moco.MocoV2.load_from_checkpoint("/home/francesco/Desktop/seco_resnet50_1m.ckpt")
+backbone = deepcopy(model.encoder_q)
+net = argoNET.get_segmentation_model(
+        backbone=nn.Sequential(*list(backbone.children())[:-1], nn.Flatten()),
+        feature_indices=(4, 3, 2),
+        feature_channels=(64, 64, 128, 256, 512)
+)
+
+myTrainer = trainer.Trainer(
+        device='cuda',
+        net=net,
+        net_args=None,
+        batch_size=20,
+        dataset=train_ds,
+        lr=1e-5,
+        epoch=10,
+        act_function=nn.ReLU,
+)
+
+myTrainer._train()
 

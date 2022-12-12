@@ -3,6 +3,7 @@ from Preprocessing import datasetscanner as ds
 from Preprocessing import imagedataset as id
 from Nnet.argoNet import argoNET, moco
 from Nnet.doveNet import unet
+from Trainer import *
 from Utils.custom_parser import custom_parser
 from Utils.errors import *
 
@@ -89,7 +90,6 @@ if __name__ == "__main__":
         datascanner.log_to_file()
         # formatting actions
         dataformatter.tiling()
-        # dataset initialisation
     elif args.dataset == "full-effis":
         # logging actions
 
@@ -108,7 +108,9 @@ if __name__ == "__main__":
         raise WrongArgument(argument="--dataset")
 
     if args.op == "train":
-        pass
+        train_dataset = ...
+        # training routines
+        # outputs routines
     elif args.op == "test":
         pass
     elif args.op == "val":
