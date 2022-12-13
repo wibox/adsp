@@ -55,13 +55,14 @@ class ImageDataset(Dataset):
             return completed
 
     def __len__(self) -> int:
+        m_dict = None
         try:
-            with open(f"{self.master_dict_path}", "r") as jsonfp:
-                info_dict = json.load(jsonfp)
+            with open(f"{os.path.join(self.log_folder, self.master_dict)}", "r") as jsonfp:
+                m_dict = json.load(jsonfp)
         except:
             print(f"Error dealing with log json file at: {self.master_dict_path}")
         finally:
-            return len(info_dict)
+            return len(m_dict)
 
     def __getitem__(self, idx) -> Tuple[str, str]:
         """

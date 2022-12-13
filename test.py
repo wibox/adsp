@@ -9,6 +9,16 @@ from Nnet.argoNet import argoNET, moco
 from torch import nn
 
 from copy import deepcopy
+import os
+import sys
+import inspect
+
+from torchvision.transforms import transforms
+
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+sys.path.insert(0, currentdir)
+
+from Utils.transforms import *
 
 INITIAL_DATASET_PATH = "/home/francesco/Desktop/colomba_dataset"
 FORMATTED_DATASET_PATH = "/home/francesco/Desktop/formatted_colombaset"
@@ -39,7 +49,7 @@ dataformatter = df.DatasetFormatter(
         verbose=1
 )
 
-dataformatter.tiling()
+# dataformatter.tiling()
 
 # adesso provo se funziona l'imagedatset_class
 train_ds = image_dataset.ImageDataset(
@@ -61,6 +71,10 @@ net = argoNET.get_segmentation_model(
         feature_channels=(64, 64, 128, 256, 512)
 )
 
+transformations = transforms.Compose([
+        ToTensor()
+])
+
 myTrainer = trainer.Trainer(
         device='cuda',
         net=net,
@@ -70,6 +84,7 @@ myTrainer = trainer.Trainer(
         lr=1e-5,
         epoch=10,
         act_function=nn.ReLU,
+        transformations=transformations
 )
 
 myTrainer._train()

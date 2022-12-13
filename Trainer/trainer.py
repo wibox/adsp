@@ -1,6 +1,6 @@
 from typing import *
-from ..Utils.errors import *
-from ..Utils.transforms import *
+from Utils.errors import *
+from Utils.transforms import *
 from tqdm import tqdm
 import rasterio as rio
 import torch
@@ -8,8 +8,18 @@ from torch.utils.data.dataloader import DataLoader
 from torch import nn, optim
 
 class Trainer():
-    def __init__(self, device : str = None, net : Any = None, net_args : Dict[str, str] = None, batch_size : int = None, dataset = None, epoch : int = None, act_function = None, lr : float = None, dropout_prob : float = None, loss_function = None, squeeze_mask : bool = True, transforms=None, verbose : int = 1):
+    def __init__(self, device : str = None, net : Any = None, net_args : Dict[str, str] = None, batch_size : int = None, dataset = None, epoch : int = None, act_function = None, lr : float = None, dropout_prob : float = None, loss_function = None, squeeze_mask : bool = True, transformations=None, verbose : int = 1):
         self.device = device
+        if self.device == 'cuda':
+            if torch.cuda.is_available():
+                self.device = device
+            else:
+                self.device = 'cpu'
+        elif device == 'cpu':
+            self.device = device
+        else:
+            raise Exception("Invalid device selected.")
+            
         self.net = net
         self.net_args = net_args
         self.batch_size = batch_size
@@ -18,19 +28,23 @@ class Trainer():
         self.act_function = act_function
         self.lr = lr
         self.dropout_prob = dropout_prob
-        self.optimizer = optim.Adam(lr=self.lr)
+        self.optimizer = optim.Adam(lr=self.lr, params=self.net.parameters())
         self.loss_function = loss_function
         self.squeeze_mask = squeeze_mask
-        self.transforms = transforms
+        self.transformations = transformations
         self.verbose = verbose
 
     def _load_tiles(self, _post_tile_path : str = None, _mask_tile_path : str = None) -> Tuple[bool, Union[rio.DatasetReader, None], Union[rio.DatasetReader, None]]:
         completed = False
         _post_dr = None
+        # _post_dr_2 = None
         _mask_dr = None
+        # print(type(_post_tile_path))
+        # print(type(_mask_tile_path))
         try:
-            _post_dr = rio.open(_post_tile_path, mode="r")
-            _mask_dr = rio.open(_mask_tile_path, mode="r")
+            _post_dr_1 = rio.open(_post_tile_path[0], mode="r")
+            # _post_dr_2 = rio.open(_post_tile_path_2[0], mode="r")
+            _mask_dr = rio.open(_mask_tile_path[0], mode="r")
             completed = True
         except Exception as e:
             print(e.format_exc())
@@ -51,29 +65,29 @@ class Trainer():
             
             self.net.train()
 
-            for data_idx, batch in enumerate(my_dataloader): # sistemare la __get_item__() -> FATTOOOOOOOOO
+            for data_idx, batch in enumerate(my_dataloader):
                 current_image_path, current_mask_path = batch[0], batch[1]
-                post_tile_dr, mask_tile_dr = self._load_tiles(_post_tile_path=current_image_path, _mask_tile_path=current_mask_path)
-                # apply rasterization and transforms
+                loading_complete, post_tile_dr, mask_tile_dr = self._load_tiles(_post_tile_path=current_image_path, _mask_tile_path=current_mask_path)
+                if loading_complete:
+                    if self.transformations is not None:
+                        post_tile_dr, mask_tile_dr = self.transformations((post_tile_dr, mask_tile_dr))
 
-                if self.transforms is not None:
-                    post_tile_dr = self.transforms(post_tile_dr)
-                    mask_tile_dr = self.transforms(mask_tile_dr)
+                    post_tile_dr = post_tile_dr.to(self.device)
+                    mask_tile_dr = mask_tile_dr.to(self.device, dtype=datatype)
 
-                post_tile_dr = post_tile_dr.to(self.device)
-                mask_tile_dr = mask_tile_dr.to(self.device, dtype=datatype)
+                    if self.squeeze_mask:
+                        current_mask = mask_tile_dr.squeeze(dim=1)
 
-                if self.squeeze_mask:
-                    current_mask = current_mask.squeeze(dim=1)
+                    self.optimizer.zero_grad()
+                    outputs = self.net(post_tile_dr)
+                    loss = self.loss_function(outputs, current_mask)
+                    loss.backward()
+                    self.optimizer.step()
 
-                self.optimizer.zero_grad()
-                outputs = self.net(post_tile_dr)
-                loss = self.loss_function(outputs, current_mask)
-                loss.backward()
-                self.optimizer.step()
-
-                running_loss += loss.item()
-                epoch_loss += loss.item()
+                    running_loss += loss.item()
+                    epoch_loss += loss.item()
+                else:
+                    raise Exception("Error during tiles loading")
 
             # here validation should be perfomed if cross validation is desired.
 
