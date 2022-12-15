@@ -9,46 +9,6 @@ from skimage import transform
 from skimage.segmentation import find_boundaries
 from skimage.morphology import disk, dilation
 
-# class ToTensor(object):
-#     """
-#     Transform object used to swap the axes of images and masks from normal convention to PyTorch convention.
-#     The image and mask are received as dict['image'] and dict['mask']
-#     Swap from:
-#         images: H x W x C -> C x H x W
-#         masks: no swapping
-#     """
-#     def __init__(self, round_mask: bool, to_float=True):
-#         """
-#         Args:
-#             round_mask (bool): if True, apply a np.rint() to the mask to round it to the nearest integer
-#             to_float (bool): if True, cast tensor to float.
-#         """
-#         self.round_mask = round_mask
-#         self.to_float = to_float
-#         return
-
-#     def __call__(self, sample):
-#         image, mask = sample['image'], sample['mask']
-#         if self.round_mask:
-#             mask = np.rint(mask)
-
-#         result = {}
-
-#         #swap axis
-#         #numpy: H x W x C
-#         #torch: C x H x W
-#         image = image.transpose((2, 0, 1))
-#         mask = mask.transpose((2, 0, 1))
-
-#         result['image'] = torch.from_numpy(image)
-#         result['mask'] = torch.from_numpy(mask)
-
-#         if self.to_float:
-#             result['image'] = result['image'].float()
-#             result['mask'] = result['mask'].float()
-
-#         return result
-
 class ToTensor(object):
     def __init__(self, round_mask: bool = False, to_float : bool =True):
         """
@@ -61,11 +21,10 @@ class ToTensor(object):
         return
 
     def __call__(self, sample):
-        img1, img2, mask = sample
-        tensor_img1 = torch.from_numpy(img1.read([i for i in range(1, 13)]))
-        tensor_img2 = torch.from_numpy(img2.read([i for i in range(1, 13)]))
+        img1, mask = sample
+        tensor_img = torch.from_numpy(img1.read([i for i in range(1, 13)]))
         tensor_mask = torch.from_numpy(mask.read(1))
-        return tensor_img1, tensor_img2, tensor_mask
+        return tensor_img, tensor_mask
 
 class Normalize(object):
     def __init__(self, t1, t2):
@@ -360,4 +319,4 @@ class RandomShear(object):
         return result
 
     def __hash__(self):
-        return 5
+        return 7

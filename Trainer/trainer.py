@@ -10,13 +10,18 @@ from torch import nn, optim
 class Trainer():
     def __init__(self, device : str = None, net : Any = None, net_args : Dict[str, str] = None, batch_size : int = None, dataset = None, epoch : int = None, act_function = None, lr : float = None, dropout_prob : float = None, loss_function = None, squeeze_mask : bool = True, transformations=None, verbose : int = 1):
         self.device = device
+        self.verbose = verbose
         if self.device == 'cuda':
             if torch.cuda.is_available():
                 self.device = device
+                if self.verbose > 0:
+                    print(f"Found CUDA: using {self.device} for training.")
             else:
                 self.device = 'cpu'
         elif device == 'cpu':
             self.device = device
+            if self.verbose > 0:
+                print(f"CUDA not found: using {self.device} for training.")
         else:
             raise Exception("Invalid device selected.")
             
@@ -32,7 +37,9 @@ class Trainer():
         self.loss_function = loss_function
         self.squeeze_mask = squeeze_mask
         self.transformations = transformations
-        self.verbose = verbose
+
+    def _instantiate(self) -> Any:
+        return self.net(**self.net_args)
 
     def _load_tiles(self, _post_tile_path : str = None, _mask_tile_path : str = None) -> Tuple[bool, Union[rio.DatasetReader, None], Union[rio.DatasetReader, None]]:
         completed = False
@@ -51,9 +58,6 @@ class Trainer():
         finally:
             return completed, _post_dr, _mask_dr
 
-    def _instantiate(self) -> Any:
-        return self.net(**self.net_args)
-
     def _train(self) -> bool:
         completed = False
         for epoch in tqdm(range(self.epoch)):
@@ -71,6 +75,8 @@ class Trainer():
                 if loading_complete:
                     if self.transformations is not None:
                         post_tile_dr, mask_tile_dr = self.transformations((post_tile_dr, mask_tile_dr))
+                    else:
+                        raise Exception("Please provide useful transformations (ToTensor() needed)")
 
                     post_tile_dr = post_tile_dr.to(self.device)
                     mask_tile_dr = mask_tile_dr.to(self.device, dtype=datatype)
@@ -88,8 +94,6 @@ class Trainer():
                     epoch_loss += loss.item()
                 else:
                     raise Exception("Error during tiles loading")
-
-            # here validation should be perfomed if cross validation is desired.
 
         completed = True
         return completed

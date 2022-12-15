@@ -4,7 +4,7 @@ from Preprocessing import imagedataset as image_dataset
 
 from Trainer import trainer
 
-from Nnet.argoNet import argoNET, moco
+from Nnet.gafesNET import unet, encoder, decoder
 
 from torch import nn
 
@@ -49,7 +49,7 @@ dataformatter = df.DatasetFormatter(
         verbose=1
 )
 
-# dataformatter.tiling()
+dataformatter.tiling()
 
 # adesso provo se funziona l'imagedatset_class
 train_ds = image_dataset.ImageDataset(
@@ -63,13 +63,16 @@ train_ds = image_dataset.ImageDataset(
 
 train_ds._load_tiles()
 
-model = moco.MocoV2.load_from_checkpoint("/home/francesco/Desktop/seco_resnet50_1m.ckpt")
-backbone = deepcopy(model.encoder_q)
-net = argoNET.get_segmentation_model(
-        backbone=nn.Sequential(*list(backbone.children())[:-1], nn.Flatten()),
-        feature_indices=(4, 3, 2),
-        feature_channels=(64, 64, 128, 256, 512)
-)
+# model = moco.MocoV2.load_from_checkpoint("/home/francesco/Desktop/seco_resnet50_1m.ckpt")
+# backbone = deepcopy(model.encoder_q)
+# net = argoNET.get_segmentation_model(
+#         backbone=nn.Sequential(*list(backbone.children())[:-1], nn.Flatten()),
+#         feature_indices=(4, 3, 2),
+#         feature_channels=(64, 64, 128, 256, 512)
+# )
+
+net = unet.Unet()
+net_args = []
 
 transformations = transforms.Compose([
         ToTensor()
@@ -78,7 +81,7 @@ transformations = transforms.Compose([
 myTrainer = trainer.Trainer(
         device='cuda',
         net=net,
-        net_args=None,
+        net_args=net_args,
         batch_size=20,
         dataset=train_ds,
         lr=1e-5,

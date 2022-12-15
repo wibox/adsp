@@ -7,11 +7,11 @@ from typing import *
 from torch.utils.data.dataset import Dataset
 
 class ImageDataset(Dataset):
-    def __init__(self, formatted_folder_path = None, log_folder=None, master_dict=None, transform=None, use_pre=False, verbose=0):
+    def __init__(self, formatted_folder_path = None, log_folder=None, master_dict=None, transformations=None, use_pre=False, verbose=0):
         self.formatted_folder_path=formatted_folder_path
         self.log_folder=log_folder
         self.master_dict=master_dict
-        self.transform=transform
+        self.transformations=transformations
         self.use_pre=use_pre
         self.verbose=verbose
         
@@ -55,18 +55,35 @@ class ImageDataset(Dataset):
             return completed
 
     def __len__(self) -> int:
-        m_dict = None
-        try:
-            with open(f"{os.path.join(self.log_folder, self.master_dict)}", "r") as jsonfp:
-                m_dict = json.load(jsonfp)
-        except:
-            print(f"Error dealing with log json file at: {self.master_dict_path}")
-        finally:
-            return len(m_dict)
+        # m_dict = None
+        # try:
+        #     with open(f"{os.path.join(self.log_folder, self.master_dict)}", "r") as jsonfp:
+        #         m_dict = json.load(jsonfp)
+        # except:
+        #     print(f"Error dealing with log json file at: {self.master_dict_path}")
+        # finally:
+        #     return len(m_dict)
+        if len(self.post_tiles) == len(self.mask_tiles):
+            return len(self.post_tiles)
+        else:
+            raise Exception("Number of tiles different from number of masks.")
 
     def __getitem__(self, idx) -> Tuple[str, str]:
         """
         Questa funzione prende in input un indice relativo all'immagine e alla maschera che vogliamo caricare sull'algoritmo da trainare
         e, tramite l'indice, carica la relativa immagine e maschera e le ritorna in un dizionario.
         """
-        return self.post_tiles[idx], self.mask_tiles[idx]
+        item_dict = dict()
+        my_image = None
+        my_mask = None
+
+        if self.transformations is not None:
+            my_image = self.transformations(self.post_tiles[idx])
+            my_mask = self.transformations(self.mask_tiles[idx])
+        
+        if my_image is not None or my_mask is not None:
+            item_dict["image"] = my_image
+            item_dict["mask"] = my_mask
+            return item_dict
+        else:
+            raise Exception("Error when loading mask or image.")
