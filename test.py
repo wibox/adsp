@@ -3,22 +3,21 @@ from Preprocessing import datasetscanner as ds
 from Preprocessing import imagedataset as image_dataset
 
 from Trainer import trainer
-
-from Nnet.gafesNET import unet, encoder, decoder
+from Nnet.lhNET import lhnet
+from Utils.albu_transformer import OptimusPrime
 
 from torch import nn
+from catalyst.contrib.nn import DiceLoss, IoULoss
 
 from copy import deepcopy
 import os
 import sys
 import inspect
 
-from torchvision.transforms import transforms
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 sys.path.insert(0, currentdir)
 
-from Utils.transforms import *
 
 INITIAL_DATASET_PATH = "/home/francesco/Desktop/colomba_dataset"
 FORMATTED_DATASET_PATH = "/home/francesco/Desktop/formatted_colombaset"
@@ -51,44 +50,60 @@ dataformatter = df.DatasetFormatter(
 
 dataformatter.tiling()
 
-# adesso provo se funziona l'imagedatset_class
-train_ds = image_dataset.ImageDataset(
+ds = image_dataset.ImageDataset(
         formatted_folder_path="/home/francesco/Desktop/formatted_colombaset",
         log_folder="Log",
         master_dict="master_dict.json",
-        transform=None,
+        transformations=None,
         use_pre=False,
         verbose=1
 )
 
-train_ds._load_tiles()
+ds._load_tiles()
+print("Total number of tiles: ", ds.post_tiles)
+##### FIN QUI TUTTO OK, ADESSO TOCCA ALLA RETE! #####
+model, preprocess_input = lhnet._get_model_and_input_preprocessing()
 
-# model = moco.MocoV2.load_from_checkpoint("/home/francesco/Desktop/seco_resnet50_1m.ckpt")
-# backbone = deepcopy(model.encoder_q)
-# net = argoNET.get_segmentation_model(
-#         backbone=nn.Sequential(*list(backbone.children())[:-1], nn.Flatten()),
-#         feature_indices=(4, 3, 2),
-#         feature_channels=(64, 64, 128, 256, 512)
-# )
+criterion = {
+    "dice": DiceLoss(),
+    "iou": IoULoss(),
+    "bce": nn.BCEWithLogitsLoss()
+}
 
-net = unet.Unet()
-net_args = []
+num_epochs = 15
+batch_size = 30
+num_workers = 4
+validation_set_size = 0.2
+random_state = 777
+train_transform_f = None
+valid_transform_f = None
+learning_rate = 1e-3
+encoder_learning_rate = 5e-4
+layerwise_params_weight_decay = 3e-5
+adam_weight_decay = 3e-4
+fp16 = None
+filepath = "Log"
 
-transformations = transforms.Compose([
-        ToTensor()
-])
-
-myTrainer = trainer.Trainer(
-        device='cuda',
-        net=net,
-        net_args=net_args,
-        batch_size=20,
-        dataset=train_ds,
-        lr=1e-5,
-        epoch=10,
-        act_function=nn.ReLU,
-        transformations=transformations
+shifu = trainer.Trainer(
+        model = model,
+        transformer = OptimusPrime(tile_dimension=512),
+        criterion=criterion,
+        num_epochs=num_epochs,
+        batch_size=batch_size,
+        num_workers=num_workers,
+        validation_set_size=validation_set_size,
+        random_state=random_state,
+        train_transform_f=train_transform_f,
+        valid_transform_f=valid_transform_f,
+        learning_rate=learning_rate,
+        encoder_learning_rate=encoder_learning_rate,
+        layerwise_params_weight_decay=layerwise_params_weight_decay,
+        adam_weight_decay=adam_weight_decay,
+        fp16=fp16,
+        filepath=filepath
 )
 
-myTrainer._train()
+loaders = shifu._get_loaders(num_tiles=len(ds.post_tiles), post_tiles=ds.post_tiles, mask_tiles=ds.mask_tiles)
+
+shifu._train(loaders=loaders)
 
