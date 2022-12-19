@@ -69,31 +69,12 @@ class Trainer():
             self.transformer.post_transforms()
         ])
 
-    def _get_loaders(self, num_tiles : int = 0, post_tiles : List[str] = None, mask_tiles : List[str] = None) -> Dict[str, DataLoader]:
+    def _get_loaders(self, num_tiles : int = 0) -> Dict[str, DataLoader]:
 
         indices = np.arange(num_tiles)
 
         # Let's divide the data set into train and valid parts.
         train_indices, valid_indices = train_test_split(indices, train_size=1-self.validation_set_size, test_size=self.validation_set_size, random_state=self.random_state, shuffle=True)
-        
-        # print("train_indices", train_indices)
-
-        np_images = np.array(post_tiles)
-        np_masks = np.array(mask_tiles)
-
-        # # Creates our train dataset ---> DA SISTEMARE L'INIZIALIZZAZIONE
-        # train_dataset = ImageDataset(
-        # images = np_images[train_indices].tolist(),
-        # masks = np_masks[train_indices].tolist(),
-        # transforms = self.train_transform_f
-        # )
-
-        # # Creates our valid dataset ---> DA SISTEMARE L'INIZIALIZZAZIONE
-        # valid_dataset = ImageDataset(
-        # images = np_images[valid_indices].tolist(),
-        # masks = np_masks[valid_indices].tolist(),
-        # transforms = self.valid_transform_f
-        # )
 
         train_dataset = ImageDataset(
                 formatted_folder_path="/home/francesco/Desktop/formatted_colombaset",
@@ -102,7 +83,8 @@ class Trainer():
                 transformations=None,
                 use_pre=False,
                 verbose=1,
-                specific_indeces=train_indices
+                specific_indeces=train_indices,
+                return_path=False
         )
         train_dataset._load_tiles()
         valid_dataset = ImageDataset(
@@ -112,10 +94,11 @@ class Trainer():
                 transformations=None,
                 use_pre=False,
                 verbose=1,
-                specific_indeces=valid_indices
+                specific_indeces=valid_indices,
+                return_path=False
         )
         valid_dataset._load_tiles()
-        # Catalyst uses normal torch.data.DataLoader
+
         train_loader = DataLoader(
         train_dataset,
         batch_size=self.batch_size,
@@ -123,7 +106,6 @@ class Trainer():
         num_workers=self.num_workers,
         drop_last=True,
         )
-
         valid_loader = DataLoader(
         valid_dataset,
         batch_size=self.batch_size,

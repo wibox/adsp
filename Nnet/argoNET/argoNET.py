@@ -1,0 +1,2 @@
+class argoNET():
+    pass

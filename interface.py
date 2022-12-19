@@ -1,17 +1,8 @@
 from Preprocessing import datasetformatter as df
 from Preprocessing import datasetscanner as ds
 from Preprocessing import imagedataset as id
-from Nnet.argoNet import argoNET, moco
-from Nnet.doveNet import unet
-from Trainer import *
 from Utils.custom_parser import custom_parser
 from Utils.errors import *
-
-
-import argparse
-from copy import deepcopy
-
-import torch.nn as nn
 
 if __name__ == "__main__":
     # Parser configuration
@@ -19,34 +10,9 @@ if __name__ == "__main__":
     
     # nn logic
     if args.net_type == "argonet":
-        #use argonet
-        model = moco.MocoV2.load_from_checkpoint(args.ckpt_path)
-        backbone = deepcopy(model.encoder_q)
-        net = argoNET.get_segmentation_model(
-            backbone=nn.Sequential(*list(backbone.children())[:-1], nn.Flatten()),
-            feature_indices=(4, 3, 2),
-            feature_channels=(64, 64, 128, 256, 512)
-        )
+        pass
     elif args.net_type == "dovenet":
-        #use colomba nn
-        if args.activation_function.lower() == "relu":
-            act=nn.ReLU
-        elif args.activation_function.lower() == "tanh":
-            act=nn.Tanh
-        elif args.activation_function.lower() == "leakyrelu":
-            act=nn.LeakyReLU
-        else:
-            raise WrongArgument(argument="--activation-function")
-
-        net = unet.UNet(
-            n_channels=12,
-            n_classes=2,
-            act=act,
-            first_ch_out=64,
-            alpha=1.0,
-            dropout=True,
-            gradcam=False
-        )
+        pass
     else:
         raise WrongArgument(argument="--net-type")
 
@@ -79,7 +45,9 @@ if __name__ == "__main__":
         tile_height=args.tile_size,
         transform=None,
         use_pre=args.use_pre,
-        verbose=1
+        verbose=1,
+        specific_indeces=None,
+        return_path=False
     )
     
     # actions to be performed by up-initialized classes for each dataset

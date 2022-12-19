@@ -2,7 +2,7 @@ from Preprocessing import datasetformatter as df
 from Preprocessing import datasetscanner as ds
 from Preprocessing import imagedataset as image_dataset
 
-from Trainer import trainer
+from Trainer import lhtrainer
 from Nnet.lhNET import lhnet
 from Utils.albu_transformer import OptimusPrime
 
@@ -61,8 +61,15 @@ ds = image_dataset.ImageDataset(
 
 ds._load_tiles()
 print("Total number of tiles: ", ds.post_tiles)
-##### FIN QUI TUTTO OK, ADESSO TOCCA ALLA RETE! #####
-model, preprocess_input = lhnet._get_model_and_input_preprocessing()
+##### FIN QUI TUTTO OK, ADESSO TOCCA ALLA RETE #####
+
+nnet = lhnet.LHNet(
+        encoder="resnet50",
+        encoder_weights="imagenet",
+        in_channels=3,
+        classes=2
+)
+model, preprocess_input = nnet._get_model_and_input_preprocessing()
 
 criterion = {
     "dice": DiceLoss(),
@@ -84,7 +91,7 @@ adam_weight_decay = 3e-4
 fp16 = None
 filepath = "Log"
 
-shifu = trainer.Trainer(
+shifu = lhtrainer.Trainer(
         model = model,
         transformer = OptimusPrime(tile_dimension=512),
         criterion=criterion,
@@ -103,7 +110,7 @@ shifu = trainer.Trainer(
         filepath=filepath
 )
 
-loaders = shifu._get_loaders(num_tiles=len(ds.post_tiles), post_tiles=ds.post_tiles, mask_tiles=ds.mask_tiles)
+loaders = shifu._get_loaders(num_tiles=len(ds.post_tiles))
 
 shifu._train(loaders=loaders)
 
