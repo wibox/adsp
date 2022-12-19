@@ -17,7 +17,7 @@ class LHNet():
     def _get_model_and_input_preprocessing(self):
         
         self.model = smp.Unet(
-        encoder_name=self.encoder_name,
+        encoder_name=self.encoder,
         encoder_weights=self.encoder_weights,
         in_channels=self.in_channels,
         classes=self.classes,

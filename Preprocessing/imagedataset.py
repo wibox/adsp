@@ -129,6 +129,6 @@ class ImageDataset(Dataset):
                 my_image = self.transformations(my_image)
                 my_mask = self.transformations(my_mask)
 
-            item_dict["image"] = my_image
+            item_dict["image"] = my_image[[4, 3, 2]]
             item_dict["mask"] = my_mask
             return item_dict
