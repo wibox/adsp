@@ -5,14 +5,14 @@ from Preprocessing import imagedataset as image_dataset
 from Trainer import lhtrainer
 from Nnet.lhNET import lhnet
 
-from torch import nn
 from sklearn.model_selection import train_test_split
 import numpy as np
 
-import segmentation_models_pytorch as smp
 from segmentation_models_pytorch import utils
 import torch
 from torch.utils.data import DataLoader
+
+import os
 
 
 INITIAL_DATASET_PATH = "/home/francesco/Desktop/colomba_dataset"
@@ -100,8 +100,8 @@ loss = utils.losses.DiceLoss()
 optimizer = torch.optim.Adam(
         [dict(params=model.parameters(), lr=1e-4)]
 )
-batch_size = 10
-num_workers = 4
+batch_size = 1
+num_workers = 1
 metrics = [
         utils.metrics.IoU(threshold=.5)
 ]
@@ -122,4 +122,23 @@ shifu = lhtrainer.Trainer(
 
 shifu._initialize()
 shifu._train()
+
+# load best model found
+if os.path.exists("./best_model.pth"):
+        best_model = torch.load("./best_model.pth", map_location=device)
+
+# creating test dataset
+
+test_ds = image_dataset.ImageDataset(
+        formatted_folder_path="/home/francesco/Desktop/formatted_colombaset",
+        log_folder="Log",
+        master_dict="master_dict.json",
+        transformations=None,
+        use_pre=False,
+        verbose=1,
+        specific_indeces=train_indices,
+        return_path=False
+)
+
+test_dl = DataLoader(test_ds)
 
