@@ -11,3 +11,4 @@ _base_log
 checkpoints
 train_log
 log.txt
+.vscode
