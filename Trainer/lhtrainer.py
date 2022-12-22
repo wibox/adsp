@@ -72,3 +72,4 @@ class Trainer():
                 best_iou_scoe = valid_logs['iou_score']
                 torch.save(self.model, "./best_model.pth")
                 print("Saving model...")
+

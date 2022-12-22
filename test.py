@@ -5,6 +5,8 @@ from Preprocessing import imagedataset as image_dataset
 from Trainer import lhtrainer
 from Nnet.lhNET import lhnet
 
+from Utils import outputformatter
+
 from sklearn.model_selection import train_test_split
 import numpy as np
 
@@ -124,8 +126,8 @@ shifu._initialize()
 shifu._train()
 
 # load best model found
-if os.path.exists("./best_model.pth"):
-        best_model = torch.load("./best_model.pth", map_location=device)
+# if os.path.exists("./best_model.pth"):
+#         best_model = torch.load("./best_model.pth", map_location=device)
 
 # creating test dataset
 
@@ -139,6 +141,17 @@ test_ds = image_dataset.ImageDataset(
         specific_indeces=train_indices,
         return_path=False
 )
+test_ds._load_tiles()
 
-test_dl = DataLoader(test_ds)
+# test_dl = DataLoader(test_ds)
 
+output_formatter = outputformatter.OutputFormatter(
+        device=device,
+        filepath="/mnt/c/Users/franc/Desktop",
+        test_ds=test_ds,
+        best_model_path=".",
+        verbose=1
+)
+
+output_formatter._initialize()
+output_formatter._compute_output()
