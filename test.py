@@ -17,7 +17,7 @@ from torch.utils.data import DataLoader
 import os
 
 
-INITIAL_DATASET_PATH = "/mnt/data1/adsp_data/colombaset"
+INITIAL_DATASET_PATH = "/mnt/data1/adsp_data/colomba_dataset"
 FORMATTED_DATASET_PATH = "/mnt/data1/adsp_data/formatted_colombaset"
 
 datascanner = ds.DatasetScanner(
