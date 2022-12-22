@@ -17,8 +17,8 @@ from torch.utils.data import DataLoader
 import os
 
 
-INITIAL_DATASET_PATH = "/home/francesco/Desktop/colomba_dataset"
-FORMATTED_DATASET_PATH = "/home/francesco/Desktop/formatted_colombaset"
+INITIAL_DATASET_PATH = "/mnt/data1/adsp_data/colombaset"
+FORMATTED_DATASET_PATH = "/mnt/data1/adsp_data/formatted_colombaset"
 
 datascanner = ds.DatasetScanner(
         master_folder_path=INITIAL_DATASET_PATH,
@@ -36,7 +36,7 @@ dataformatter = df.DatasetFormatter(
         master_folder_path=FORMATTED_DATASET_PATH,
         log_file_path="Log/",
         log_filename="master_folder_log_colombaset.csv",
-        master_dict_path="/home/francesco/Desktop/adsp/Log/",
+        master_dict_path="Log/",
         master_dict_filename="master_dict.json",
         tile_height=512,
         tile_width=512,
@@ -49,7 +49,7 @@ dataformatter = df.DatasetFormatter(
 dataformatter.tiling()
 
 ds = image_dataset.ImageDataset(
-        formatted_folder_path="/home/francesco/Desktop/formatted_colombaset",
+        formatted_folder_path=FORMATTED_DATASET_PATH,
         log_folder="Log",
         master_dict="master_dict.json",
         transformations=None,
@@ -75,7 +75,7 @@ print(indices)
 train_indices, val_indices = train_test_split(indices, test_size=0.8, train_size=0.2, shuffle=True, random_state=777)
 
 train_ds = image_dataset.ImageDataset(
-        formatted_folder_path="/home/francesco/Desktop/formatted_colombaset",
+        formatted_folder_path=FORMATTED_DATASET_PATH,
         log_folder="Log",
         master_dict="master_dict.json",
         transformations=None,
@@ -86,7 +86,7 @@ train_ds = image_dataset.ImageDataset(
 )
 
 val_ds = image_dataset.ImageDataset(
-        formatted_folder_path="/home/francesco/Desktop/formatted_colombaset",
+        formatted_folder_path=FORMATTED_DATASET_PATH,
         log_folder="Log",
         master_dict="master_dict.json",
         transformations=None,
@@ -96,13 +96,13 @@ val_ds = image_dataset.ImageDataset(
         return_path=False
 )
 
-epochs = 10
-device = 'cpu'
+epochs = 15
+device = 'cuda'
 loss = utils.losses.DiceLoss()
 optimizer = torch.optim.Adam(
         [dict(params=model.parameters(), lr=1e-4)]
 )
-batch_size = 1
+batch_size = 10
 num_workers = 1
 metrics = [
         utils.metrics.IoU(threshold=.5)
@@ -130,26 +130,24 @@ shifu._train()
 #         best_model = torch.load("./best_model.pth", map_location=device)
 
 # creating test dataset
-
+test_indices = [1, 2, 3]
 test_ds = image_dataset.ImageDataset(
-        formatted_folder_path="/home/francesco/Desktop/formatted_colombaset",
+        formatted_folder_path=FORMATTED_DATASET_PATH,
         log_folder="Log",
         master_dict="master_dict.json",
         transformations=None,
         use_pre=False,
         verbose=1,
-        specific_indeces=train_indices,
+        specific_indeces=test_indices,
         return_path=False
 )
 test_ds._load_tiles()
 
-# test_dl = DataLoader(test_ds)
-
 output_formatter = outputformatter.OutputFormatter(
         device=device,
-        filepath="/mnt/c/Users/franc/Desktop",
+        filepath="/mnt/data1/adsp_data",
         test_ds=test_ds,
-        best_model_path=".",
+        best_model_path="/mnt/data1/adsp_data",
         verbose=1
 )
 

@@ -4,7 +4,6 @@ import os
 from typing import *
 
 from torch.utils.data.dataset import Dataset
-from catalyst import utils ### SOLO PER VEDERE SE FINE-TUNING SU IMAGENET FUNZIONA CON CATALYST
 import numpy as np
 import rasterio as rio
 
@@ -82,7 +81,8 @@ class ImageDataset(Dataset):
     def _read_tile_image(self, tile_path : str = None) -> Union[np.ndarray, None]:
         current_image = None
         try:
-            if tile_path:
+            if tile_path is not None:
+                print("Reading image")
                 with rio.open(tile_path) as input_tile_path:
                     current_image = input_tile_path.read()
             else:
@@ -125,6 +125,7 @@ class ImageDataset(Dataset):
 
             # item_dict = dict()
             my_image = self._read_tile_image(tile_path=self.post_tiles[idx])
+            print(my_image)
             my_mask = self._read_tile_image(tile_path=self.mask_tiles[idx])
 
             if self.transformations is not None:

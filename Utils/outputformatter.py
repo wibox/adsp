@@ -42,16 +42,10 @@ class OutputFormatter():
 
     def _save_output(self, _input : np.ndarray = None, idx : int = 0) -> bool:
         completed = False
+        height = 512
+        width = 3*height
         try:
-            with rio.open(
-                os.path.join(f"{self.filepath}",
-                f"{idx}.tiff"),
-                driver="GTiff",
-                height=_input.shape[0],
-                width=_input.shape[1],
-                count=self.bands,
-                dtype=str(_input.dtype)
-            ) as outds:
+            with rio.open(os.path.join(f"{self.filepath}", f"{idx}.tif"), "w", driver="GTiff", height=height, width=3*width, count=1, dtype=str(_input.dtype)) as outds:
                 outds.write(_input, indexes=self.bands)
         except Exception as e:
             print(e.format_exc())
