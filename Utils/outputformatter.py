@@ -33,11 +33,13 @@ class OutputFormatter():
 
     def _initialize(self):
         if os.path.exists(self.best_model_path):
+            print(f"Loading best model found in {self.best_model_path}")
             self.best_model = torch.load(self.best_model_path)
         else:
             raise Exception("Best model not found.")
         
         if not os.path.exists(self.filepath):
+            print(f"Creating test's output folder: {os.path.join(self.filepath, 'formatted_output')}")
             os.makedirs(os.path.join(f"{self.filepath}"), "formatted_output")
 
     def _save_output(self, _input : np.ndarray = None, idx : int = 0) -> bool:
@@ -63,6 +65,6 @@ class OutputFormatter():
             # ti ricostruisci la maschera
             predicted_mask = predicted_mask.detach().cpu().squeeze().numpy()
             # faccio hstack
-            formatted_output = np.hstack((current_image, current_gt_mask, predicted_mask))
+            formatted_output = np.hstack([current_image, current_gt_mask, predicted_mask])
             # salvo nel path
             self._save_output(_input=formatted_output, idx=idx)

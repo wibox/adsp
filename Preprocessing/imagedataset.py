@@ -69,10 +69,6 @@ class ImageDataset(Dataset):
                 self.mask_tiles = np.array(self.mask_tiles)
                 self.mask_tiles = self.mask_tiles[self.specific_indeces].to_list()
 
-            # here we make sure that all the tiles have the same input dimension! -- fix temporaneo
-            self.post_tiles = [item for item in self.post_tiles if torch.tensor(self._read_tile_image(item)).shape[-1] == 512 and torch.tensor(self._read_tile_image(item)).shape[-2] == 512]
-            self.post_tiles = [item for item in self.mask_tiles if torch.tensor(self._read_tile_image(item)).shape[-1] == 512 and torch.tensor(self._read_tile_image(item)).shape[-2] == 512]
-
             if len(self.post_tiles) != len(self.mask_tiles):
                 raise Exception("Incoherent number of tiles for post and mask!")
             else:
@@ -95,6 +91,11 @@ class ImageDataset(Dataset):
             print(e.format_exc())
         finally:
             return current_image
+
+    def _change_channels_order(self, image : np.ndarray, mask : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+        _swap_image = np.moveaxis(image, 0, 1)
+        _swap_mask = np.moveaxis(mask, 0, -1)
+        return _swap_image, _swap_mask
 
     def __len__(self) -> int:
         if len(self.post_tiles) == len(self.mask_tiles):
@@ -127,14 +128,13 @@ class ImageDataset(Dataset):
 
         else:
 
-            # item_dict = dict()
             my_image = self._read_tile_image(tile_path=self.post_tiles[idx])
             my_mask = self._read_tile_image(tile_path=self.mask_tiles[idx])
 
             if self.transformations is not None:
-                my_image = self.transformations(my_image)
-                my_mask = self.transformations(my_mask)
+                my_image = my_image[self.channels]
+                my_image, my_mask = self._change_channels_order(image=my_image, mask=my_mask)
+                applied_transform = self.transformations(image=my_image, mask=my_mask)
+                my_image, my_mask = applied_transform['image'], applied_transform['mask']
 
-            # item_dict["image"] = my_image[[4, 3, 2]]
-            # item_dict["mask"] = my_mask
-            return my_image[self.channels], my_mask
+            return my_image, my_mask

@@ -21,9 +21,10 @@ class OptimusPrime():
       ]
       return result
   
-  def resize_transforms(self, image_size : int =224) -> List[albu.OneOf]:
+  def resize_transforms(self, image_size : int = 512) -> List[albu.OneOf]:
       BORDER_CONSTANT = 0
-      pre_size = int(image_size * 1.5)
+      # pre_size = int(image_size * 1.5)
+      pre_size = int(image_size)
       random_crop = albu.Compose([
         albu.SmallestMaxSize(pre_size, p=1),
         albu.RandomCrop(
@@ -55,9 +56,13 @@ class OptimusPrime():
   def compose(self, transforms_to_compose : List[Any] = None) -> albu.Compose:
       # combine all augmentations into single pipeline
       if transforms_to_compose:
-        result = albu.Compose([
-          item for sublist in transforms_to_compose for item in sublist
-        ])
+        result = albu.Compose(
+          [item for sublist in transforms_to_compose for item in sublist],
+          additional_targets =
+          {
+              "mask" : "mask"
+          }
+        )
         return result
       else:
         raise Exception("Empty set of transformations to compose passed.")

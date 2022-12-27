@@ -578,25 +578,6 @@
             }
         },
         {
-            "EMSR209_05MAZAGONDETAIL01_02GRADING_MAP_v1_vector": {
-                "tile_info_pre": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR209_05MAZAGONDETAIL01_02GRADING_MAP_v1_vector/pre/tile_0_0.tif"
-                    ]
-                ],
-                "tile_info_post": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR209_05MAZAGONDETAIL01_02GRADING_MAP_v1_vector/post/tile_0_0.tif"
-                    ]
-                ],
-                "tile_info_mask": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR209_05MAZAGONDETAIL01_02GRADING_MAP_v1_vector/mask/tile_0_0.tif"
-                    ]
-                ]
-            }
-        },
-        {
             "EMSR210_03ELCAMPILLO_02GRADING_MAP_v1_vector": {
                 "tile_info_pre": [
                     [
@@ -658,25 +639,6 @@
                         "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR210_05ELCAMPILLOOVERVIEW_02GRADING_MAP_v1_vector/mask/tile_0_620.tif",
                         "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR210_05ELCAMPILLOOVERVIEW_02GRADING_MAP_v1_vector/mask/tile_612_0.tif",
                         "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR210_05ELCAMPILLOOVERVIEW_02GRADING_MAP_v1_vector/mask/tile_612_620.tif"
-                    ]
-                ]
-            }
-        },
-        {
-            "EMSR211_01SONEJAWEST_02GRADING_MAP_v1_vector": {
-                "tile_info_pre": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR211_01SONEJAWEST_02GRADING_MAP_v1_vector/pre/tile_34_0.tif"
-                    ]
-                ],
-                "tile_info_post": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR211_01SONEJAWEST_02GRADING_MAP_v1_vector/post/tile_34_0.tif"
-                    ]
-                ],
-                "tile_info_mask": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR211_01SONEJAWEST_02GRADING_MAP_v1_vector/mask/tile_34_0.tif"
                     ]
                 ]
             }
@@ -2197,44 +2159,6 @@
             }
         },
         {
-            "EMSR217_03SLLATINE_02GRADING_MAP_v2_vector": {
-                "tile_info_pre": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR217_03SLLATINE_02GRADING_MAP_v2_vector/pre/tile_69_0.tif"
-                    ]
-                ],
-                "tile_info_post": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR217_03SLLATINE_02GRADING_MAP_v2_vector/post/tile_69_0.tif"
-                    ]
-                ],
-                "tile_info_mask": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR217_03SLLATINE_02GRADING_MAP_v2_vector/mask/tile_69_0.tif"
-                    ]
-                ]
-            }
-        },
-        {
-            "EMSR217_04DAJTI_02GRADING_MAP_v1_vector": {
-                "tile_info_pre": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR217_04DAJTI_02GRADING_MAP_v1_vector/pre/tile_0_0.tif"
-                    ]
-                ],
-                "tile_info_post": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR217_04DAJTI_02GRADING_MAP_v1_vector/post/tile_0_0.tif"
-                    ]
-                ],
-                "tile_info_mask": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR217_04DAJTI_02GRADING_MAP_v1_vector/mask/tile_0_0.tif"
-                    ]
-                ]
-            }
-        },
-        {
             "EMSR219_01SEGURADELASIERRA_02GRADING_MAP_v1_vector": {
                 "tile_info_pre": [
                     [
@@ -2675,44 +2599,6 @@
                         "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR254_02SILVAN_02GRADING_MAP_v2_vector/mask/tile_512_456.tif",
                         "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR254_02SILVAN_02GRADING_MAP_v2_vector/mask/tile_647_0.tif",
                         "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR254_02SILVAN_02GRADING_MAP_v2_vector/mask/tile_647_456.tif"
-                    ]
-                ]
-            }
-        },
-        {
-            "EMSR254_03PERENADELARIBERA_02GRADING_MAP_v2_vector": {
-                "tile_info_pre": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR254_03PERENADELARIBERA_02GRADING_MAP_v2_vector/pre/tile_69_0.tif"
-                    ]
-                ],
-                "tile_info_post": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR254_03PERENADELARIBERA_02GRADING_MAP_v2_vector/post/tile_69_0.tif"
-                    ]
-                ],
-                "tile_info_mask": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR254_03PERENADELARIBERA_02GRADING_MAP_v2_vector/mask/tile_69_0.tif"
-                    ]
-                ]
-            }
-        },
-        {
-            "EMSR281_01KIRTOMY_02GRADING_MAP_v1_vector": {
-                "tile_info_pre": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR281_01KIRTOMY_02GRADING_MAP_v1_vector/pre/tile_12_0.tif"
-                    ]
-                ],
-                "tile_info_post": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR281_01KIRTOMY_02GRADING_MAP_v1_vector/post/tile_12_0.tif"
-                    ]
-                ],
-                "tile_info_mask": [
-                    [
-                        "/mnt/c/Users/franc/Desktop/formatted_colombaset//processed_EMSR281_01KIRTOMY_02GRADING_MAP_v1_vector/mask/tile_12_0.tif"
                     ]
                 ]
             }

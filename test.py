@@ -5,7 +5,7 @@ from Preprocessing import imagedataset as image_dataset
 from Trainer import lhtrainer
 from Nnet.lhNET import lhnet
 
-from Utils import outputformatter
+from Utils import outputformatter, albu_transformer
 
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -73,6 +73,15 @@ model, preprocess_input = nnet._get_model_and_input_preprocessing()
 indices = np.arange(len(ds.post_tiles))
 train_indices, val_indices = train_test_split(indices, test_size=0.8, train_size=0.2, shuffle=True, random_state=777)
 
+my_transformer = albu_transformer.OptimusPrime()
+
+train_transforms = my_transformer.compose([
+    my_transformer.resize_transforms(), 
+    my_transformer.hard_transforms(), 
+    my_transformer.post_transforms()
+])
+valid_transforms = my_transformer.compose([my_transformer.pre_transforms(), my_transformer.post_transforms()])
+
 train_ds = image_dataset.ImageDataset(
         formatted_folder_path=FORMATTED_DATASET_PATH,
         log_folder="Log",
@@ -81,7 +90,8 @@ train_ds = image_dataset.ImageDataset(
         use_pre=False,
         verbose=1,
         specific_indeces=train_indices,
-        return_path=False
+        return_path=False,
+        transformations=train_transforms
 )
 
 val_ds = image_dataset.ImageDataset(
@@ -92,7 +102,8 @@ val_ds = image_dataset.ImageDataset(
         use_pre=False,
         verbose=1,
         specific_indeces=val_indices,
-        return_path=False
+        return_path=False,
+        transformations=valid_transforms
 )
 
 epochs = 15
@@ -146,7 +157,7 @@ output_formatter = outputformatter.OutputFormatter(
         device=device,
         filepath="/mnt/data1/adsp_data",
         test_ds=test_ds,
-        best_model_path="/mnt/data1/adsp_data",
+        best_model_path="/mnt/data1/adsp_data/best_model.pth",
         verbose=1
 )
 
