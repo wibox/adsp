@@ -70,8 +70,8 @@ class ImageDataset(Dataset):
                 self.mask_tiles = self.mask_tiles[self.specific_indeces].to_list()
 
             # here we make sure that all the tiles have the same input dimension! -- fix temporaneo
-            self.post_tiles = [item for item in self.post_tiles if torch.tensor(self._read_tile_image(item)).shape[-1] == 512 and torch.tensor(item).shape[-2] == 512]
-            self.post_tiles = [item for item in self.mask_tiles if torch.tensor(self._read_tile_image(item)).shape[-1] == 512 and torch.tensor(item).shape[-2] == 512]
+            self.post_tiles = [item for item in self.post_tiles if torch.tensor(self._read_tile_image(item)).shape[-1] == 512 and torch.tensor(self._read_tile_image(item)).shape[-2] == 512]
+            self.post_tiles = [item for item in self.mask_tiles if torch.tensor(self._read_tile_image(item)).shape[-1] == 512 and torch.tensor(self._read_tile_image(item)).shape[-2] == 512]
 
             if len(self.post_tiles) != len(self.mask_tiles):
                 raise Exception("Incoherent number of tiles for post and mask!")
