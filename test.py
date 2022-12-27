@@ -71,7 +71,6 @@ nnet = lhnet.LHNet(
 model, preprocess_input = nnet._get_model_and_input_preprocessing()
 
 indices = np.arange(len(ds.post_tiles))
-print(indices)
 train_indices, val_indices = train_test_split(indices, test_size=0.8, train_size=0.2, shuffle=True, random_state=777)
 
 train_ds = image_dataset.ImageDataset(

@@ -1,0 +1,5 @@
+{
+    "INITIAL_DATASET_PATH" : "/mnt/data1/adsp_data/colomba_dataset",
+    "FORMATTED_DATASET_PATH" : "/mnt/data1/adsp_data/formatted_colombaset",
+    "SEGMENTATION_TEST_PATH" : ""
+}
