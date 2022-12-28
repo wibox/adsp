@@ -76,11 +76,14 @@ train_indices, val_indices = train_test_split(indices, test_size=0.8, train_size
 my_transformer = albu_transformer.OptimusPrime()
 
 train_transforms = my_transformer.compose([
-    my_transformer.resize_transforms(), 
-    my_transformer.hard_transforms(), 
+    my_transformer.flip(),
+    my_transformer.rotate(),
+    my_transformer.color_jitter(brigthness=.2, contrast=.2, saturation=.2, hue=.2),
+    my_transformer.channel_shuffle(),
+    my_transformer.gauss_noise(var_limit=(1, 10), mean=0),
     my_transformer.post_transforms()
 ])
-valid_transforms = my_transformer.compose([my_transformer.pre_transforms(), my_transformer.post_transforms()])
+valid_transforms = my_transformer.compose([my_transformer.post_transforms()])
 
 train_ds = image_dataset.ImageDataset(
         formatted_folder_path=FORMATTED_DATASET_PATH,
@@ -106,7 +109,7 @@ val_ds = image_dataset.ImageDataset(
         transformations=valid_transforms
 )
 
-epochs = 15
+epochs = 5
 device = 'cuda'
 loss = utils.losses.DiceLoss()
 optimizer = torch.optim.Adam(

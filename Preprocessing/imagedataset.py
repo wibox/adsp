@@ -92,7 +92,10 @@ class ImageDataset(Dataset):
         finally:
             return current_image
 
-    def _change_channels_order(self, image : np.ndarray, mask : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    def _make_channels_first(self, mask : np.ndarray) -> np.ndarray:
+        return np.moveaxis(mask, -1, 0)
+
+    def _make_channels_last(self, image : np.ndarray, mask : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         _swap_image = np.moveaxis(image, 0, 1)
         _swap_mask = np.moveaxis(mask, 0, -1)
         return _swap_image, _swap_mask
@@ -133,8 +136,9 @@ class ImageDataset(Dataset):
 
             if self.transformations is not None:
                 my_image = my_image[self.channels]
-                my_image, my_mask = self._change_channels_order(image=my_image, mask=my_mask)
+                my_image, my_mask = self._make_channels_last(image=my_image, mask=my_mask)
                 applied_transform = self.transformations(image=my_image, mask=my_mask)
-                my_image, my_mask = applied_transform['image'], applied_transform['mask']
-
+                my_image = applied_transform['image']
+                my_mask = self._make_channels_first(applied_transform['mask'])
+                
             return my_image, my_mask
