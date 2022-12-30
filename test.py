@@ -100,7 +100,7 @@ std = [
 
 my_transformer = lhtransformer.OptimusPrime(
         mean=mean,
-        stds=std
+        std=std
 )
 
 train_transforms = my_transformer.compose([
