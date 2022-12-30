@@ -15,7 +15,6 @@ class ImageDataset(Dataset):
         log_folder : str = None,
         master_dict=None,
         transformations : List[Any] = None,
-        channels : List[int] = [4, 3, 2],
         use_pre : bool = False,
         verbose : int = 0,
         specific_indeces : List[int] = 0,
@@ -26,7 +25,6 @@ class ImageDataset(Dataset):
         self.log_folder=log_folder
         self.master_dict=master_dict
         self.transformations=transformations
-        self.channels=channels
         self.use_pre=use_pre
         self.verbose=verbose
         self.specific_indeces = specific_indeces
@@ -150,11 +148,11 @@ class ImageDataset(Dataset):
             my_mask = self._read_tile_image(tile_path=self.mask_tiles[idx])
 
             if self.transformations is not None:
-                my_image = my_image[self.channels]
-                my_image, my_mask = self._make_channels_last(image=my_image, mask=my_mask)
                 my_image = self._format_image(img=my_image)
+                my_image, my_mask = self._make_channels_last(image=my_image, mask=my_mask)
                 applied_transform = self.transformations(image=my_image, mask=my_mask)
                 my_image = applied_transform['image']
-                my_mask = self._make_channels_first(applied_transform['mask'])
+                my_mask = applied_transform['mask'].numpy()
+                my_mask = self._make_channels_first(mask=my_mask)
                 
             return my_image, my_mask
