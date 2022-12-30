@@ -68,8 +68,8 @@ class Trainer():
             train_logs_list.append(train_logs)
             valid_logs_list.append(valid_logs)
 
-            if best_iou_score < valid_logs['iou_score']:
-                best_iou_score = valid_logs['iou_score']
-                torch.save(self.model, "/mnt/data1/adsp_data/best_model.pth")
-                print("Saving model...")
+        if best_iou_score < valid_logs['iou_score']:
+            best_iou_score = valid_logs['iou_score']
+            torch.save(self.model, "/mnt/data1/adsp_data/best_model.pt")
+            print("Saving model...")
 
