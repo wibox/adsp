@@ -94,7 +94,7 @@ class ImageDataset(Dataset):
         return np.moveaxis(mask, -1, 0)
 
     def _make_channels_last(self, image : np.ndarray, mask : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        _swap_image = np.moveaxis(image, 0, 1)
+        _swap_image = np.moveaxis(image, 0, -1)
         _swap_mask = np.moveaxis(mask, 0, -1)
         return _swap_image, _swap_mask
 
@@ -110,7 +110,7 @@ class ImageDataset(Dataset):
         _formatted_image.append(img[8, :, :])
         _formatted_image.append(img[10, :, :])
         _formatted_image.append(img[11, :, :])
-        _formatted_image = np.ndarray(_formatted_image)
+        _formatted_image = np.array(_formatted_image)
         return np.clip(_formatted_image / 10_000.0, 0, 1)
 
     def __len__(self) -> int:

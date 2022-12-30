@@ -106,7 +106,7 @@ my_transformer = lhtransformer.OptimusPrime(
 train_transforms = my_transformer.compose([
     my_transformer.flip(),
     my_transformer.rotate(),
-    my_transformer.color_jitter(brigthness=.2, contrast=.2, saturation=.2, hue=.2),
+#     my_transformer.color_jitter(brigthness=.2, contrast=.2, saturation=.2, hue=.2),
     my_transformer.channel_shuffle(),
     my_transformer.gauss_noise(var_limit=(1, 10), mean=0),
     my_transformer.post_transforms()

@@ -34,8 +34,9 @@ class OutputFormatter():
 
     def _initialize(self):
         if os.path.exists(self.best_model_path):
-            print(f"Loading best model found in {self.best_model_path}")
-            self.best_model = torch.load(self.best_model_path)
+            # print(f"Loading best model found in {self.best_model_path}")
+            # self.best_model = torch.load(self.best_model_path)
+            pass
         else:
             raise Exception("Best model not found.")
         
