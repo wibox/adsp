@@ -67,7 +67,7 @@ nnet = lhnet.LHNet(
         in_channels=10,
         classes=2
 )
-model = nnet._create_model()
+_, model = nnet._create_model()
 
 indices = np.arange(len(ds.post_tiles))
 train_indices, val_indices = train_test_split(indices, test_size=0.8, train_size=0.2, shuffle=True, random_state=777)
