@@ -5,7 +5,7 @@ from Preprocessing import imagedataset as image_dataset
 from Trainer import lhtrainer
 from Nnet.lhNET import lhnet
 
-from Utils import outputformatter, albu_transformer
+from Utils import lhtransformer, outputformatter
 
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -64,16 +64,44 @@ ds._load_tiles()
 
 nnet = lhnet.LHNet(
         encoder="resnet50",
-        encoder_weights="imagenet",
-        in_channels=3,
+        in_channels=10,
         classes=2
 )
-model, preprocess_input = nnet._get_model_and_input_preprocessing()
+model = nnet._create_model()
 
 indices = np.arange(len(ds.post_tiles))
 train_indices, val_indices = train_test_split(indices, test_size=0.8, train_size=0.2, shuffle=True, random_state=777)
 
-my_transformer = albu_transformer.OptimusPrime()
+mean = [
+    0.12375696117681859,
+    0.1092774636368323,
+    0.1010855203267882,
+    0.1142398616114001,
+    0.1592656692023089,
+    0.18147236008771792,
+    0.1745740312291377,
+    0.19501607349635292,
+    0.15428468872076637,
+    0.10905050699570007,
+]
+
+std = [
+    0.03958795985905458,
+    0.047778262752410296,
+    0.06636616706371974,
+    0.06358874912497474,
+    0.07744387147984592,
+    0.09101635085921553,
+    0.09218466562387101,
+    0.10164581233948201,
+    0.09991773043519253,
+    0.08780632509122865
+]
+
+my_transformer = lhtransformer.OptimusPrime(
+        mean=mean,
+        stds=std
+)
 
 train_transforms = my_transformer.compose([
     my_transformer.flip(),

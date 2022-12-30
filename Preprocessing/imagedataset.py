@@ -100,6 +100,21 @@ class ImageDataset(Dataset):
         _swap_mask = np.moveaxis(mask, 0, -1)
         return _swap_image, _swap_mask
 
+    def _format_image(self, img : np.ndarray = None) -> Union[None, np.ndarray]:
+        _formatted_image = list()
+        _formatted_image.insert(img[3, :, :])
+        _formatted_image.insert(img[2, :, :])
+        _formatted_image.insert(img[1, :, :])
+        _formatted_image.insert(img[4, :, :])
+        _formatted_image.insert(img[5, :, :])
+        _formatted_image.insert(img[6, :, :])
+        _formatted_image.insert(img[7, :, :])
+        _formatted_image.insert(img[8, :, :])
+        _formatted_image.insert(img[10, :, :])
+        _formatted_image.insert(img[11, :, :])
+        _formatted_image = np.ndarray(_formatted_image)
+        return np.clip(_formatted_image / 10_000.0, 0, 1)
+
     def __len__(self) -> int:
         if len(self.post_tiles) == len(self.mask_tiles):
             return len(self.post_tiles)
@@ -137,6 +152,7 @@ class ImageDataset(Dataset):
             if self.transformations is not None:
                 my_image = my_image[self.channels]
                 my_image, my_mask = self._make_channels_last(image=my_image, mask=my_mask)
+                my_image = self._format_image(img=my_image)
                 applied_transform = self.transformations(image=my_image, mask=my_mask)
                 my_image = applied_transform['image']
                 my_mask = self._make_channels_first(applied_transform['mask'])

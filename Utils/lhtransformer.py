@@ -4,7 +4,13 @@ import albumentations as albu
 from albumentations.pytorch import ToTensorV2
 
 class OptimusPrime():
-    def __init__(self, tile_dimension : int = 512):
+    def __init__(self,
+                mean : List[float],
+                stds : List[float],
+                tile_dimension : int = 512,
+                ):
+        self.mean = mean
+        self.std = stds
         self.tile_dimension = tile_dimension
         
     def compose(self, transforms_to_compose : List[Any] = None) -> albu.Compose:
@@ -26,7 +32,7 @@ class OptimusPrime():
     
     def post_transforms(self) -> List[Any]:
     # using ImageNet image normalization
-        return [albu.Normalize(), ToTensorV2()]
+        return [albu.Normalize(mean=self.mean, std=self.stds), ToTensorV2()]
 
     def channel_shuffle(self, p : float = .5) -> List[Any]:
         return [albu.ChannelShuffle(p=p)]

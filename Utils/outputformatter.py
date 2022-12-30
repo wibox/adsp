@@ -52,7 +52,7 @@ class OutputFormatter():
             with rio.open(os.path.join(f"{self.output_path}", f"{idx}.tif"), "w", driver="GTiff", height=height, width=3*width, count=1, dtype=str(_input.dtype)) as outds:
                 outds.write(_input, indexes=self.bands)
         except Exception as e:
-            print(e.format_exc())
+            print(traceback.format_exc())
         finally:
             return completed
 
