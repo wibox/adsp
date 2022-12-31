@@ -32,7 +32,7 @@ class Trainer():
         self.num_workers = num_workers
         self.shuffle = shuffle
         self.metrics = metrics
-        self.export_format = torch.rand(1, 10, 512, 512, requires_grad=True, device='cuda')
+        self.export_format = torch.rand((1, 10, 512, 512), requires_grad=True, device='cuda')
 
     def _initialize(self):
         self.train_ds._load_tiles()
@@ -73,9 +73,12 @@ class Trainer():
             best_iou_score = valid_logs['iou_score']
             torch.onnx.export(
                 self.model,
-                args=self.export_format,
-                f="/mnt/data1/adsp_data/best_model.onnx",
-                export_params=True
+                self.export_format,
+                "/mnt/data1/adsp_data/best_model.onnx",
+                verbose=False,
+                export_params=True,
+                input_names = ["input"],
+                output_names = ["output"],
                 )
             print("Saving model...")
 
