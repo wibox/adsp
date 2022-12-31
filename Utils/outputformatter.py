@@ -1,7 +1,7 @@
 from Preprocessing import imagedataset
 
 import torch
-
+import onnx
 import numpy as np
 import rasterio as rio
 
@@ -34,7 +34,8 @@ class OutputFormatter():
 
     def _initialize(self):
         if os.path.exists(self.best_model_path):
-            self.best_model = torch.load(self.best_model_path)
+            self.best_model = onnx.load(self.best_model_path)
+            onnx.checker.check_model(self.best_model)
         else:
             raise Exception("Best model not found.")
         
