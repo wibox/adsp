@@ -2,6 +2,7 @@ from Preprocessing import imagedataset
 
 import torch
 import onnx
+import onnxruntime as ort
 import numpy as np
 import rasterio as rio
 
@@ -36,6 +37,7 @@ class OutputFormatter():
         if os.path.exists(self.best_model_path):
             self.best_model = onnx.load(self.best_model_path)
             onnx.checker.check_model(self.best_model)
+            self.ort_session = ort.InferenceSession(self.best_model_path)
         else:
             raise Exception("Best model not found.")
         
@@ -63,9 +65,9 @@ class OutputFormatter():
             # la converti in tensore
             current_tensor = torch.from_numpy(current_image).to(self.device).unsqueeze(0)
             # le fai fare la prediction
-            predicted_mask = self.best_model(current_tensor)
+            predicted_mask = self.ort_session.run(None, {self.ort_session.get_inputs()[0] : current_image})
             # ti ricostruisci la maschera
-            predicted_mask = predicted_mask.detach().cpu().squeeze().numpy()
+            # predicted_mask = predicted_mask.detach().cpu().squeeze().numpy()
             # faccio hstack
             formatted_output = np.hstack([current_gt_mask, predicted_mask])
             # salvo nel path

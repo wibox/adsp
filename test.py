@@ -137,7 +137,7 @@ val_ds = image_dataset.ImageDataset(
         transformations=valid_transforms
 )
 
-epochs = 5
+epochs = 1
 device = 'cuda'
 loss = utils.losses.DiceLoss()
 optimizer = torch.optim.Adam(
