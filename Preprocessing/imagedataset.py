@@ -155,4 +155,4 @@ class ImageDataset(Dataset):
                 my_mask = applied_transform['mask'].numpy()
                 my_mask = self._make_channels_first(mask=my_mask)
                 
-            return my_image, my_mask
+            return np.expand_dims(my_image, axis=0), my_mask
