@@ -37,8 +37,11 @@ class OptimusPrime():
     def channel_shuffle(self, p : float = .5) -> List[Any]:
         return [albu.ChannelShuffle(p=p)]
 
-    def color_jitter(self, brigthness : float, contrast : float, saturation : float, hue : float, p : float = .5) -> List[Any]:
-        return [albu.ColorJitter(brightness=brigthness, contrast=contrast, saturation=saturation, hue=hue, p=p)]
+    def random_brightness(self, limit : float = .2, p : float = .5) -> List[Any]:
+        return [albu.RandomBrightness(limit=limit, p=p)]
+
+    def hue_saturation(self, hue_shift_limit : int = 20, val_shift_limit : int = 20, sat_shift_limit : int = 30, p : float = .5) -> List[Any]:
+        return [albu.HueSaturationValue(hue_shift_limit=hue_shift_limit, val_shift_limit=val_shift_limit, sat_shift_limit=sat_shift_limit, p=p)]
 
     def gauss_noise(self, var_limit : Tuple[float, float], mean : float, per_channel : bool = True, p : float = .5) -> List[Any]:
         return [albu.GaussNoise(var_limit=var_limit, mean=mean, per_channel=per_channel, p=p)]

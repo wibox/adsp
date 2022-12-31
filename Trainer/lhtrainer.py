@@ -32,7 +32,7 @@ class Trainer():
         self.num_workers = num_workers
         self.shuffle = shuffle
         self.metrics = metrics
-        self.export_format = (torch.rand(self.batch_size, 10, 512, 512, requires_grad=True), torch.rand(self.batch_size, 1, 512, 512, requires_grad=True))
+        self.export_format = torch.rand(1, 1, 512, 512, requires_grad=True, device='cuda')
 
     def _initialize(self):
         self.train_ds._load_tiles()

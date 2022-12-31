@@ -19,6 +19,8 @@ import os
 
 INITIAL_DATASET_PATH = "/mnt/data1/adsp_data/colomba_dataset"
 FORMATTED_DATASET_PATH = "/mnt/data1/adsp_data/formatted_colombaset"
+TEST_DATASET_PATH = "/mnt/data1/adsp_data/test_colombaset"
+FORMATTED_TEST_DATASET_PATH = "/mnt/data1/adsp_data/formatted_test_colombaset"
 
 datascanner = ds.DatasetScanner(
         master_folder_path=INITIAL_DATASET_PATH,
@@ -106,7 +108,8 @@ my_transformer = lhtransformer.OptimusPrime(
 train_transforms = my_transformer.compose([
     my_transformer.flip(),
     my_transformer.rotate(),
-#     my_transformer.color_jitter(brigthness=.2, contrast=.2, saturation=.2, hue=.2),
+    my_transformer.random_brightness(),
+    my_transformer.hue_saturation(),
     my_transformer.channel_shuffle(),
     my_transformer.gauss_noise(var_limit=(1, 10), mean=0),
     my_transformer.post_transforms()
@@ -135,7 +138,7 @@ val_ds = image_dataset.ImageDataset(
         transformations=valid_transforms
 )
 
-epochs = 1
+epochs = 5
 device = 'cuda'
 loss = utils.losses.DiceLoss()
 optimizer = torch.optim.Adam(
@@ -169,15 +172,42 @@ shifu._train()
 #         best_model = torch.load("./best_model.pth", map_location=device)
 
 # creating test dataset
-test_indices = [1, 2, 3]
+datascanner = ds.DatasetScanner(
+        master_folder_path=TEST_DATASET_PATH,
+        log_file_path="Log/test_master_folder_log_colombaset.csv",
+        validation_file_path=None,
+        dataset="colombaset",
+        verbose=1
+    )
+
+datascanner.scan_master_folder()
+datascanner.log_header_to_file(header="act_id,pre,post,mask")
+datascanner.log_to_file()
+
+dataformatter = df.DatasetFormatter(
+        master_folder_path=FORMATTED_TEST_DATASET_PATH,
+        log_file_path="Log/",
+        log_filename="test_master_folder_log_colombaset.csv",
+        master_dict_path="Log/",
+        master_dict_filename="test_master_dict.json",
+        tile_height=512,
+        tile_width=512,
+        thr_pixels=112,
+        use_pre=False,
+        dataset="colombaset",
+        verbose=1
+)
+
+dataformatter.tiling()
+
 test_ds = image_dataset.ImageDataset(
-        formatted_folder_path=FORMATTED_DATASET_PATH,
+        formatted_folder_path=FORMATTED_TEST_DATASET_PATH,
         log_folder="Log",
-        master_dict="master_dict.json",
+        master_dict="test_master_dict.json",
         transformations=None,
         use_pre=False,
         verbose=1,
-        specific_indeces=test_indices,
+        specific_indeces=None,
         return_path=False
 )
 test_ds._load_tiles()
@@ -186,7 +216,7 @@ output_formatter = outputformatter.OutputFormatter(
         device=device,
         filepath="/mnt/data1/adsp_data",
         test_ds=test_ds,
-        best_model_path="/mnt/data1/adsp_data/best_model.pth",
+        best_model_path="/mnt/data1/adsp_data/best_model.onnx",
         verbose=1
 )
 
