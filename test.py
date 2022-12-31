@@ -171,6 +171,10 @@ shifu._train()
 #         best_model = torch.load("./best_model.pth", map_location=device)
 
 # creating test dataset
+test_transforms = my_transformer.compose([
+    my_transformer.post_transforms()
+])
+
 test_datascanner = dataset_scanner.DatasetScanner(
         master_folder_path=TEST_DATASET_PATH,
         log_file_path="Log/test_master_folder_log_colombaset.csv",
@@ -203,7 +207,7 @@ test_ds = image_dataset.ImageDataset(
         formatted_folder_path=FORMATTED_TEST_DATASET_PATH,
         log_folder="Log",
         master_dict="test_master_dict.json",
-        transformations=None,
+        transformations=test_transforms,
         use_pre=False,
         verbose=1,
         specific_indeces=None,

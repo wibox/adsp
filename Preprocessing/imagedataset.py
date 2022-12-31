@@ -151,7 +151,7 @@ class ImageDataset(Dataset):
                 my_image = self._format_image(img=my_image)
                 my_image, my_mask = self._make_channels_last(image=my_image, mask=my_mask)
                 applied_transform = self.transformations(image=my_image, mask=my_mask)
-                my_image = applied_transform['image']
+                my_image = applied_transform['image'].numpy()
                 my_mask = applied_transform['mask'].numpy()
                 my_mask = self._make_channels_first(mask=my_mask)
                 
