@@ -1,5 +1,5 @@
-from Preprocessing import datasetformatter as df
-from Preprocessing import datasetscanner as ds
+from Preprocessing import datasetformatter as dataset_formatter
+from Preprocessing import datasetscanner as dataset_scanner
 from Preprocessing import imagedataset as image_dataset
 
 from Trainer import lhtrainer
@@ -22,7 +22,7 @@ FORMATTED_DATASET_PATH = "/mnt/data1/adsp_data/formatted_colombaset"
 TEST_DATASET_PATH = "/mnt/data1/adsp_data/test_colombaset"
 FORMATTED_TEST_DATASET_PATH = "/mnt/data1/adsp_data/formatted_test_colombaset"
 
-datascanner = ds.DatasetScanner(
+datascanner = dataset_scanner.DatasetScanner(
         master_folder_path=INITIAL_DATASET_PATH,
         log_file_path="Log/master_folder_log_colombaset.csv",
         validation_file_path=None,
@@ -34,7 +34,7 @@ datascanner.scan_master_folder()
 datascanner.log_header_to_file(header="act_id,pre,post,mask")
 datascanner.log_to_file()
 
-dataformatter = df.DatasetFormatter(
+dataformatter = dataset_formatter.DatasetFormatter(
         master_folder_path=FORMATTED_DATASET_PATH,
         log_file_path="Log/",
         log_filename="master_folder_log_colombaset.csv",
@@ -171,7 +171,7 @@ shifu._train()
 #         best_model = torch.load("./best_model.pth", map_location=device)
 
 # creating test dataset
-datascanner = ds.DatasetScanner(
+test_datascanner = dataset_scanner.DatasetScanner(
         master_folder_path=TEST_DATASET_PATH,
         log_file_path="Log/test_master_folder_log_colombaset.csv",
         validation_file_path=None,
@@ -179,11 +179,11 @@ datascanner = ds.DatasetScanner(
         verbose=1
     )
 
-datascanner.scan_master_folder()
-datascanner.log_header_to_file(header="act_id,pre,post,mask")
-datascanner.log_to_file()
+test_datascanner.scan_master_folder()
+test_datascanner.log_header_to_file(header="act_id,pre,post,mask")
+test_datascanner.log_to_file()
 
-dataformatter = df.DatasetFormatter(
+test_dataformatter = dataset_formatter.DatasetFormatter(
         master_folder_path=FORMATTED_TEST_DATASET_PATH,
         log_file_path="Log/",
         log_filename="test_master_folder_log_colombaset.csv",
@@ -197,7 +197,7 @@ dataformatter = df.DatasetFormatter(
         verbose=1
 )
 
-dataformatter.tiling()
+test_dataformatter.tiling()
 
 test_ds = image_dataset.ImageDataset(
         formatted_folder_path=FORMATTED_TEST_DATASET_PATH,
