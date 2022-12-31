@@ -65,10 +65,10 @@ class OutputFormatter():
             # la converti in tensore
             current_tensor = torch.from_numpy(current_image).to(self.device).unsqueeze(0)
             # le fai fare la prediction
-            predicted_mask = self.ort_session.run(None, {self.ort_session.get_inputs()[0] : current_image})
+            predicted_mask = self.ort_session.run(None, {self.ort_session.get_inputs()[0].name : current_image})
             # ti ricostruisci la maschera
             # predicted_mask = predicted_mask.detach().cpu().squeeze().numpy()
             # faccio hstack
-            formatted_output = np.hstack([current_gt_mask, predicted_mask])
+            formatted_output = np.hstack([current_gt_mask, predicted_mask[0]])
             # salvo nel path
             self._save_output(_input=formatted_output, idx=idx)
