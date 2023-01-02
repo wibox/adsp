@@ -113,6 +113,9 @@ class ImageDataset(Dataset):
         _formatted_image = np.array(_formatted_image)
         return np.clip(_formatted_image, 0, 1)
 
+    def _format_mask(self, mask : np.ndarray = None) -> Union[None, np.ndarray]:
+        return np.clip(mask, 0, 1)
+
     def __len__(self) -> int:
         if len(self.post_tiles) == len(self.mask_tiles):
             return len(self.post_tiles)
@@ -154,5 +157,6 @@ class ImageDataset(Dataset):
                 my_image = applied_transform['image'].numpy()
                 my_mask = applied_transform['mask'].numpy()
                 my_mask = self._make_channels_first(mask=my_mask)
+                my_mask = self._format_mask(mask=my_mask)
                 
             return my_image, my_mask
