@@ -75,8 +75,8 @@ class Trainer():
             train_logs_list.append(train_logs)
             valid_logs_list.append(valid_logs)
 
-            wandb.log({"IoU_score":train_logs['iou_score'] , "DiceLoss":train_logs['loss']})
-            wandb.log({"IoU_score":valid_logs['iou_score'] , "DiceLoss":valid_logs['loss']})
+            wandb.log({"IoU_score":train_logs['iou_score']})
+            wandb.log({"IoU_score":valid_logs['iou_score']})
 
         if best_iou_score < valid_logs['iou_score']:
             best_iou_score = valid_logs['iou_score']
