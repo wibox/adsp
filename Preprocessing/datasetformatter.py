@@ -50,7 +50,6 @@ class DatasetFormatter():
             with open(f"{self.log_file_path}/{self.log_filename}", "r") as act_paths_file:
                 next(act_paths_file) # skip header
                 for act_path in act_paths_file:
-                    print(act_path)
                     act_id = act_path.split(",")[0]
                     post = act_path.split(",")[2]
                     mask = act_path.split(",")[3].rstrip() # removing \n characters
