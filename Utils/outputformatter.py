@@ -51,7 +51,7 @@ class OutputFormatter():
         height = 512
         width = 512
         try:
-            with rio.open(os.path.join(f"{self.output_path}", f"{cat}_{idx}.tif"), "w", driver="GTiff", height=height, width=2*width, count=1, dtype=str(_input.dtype)) as outds:
+            with rio.open(os.path.join(f"{self.output_path}", f"{cat}_{idx}.tif"), "w", driver="GTiff", height=height, width=width, count=1, dtype=str(_input.dtype)) as outds:
                 outds.write(np.squeeze(_input, axis=0), indexes=self.bands)
         except Exception as e:
             print(traceback.format_exc())
