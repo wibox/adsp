@@ -41,10 +41,10 @@ class OutputFormatter():
         else:
             raise Exception("Best model not found.")
         
-        if not os.path.exists(self.filepath):
+        if not os.path.exists(os.path.join(self.filepath, "test_output_colombaset")):
             print(f"Creating test's output folder: {os.path.join(self.filepath, 'test_output_colombaset')}")
             os.makedirs(os.path.join(f"{self.filepath}"), "test_output_colombaset")
-            self.output_path = os.path.join(self.filepath, 'test_output_colombaset')
+        self.output_path = os.path.join(self.filepath, 'test_output_colombaset')
 
     def _save_output(self, _input : np.ndarray = None, idx : int = 0) -> bool:
         completed = False
