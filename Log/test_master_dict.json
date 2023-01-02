@@ -1,0 +1,142 @@
+{
+    "processing_info": [
+        {
+            "EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector": {
+                "tile_info_pre": [
+                    [
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_0_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_0_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_0_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_512_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_512_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_512_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_1124_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_1124_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_1124_845.tif"
+                    ]
+                ],
+                "tile_info_post": [
+                    [
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_0_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_0_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_0_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_512_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_512_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_512_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_1124_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_1124_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_1124_845.tif"
+                    ]
+                ],
+                "tile_info_mask": [
+                    [
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_0_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_0_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_0_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_512_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_512_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_512_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_1124_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_1124_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_1124_845.tif"
+                    ]
+                ]
+            }
+        },
+        {
+            "EMSR207_06MADEIRA_02GRADING_MAP_v2_vector": {
+                "tile_info_pre": [
+                    [
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/pre/tile_0_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/pre/tile_0_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/pre/tile_0_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/pre/tile_512_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/pre/tile_512_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/pre/tile_512_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/pre/tile_1024_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/pre/tile_1024_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/pre/tile_1024_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/pre/tile_1141_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/pre/tile_1141_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/pre/tile_1141_845.tif"
+                    ]
+                ],
+                "tile_info_post": [
+                    [
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/post/tile_0_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/post/tile_0_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/post/tile_0_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/post/tile_512_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/post/tile_512_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/post/tile_512_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/post/tile_1024_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/post/tile_1024_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/post/tile_1024_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/post/tile_1141_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/post/tile_1141_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/post/tile_1141_845.tif"
+                    ]
+                ],
+                "tile_info_mask": [
+                    [
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/mask/tile_0_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/mask/tile_0_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/mask/tile_0_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/mask/tile_512_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/mask/tile_512_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/mask/tile_512_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/mask/tile_1024_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/mask/tile_1024_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/mask/tile_1024_845.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/mask/tile_1141_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/mask/tile_1141_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_06MADEIRA_02GRADING_MAP_v2_vector/mask/tile_1141_845.tif"
+                    ]
+                ]
+            }
+        },
+        {
+            "EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector": {
+                "tile_info_pre": [
+                    [
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_0_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_0_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_0_835.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_512_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_512_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_512_835.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_1124_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_1124_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_1124_835.tif"
+                    ]
+                ],
+                "tile_info_post": [
+                    [
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_0_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_0_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_0_835.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_512_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_512_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_512_835.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_1124_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_1124_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_1124_835.tif"
+                    ]
+                ],
+                "tile_info_mask": [
+                    [
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_0_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_0_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_0_835.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_512_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_512_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_512_835.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_1124_0.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_1124_512.tif",
+                        "/mnt/c/Users/franc/Desktop/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_1124_835.tif"
+                    ]
+                ]
+            }
+        }
+    ]
+}

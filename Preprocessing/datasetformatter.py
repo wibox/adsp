@@ -49,7 +49,8 @@ class DatasetFormatter():
         try:
             with open(f"{self.log_file_path}/{self.log_filename}", "r") as act_paths_file:
                 next(act_paths_file) # skip header
-                for act_path in act_paths_file:
+                lines = act_paths_file.readlines()
+                for act_path in lines:
                     act_id = act_path.split(",")[0]
                     post = act_path.split(",")[2]
                     mask = act_path.split(",")[3].rstrip() # removing \n characters
@@ -179,14 +180,12 @@ class DatasetFormatter():
         completed = False
         try:
             input_paths, activations = self.build_input_paths()
-
             if input_paths is None:
                 raise NoneTypeEncountered(correct_type=Dict[str, str])
             if activations is None:
                 raise NoneTypeEncountered(correct_type=List[str])
             if len(activations) == 0:
                 raise EmptyListEncountered(list_name="activations", expected_content="activations' id")
-
             for idx in tqdm(range(len(activations))): # cycling through activations
                 current_processing_folder=f"processed_{activations[idx]}"
                 os.mkdir(f"{self.master_folder_path}/{current_processing_folder}") # creating dir for processed (tiled) activation

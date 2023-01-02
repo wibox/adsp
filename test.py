@@ -119,7 +119,7 @@ test_dataformatter = dataset_formatter.DatasetFormatter(
         tile_height=512,
         tile_width=512,
         thr_pixels=112,
-        use_pre=False,
+        use_pre=True,
         dataset="colombaset",
         verbose=1
 )
