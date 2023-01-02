@@ -111,7 +111,7 @@ class ImageDataset(Dataset):
         _formatted_image.append(img[10, :, :])
         _formatted_image.append(img[11, :, :])
         _formatted_image = np.array(_formatted_image)
-        return np.clip(_formatted_image / 10_000.0, 0, 255)
+        return np.clip(_formatted_image, 0, 1)
 
     def __len__(self) -> int:
         if len(self.post_tiles) == len(self.mask_tiles):

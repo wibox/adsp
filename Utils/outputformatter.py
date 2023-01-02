@@ -70,6 +70,6 @@ class OutputFormatter():
             # ti ricostruisci la maschera
             # predicted_mask = predicted_mask.detach().cpu().squeeze().numpy()
             # faccio hstack
-            formatted_output = np.hstack([current_gt_mask, np.array(predicted_mask[0])])
+            formatted_output = np.hstack([current_gt_mask, np.squeeze(np.array(predicted_mask[0]), axis=0)])
             # salvo nel path
             self._save_output(_input=formatted_output, idx=idx)

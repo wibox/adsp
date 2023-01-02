@@ -108,7 +108,7 @@ my_transformer = lhtransformer.OptimusPrime(
 train_transforms = my_transformer.compose([
     my_transformer.flip(),
     my_transformer.rotate(),
-    my_transformer.random_brightness(),
+    my_transformer.random_brightness_contrast(),
     my_transformer.channel_shuffle(),
     my_transformer.gauss_noise(var_limit=(1, 10), mean=0),
     my_transformer.post_transforms()
