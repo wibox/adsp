@@ -46,12 +46,12 @@ class OutputFormatter():
             os.makedirs(os.path.join(f"{self.filepath}"), "test_output_colombaset")
         self.output_path = os.path.join(self.filepath, 'test_output_colombaset')
 
-    def _save_output(self, _input : np.ndarray = None, idx : int = 0) -> bool:
+    def _save_output(self, cat : str, _input : np.ndarray = None, idx : int = 0) -> bool:
         completed = False
         height = 512
         width = 512
         try:
-            with rio.open(os.path.join(f"{self.output_path}", f"{idx}.tif"), "w", driver="GTiff", height=height, width=2*width, count=1, dtype=str(_input.dtype)) as outds:
+            with rio.open(os.path.join(f"{self.output_path}", f"{cat}_{idx}.tif"), "w", driver="GTiff", height=height, width=2*width, count=1, dtype=str(_input.dtype)) as outds:
                 outds.write(np.squeeze(_input, axis=0), indexes=self.bands)
         except Exception as e:
             print(traceback.format_exc())
@@ -67,9 +67,11 @@ class OutputFormatter():
             # le fai fare la prediction
             current_image = np.expand_dims(current_image, axis=0)
             predicted_mask = self.ort_session.run(None, {self.ort_session.get_inputs()[0].name : current_image})
+            predicted_mask = np.squeeze(np.array(predicted_mask[0]), axis=0)
             # ti ricostruisci la maschera
             # predicted_mask = predicted_mask.detach().cpu().squeeze().numpy()
             # faccio hstack
-            formatted_output = np.hstack((current_gt_mask, np.squeeze(np.array(predicted_mask[0]), axis=0)))
+            # formatted_output = np.hstack((current_gt_mask, np.squeeze(np.array(predicted_mask[0]), axis=0)))
             # salvo nel path
-            self._save_output(_input=formatted_output, idx=idx)
+            self._save_output(cat="gt", _input=current_gt_mask, idx=idx)
+            self._save_output(cat="pred", _input=predicted_mask, idx=idx)
