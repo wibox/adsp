@@ -5,6 +5,7 @@ from typing import *
 import segmentation_models_pytorch as smp
 import torch
 from torch.utils.data import DataLoader
+import wandb
 
 class Trainer():
     def __init__(
@@ -35,6 +36,11 @@ class Trainer():
         self.export_format = torch.rand((1, 10, 512, 512), requires_grad=True, device='cuda')
 
     def _initialize(self):
+
+        wandb.init(
+            project="ADSP",
+        )
+
         self.train_ds._load_tiles()
         self.train_dl = DataLoader(self.train_ds, batch_size=self.batch_size, shuffle=self.shuffle, num_workers=self.num_workers)
         self.val_ds._load_tiles()
@@ -68,6 +74,9 @@ class Trainer():
             valid_logs = self.valid_epoch.run(self.val_dl)
             train_logs_list.append(train_logs)
             valid_logs_list.append(valid_logs)
+
+            wandb.log({"IoU_score":train_logs['iou_score'] , "DiceLoss":train_logs['loss']})
+            wandb.log({"IoU_score":valid_logs['iou_score'] , "DiceLoss":valid_logs['loss']})
 
         if best_iou_score < valid_logs['iou_score']:
             best_iou_score = valid_logs['iou_score']
