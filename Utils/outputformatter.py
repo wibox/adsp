@@ -20,7 +20,7 @@ class OutputFormatter():
         filepath : str,
         test_ds : imagedataset.ImageDataset,
         best_model_path : str,
-        bands : int = 3,
+        bands : int = 1,
         verbose : int = 1
     ):
         self.device = device
@@ -51,8 +51,8 @@ class OutputFormatter():
         height = 512
         width = 512
         try:
-            with rio.open(os.path.join(f"{self.output_path}", f"{idx}.tif"), "w", driver="GTiff", height=height, width=3*width, count=1, dtype=str(_input.dtype)) as outds:
-                outds.write(_input, indexes=self.bands)
+            with rio.open(os.path.join(f"{self.output_path}", f"{idx}.tif"), "w", driver="GTiff", height=height, width=2*width, count=1, dtype=str(_input.dtype)) as outds:
+                outds.write(np.squeeze(_input, axis=0), indexes=self.bands)
         except Exception as e:
             print(traceback.format_exc())
         finally:
@@ -70,6 +70,6 @@ class OutputFormatter():
             # ti ricostruisci la maschera
             # predicted_mask = predicted_mask.detach().cpu().squeeze().numpy()
             # faccio hstack
-            formatted_output = np.hstack([current_gt_mask, np.squeeze(np.array(predicted_mask[0]), axis=0)])
+            formatted_output = np.hstack((current_gt_mask, np.squeeze(np.array(predicted_mask[0]), axis=0)))
             # salvo nel path
             self._save_output(_input=formatted_output, idx=idx)
