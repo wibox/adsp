@@ -184,7 +184,7 @@ val_ds = image_dataset.ImageDataset(
 
 epochs = 15
 device = 'cuda'
-loss = utils.losses.DiceLoss()
+loss = utils.losses.BCEWithLogitsLoss()
 optimizer = torch.optim.Adam(
         [dict(params=model.parameters(), lr=1e-4)]
 )
