@@ -151,11 +151,11 @@ indices = np.arange(len(ds.post_tiles))
 train_indices, val_indices = train_test_split(indices, test_size=0.8, train_size=0.2, shuffle=True, random_state=777)
 
 train_transforms = my_transformer.compose([
-    my_transformer.flip(),
-    my_transformer.rotate(),
-    my_transformer.random_brightness_contrast(),
-    my_transformer.channel_shuffle(),
-    my_transformer.gauss_noise(var_limit=(1, 10), mean=0),
+#     my_transformer.flip(),
+#     my_transformer.rotate(),
+#     my_transformer.random_brightness_contrast(),
+#     my_transformer.channel_shuffle(),
+#     my_transformer.gauss_noise(var_limit=(1, 10), mean=0),
     my_transformer.post_transforms()
 ])
 valid_transforms = my_transformer.compose([my_transformer.post_transforms()])
@@ -184,7 +184,7 @@ val_ds = image_dataset.ImageDataset(
 
 epochs = 15
 device = 'cuda'
-loss = utils.losses.BCELoss()
+loss = utils.losses.DiceLoss()
 optimizer = torch.optim.Adam(
         [dict(params=model.parameters(), lr=1e-4)]
 )
