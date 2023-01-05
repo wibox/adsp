@@ -6,7 +6,7 @@ class CNNBlock(nn.Module):
     def __init__(self,
                  in_channels,
                  out_channels,
-                 kernel_size=3,
+                 kernel_size=2,
                  stride=1,
                  padding=0):
         super(CNNBlock, self).__init__()
