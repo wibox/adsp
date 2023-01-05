@@ -185,7 +185,7 @@ val_ds = image_dataset.ImageDataset(
 epochs = 15
 device = 'cuda'
 loss = utils.losses.DiceLoss()
-optimizer = torch.optim.Adam(
+optimizer = torch.optim.AdamW(
         [dict(params=model.parameters(), lr=1e-4)]
 )
 batch_size = 10

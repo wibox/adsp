@@ -6,6 +6,8 @@ import onnxruntime as ort
 import numpy as np
 import rasterio as rio
 
+from typing import *
+
 import os
 import traceback
 
@@ -68,6 +70,7 @@ class OutputFormatter():
             current_image = np.expand_dims(current_image, axis=0)
             predicted_mask = self.ort_session.run(None, {self.ort_session.get_inputs()[0].name : current_image})
             predicted_mask = np.squeeze(np.array(predicted_mask[0]), axis=0)
+            predicted_mask = np.where(predicted_mask > .5, 1, 0)
             # ti ricostruisci la maschera
             # predicted_mask = predicted_mask.detach().cpu().squeeze().numpy()
             # faccio hstack
