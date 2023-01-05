@@ -32,6 +32,7 @@ class UnetTrainer():
         self.checkpoint_filename = checkpoint_filename
 
     def _initialise(self):
+        torch.cuda.empty_cache()
         self.model.to(self.device)
 
     def _compute_metrics(self, mask, predicted_mask):
