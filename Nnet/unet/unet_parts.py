@@ -130,14 +130,16 @@ class Decoder(nn.Module):
         for layer in self.layers:
             if isinstance(layer, CNNBlocks):
                 # center_cropping the route tensor to make width and height match
-                print(routes_connection[-1].shape)
-                print(x.shape[2])
+                print("ROUTES CONNECTIONS PRE-CROP", routes_connection[-1].shape)
+                print("X.SHAPE[2] PRE-CROP", x.shape[2])
                 routes_connection[-1] = center_crop(routes_connection[-1], x.shape[2])
-                print(routes_connection[-1].shape)
+                print("ROUTES CONNECTION POST-CROP", routes_connection[-1].shape)
                 # concatenating tensors channel-wise
                 x = torch.cat([x, routes_connection.pop(-1)], dim=1)
                 x = layer(x)
+                print("OUT-UPSAMPLIG X SHAPE", x.shape)
             else:
                 x = layer(x)
+                print("LAST CONV X SHAPE", x.shape)
         print("LAST DECODER SHAPE", x.shape)
         return x
