@@ -8,7 +8,7 @@ class UNET(nn.Module):
         in_channels : int = 10,
         first_out_channels : int = 64, # number of channels for the output feature map
         exit_channels : int = 1, # number of channels for Decoder's last layer
-        downhill : int = 4, # number of downsamping/upsampling layers in Encoder/Decoder
+        downhill : int = 5, # number of downsamping/upsampling layers in Encoder/Decoder
         padding : int = 0
     ):
         super(UNET, self).__init__()
