@@ -129,7 +129,7 @@ class Decoder(nn.Module):
         for layer in self.layers:
             if isinstance(layer, CNNBlocks):
                 # center_cropping the route tensor to make width and height match
-                routes_connection[-1] = center_crop(routes_connection[-1], x.shape[2])
+                #routes_connection[-1] = center_crop(routes_connection[-1], x.shape[2])
                 # concatenating tensors channel-wise
                 x = torch.cat([x, routes_connection.pop(-1)], dim=1)
                 x = layer(x)
