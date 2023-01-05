@@ -12,6 +12,7 @@ class UnetTrainer():
         loss,
         scaler,
         epochs,
+        batch_size,
         train_loader,
         val_loader,
         device,
@@ -23,6 +24,7 @@ class UnetTrainer():
         self.loss = loss
         self.scaler = scaler
         self.epochs = epochs
+        self.batch_size = batch_size
         self.train_loader = train_loader
         self.val_loader = val_loader
         self.device = device

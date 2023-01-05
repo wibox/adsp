@@ -182,6 +182,7 @@ shifu = UnetTrainer(
     loss = torch.nn.BCEWithLogitsLoss(),
     scaler = torch.cuda.amp.GradScaler(),
     epochs=15,
+    batch_size=10,
     train_loader=train_loader,
     val_loader=val_loader,
     device='cuda',
