@@ -80,6 +80,7 @@ class Encoder(nn.Module):
         for layer in self.enc_layers:
             if isinstance(layer, CNNBlocks):
                 x = layer(x)
+                print(x.shape)
                 route_connection.append(x)
             else:
                 x = layer(x)
@@ -125,21 +126,21 @@ class Decoder(nn.Module):
     def forward(self, x, routes_connection):
         # pop the last element of the list since
         # it's not used for concatenation
-        print("FIRST DECODER SHAPE", x.shape)
+        # print("FIRST DECODER SHAPE", x.shape)
         routes_connection.pop(-1)
         for layer in self.layers:
             if isinstance(layer, CNNBlocks):
                 # center_cropping the route tensor to make width and height match
-                print("ROUTES CONNECTIONS PRE-CROP", routes_connection[-1].shape)
-                print("X.SHAPE[2] PRE-CROP", x.shape[2])
+                # print("ROUTES CONNECTIONS PRE-CROP", routes_connection[-1].shape)
+                # print("X.SHAPE[2] PRE-CROP", x.shape[2])
                 routes_connection[-1] = center_crop(routes_connection[-1], x.shape[2])
-                print("ROUTES CONNECTION POST-CROP", routes_connection[-1].shape)
+                # print("ROUTES CONNECTION POST-CROP", routes_connection[-1].shape)
                 # concatenating tensors channel-wise
                 x = torch.cat([x, routes_connection.pop(-1)], dim=1)
                 x = layer(x)
-                print("OUT-UPSAMPLIG X SHAPE", x.shape)
+                # print("OUT-UPSAMPLIG X SHAPE", x.shape)
             else:
                 x = layer(x)
-                print("LAST CONV X SHAPE", x.shape)
-        print("LAST DECODER SHAPE", x.shape)
+                # print("LAST CONV X SHAPE", x.shape)
+        # print("LAST DECODER SHAPE", x.shape)
         return x
