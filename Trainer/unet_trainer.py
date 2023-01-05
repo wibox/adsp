@@ -60,8 +60,10 @@ class UnetTrainer():
             # data to GPU
             image = image.to(self.device)
             mask = mask.to(self.device)
+            print("MASK SHAPE",mask.shape)
             # with torch.cuda.amp.autocast():
             out = self.model(image)
+            print("PREDICTION SHAPE", out.shape)
             # if pos_weight:
             #     loss_fn = torch.nn.BCEWithLogitsLoss(pos_weight=(mask==0.).sum()/mask.sum())
             loss = self.loss(out, mask)
