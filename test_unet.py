@@ -141,6 +141,7 @@ train_ds = image_dataset.ImageDataset(
         return_path=False,
         transformations=train_transforms
 )
+train_ds._load_tiles()
 
 val_ds = image_dataset.ImageDataset(
         formatted_folder_path=FORMATTED_DATASET_PATH,
@@ -152,6 +153,7 @@ val_ds = image_dataset.ImageDataset(
         return_path=False,
         transformations=valid_transforms
 )
+val_ds._load_tiles()
 
 test_ds = image_dataset.ImageDataset(
         formatted_folder_path=FORMATTED_TEST_DATASET_PATH,
