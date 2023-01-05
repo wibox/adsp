@@ -178,7 +178,7 @@ model = UNET()
 
 shifu = UnetTrainer(
     model = model,
-    optimizer=torch.optim.AdamW(lr=1e-4),
+    optimizer = torch.optim.AdamW([dict(params=model.parameters(), lr=1e-4)]),
     loss = torch.nn.BCEWithLogitsLoss(),
     scaler = torch.cuda.amp.GradScaler(),
     epochs=15,
