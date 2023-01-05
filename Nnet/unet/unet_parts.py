@@ -80,7 +80,6 @@ class Encoder(nn.Module):
         for layer in self.enc_layers:
             if isinstance(layer, CNNBlocks):
                 x = layer(x)
-                print(x.shape)
                 route_connection.append(x)
             else:
                 x = layer(x)
