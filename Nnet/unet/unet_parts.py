@@ -135,4 +135,5 @@ class Decoder(nn.Module):
                 x = layer(x)
             else:
                 x = layer(x)
+        print("LAST DECODER SHAPE", x.shape)
         return x
