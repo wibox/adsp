@@ -30,7 +30,7 @@ class UnetTrainer():
         self.checkpoint_filename = checkpoint_filename
 
     def _initialise(self):
-        pass
+        self.model.to(self.device)
 
     def _compute_metrics(self, mask, predicted_mask):
         mask_predicted_mask = (torch.sigmoid(predicted_mask)>.5).float()
@@ -109,6 +109,7 @@ class UnetTrainer():
         self.optimizer.load_state_dict(loaded_checkpoint['optimizer'])
 
     def train(self):
+        self._initialise()
         for epoch in range(self.epochs):
             print(f"Training epoch: {epoch}")
             self._train()
