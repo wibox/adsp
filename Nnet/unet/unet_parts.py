@@ -1,4 +1,6 @@
+import torch
 import torch.nn as nn
+from torchvision.transforms.functional import center_crop
 
 class CNNBlock(nn.Module):
     def __init__(self,
@@ -119,3 +121,18 @@ class Decoder(nn.Module):
         self.layers.append(
             nn.Conv2d(in_channels, exit_channels, kernel_size=1, padding=padding),
         )
+
+    def forward(self, x, routes_connection):
+        # pop the last element of the list since
+        # it's not used for concatenation
+        routes_connection.pop(-1)
+        for layer in self.layers:
+            if isinstance(layer, CNNBlocks):
+                # center_cropping the route tensor to make width and height match
+                routes_connection[-1] = center_crop(routes_connection[-1], x.shape[2])
+                # concatenating tensors channel-wise
+                x = torch.cat([x, routes_connection.pop(-1)], dim=1)
+                x = layer(x)
+            else:
+                x = layer(x)
+        return x
