@@ -167,8 +167,8 @@ test_ds = image_dataset.ImageDataset(
 )
 test_ds._load_tiles()
 
-train_loader = DataLoader(train_ds, batch_size=10, shuffle=True, num_workers=1)
-val_loader = DataLoader(val_ds, batch_size=10, shuffle=True, num_workers=1)
+train_loader = DataLoader(train_ds, batch_size=4, shuffle=True, num_workers=1)
+val_loader = DataLoader(val_ds, batch_size=4, shuffle=True, num_workers=1)
 
 from Nnet.unet.unet import UNET
 from Trainer.unet_trainer import UnetTrainer
