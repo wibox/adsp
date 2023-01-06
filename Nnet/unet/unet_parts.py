@@ -19,7 +19,6 @@ class CNNBlock(nn.Module):
 
     def forward(self, x):
         x = self.seq_block(x)
-        print("CNN BLOCK", x.shape)
         return x
 
 class CNNBlocks(nn.Module):
@@ -84,7 +83,6 @@ class Encoder(nn.Module):
                 route_connection.append(x)
             else:
                 x = layer(x)
-        print("ENCODER OUTPUT", x.shape)
         return x, route_connection
 
 class Decoder(nn.Module):
@@ -121,7 +119,7 @@ class Decoder(nn.Module):
         # 2) cannot append nn.Sigmoid here because you should be later using
         #    BCELoss () which will trigger the amp error "are unsafe to autocast".
         self.layers.append(
-            nn.Conv2d(in_channels, exit_channels, kernel_size=1, padding=padding),
+            nn.Conv2d(in_channels, exit_channels, kernel_size=3, padding=padding),
         )
 
     def forward(self, x, routes_connection):
@@ -139,11 +137,9 @@ class Decoder(nn.Module):
                 # concatenating tensors channel-wise
                 x = torch.cat([x, routes_connection.pop(-1)], dim=1)
                 x = layer(x)
-                print(x.shape)
                 # print("OUT-UPSAMPLIG X SHAPE", x.shape)
             else:
                 x = layer(x)
-                print(x.shape)
                 # print("LAST CONV X SHAPE", x.shape)
         # print("LAST DECODER SHAPE", x.shape)
         return x
