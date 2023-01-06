@@ -8,7 +8,7 @@ class CNNBlock(nn.Module):
                  out_channels,
                  kernel_size=3,
                  stride=1,
-                 padding=0):
+                 padding=1):
         super(CNNBlock, self).__init__()
 
         self.seq_block = nn.Sequential(
@@ -108,7 +108,7 @@ class Decoder(nn.Module):
         for i in range(uphill):
 
             self.layers += [
-                nn.ConvTranspose2d(in_channels, out_channels, kernel_size=3, stride=2),
+                nn.ConvTranspose2d(in_channels, out_channels, kernel_size=2, stride=2),
                 CNNBlocks(n_conv=2, in_channels=in_channels,
                           out_channels=out_channels, padding=padding),
             ]
