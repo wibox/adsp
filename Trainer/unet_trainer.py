@@ -62,7 +62,7 @@ class UnetTrainer():
             # data to GPU
             image = image.to(self.device)
             mask = mask.to(self.device)
-            print("MASK SHAPE",mask.shape)
+            # print("MASK SHAPE",mask.shape)
             # with torch.cuda.amp.autocast():
             out = self.model(image)
             print("PREDICTION SHAPE", out.shape)
