@@ -3,7 +3,6 @@ from tqdm import tqdm
 import torch
 
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = 1
 
 class UnetTrainer():
     def __init__(
