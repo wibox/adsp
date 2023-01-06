@@ -19,6 +19,7 @@ class CNNBlock(nn.Module):
 
     def forward(self, x):
         x = self.seq_block(x)
+        print("CNN BLOCK", x.shape)
         return x
 
 class CNNBlocks(nn.Module):
@@ -83,6 +84,7 @@ class Encoder(nn.Module):
                 route_connection.append(x)
             else:
                 x = layer(x)
+                print("ENCODER OUTPUT", x.shape)
         return x, route_connection
 
 class Decoder(nn.Module):
