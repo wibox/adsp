@@ -7,8 +7,8 @@ class CNNBlock(nn.Module):
                  in_channels,
                  out_channels,
                  kernel_size=3,
-                 stride=2,
-                 padding=1):
+                 stride=1,
+                 padding=2):
         super(CNNBlock, self).__init__()
 
         self.seq_block = nn.Sequential(
