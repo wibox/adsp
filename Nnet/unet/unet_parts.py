@@ -84,7 +84,7 @@ class Encoder(nn.Module):
                 route_connection.append(x)
             else:
                 x = layer(x)
-                print("ENCODER OUTPUT", x.shape)
+        print("ENCODER OUTPUT", x.shape)
         return x, route_connection
 
 class Decoder(nn.Module):
@@ -139,9 +139,11 @@ class Decoder(nn.Module):
                 # concatenating tensors channel-wise
                 x = torch.cat([x, routes_connection.pop(-1)], dim=1)
                 x = layer(x)
+                print(x.shape)
                 # print("OUT-UPSAMPLIG X SHAPE", x.shape)
             else:
                 x = layer(x)
+                print(x.shape)
                 # print("LAST CONV X SHAPE", x.shape)
         # print("LAST DECODER SHAPE", x.shape)
         return x
