@@ -108,7 +108,7 @@ class Decoder(nn.Module):
         for i in range(uphill):
 
             self.layers += [
-                nn.ConvTranspose2d(in_channels, out_channels, kernel_size=2, stride=2),
+                nn.ConvTranspose2d(in_channels, out_channels, kernel_size=2, stride=1),
                 CNNBlocks(n_conv=2, in_channels=in_channels,
                           out_channels=out_channels, padding=padding),
             ]
