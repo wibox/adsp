@@ -39,7 +39,7 @@ class UnetTrainer():
     def _compute_metrics(self, mask, predicted_mask):
         mask_predicted_mask = (torch.sigmoid(predicted_mask)>.5).float()
 
-        num_pixels += torch.numel(mask_predicted_mask)
+        num_pixels = torch.numel(mask_predicted_mask)
         TP += (mask_predicted_mask == mask).sum()
         FP += (mask_predicted_mask - mask).sum()
         FN += (mask - mask_predicted_mask).sum()
