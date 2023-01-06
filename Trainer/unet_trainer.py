@@ -33,6 +33,7 @@ class UnetTrainer():
 
     def _initialise(self):
         torch.cuda.empty_cache()
+        self.device = torch.device("cuda:1")
         self.model.to(self.device)
 
     def _compute_metrics(self, mask, predicted_mask):
