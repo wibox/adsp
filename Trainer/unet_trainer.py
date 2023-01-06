@@ -3,6 +3,7 @@ from tqdm import tqdm
 import torch
 
 import os
+os.environ['CUDA_VISIBLE_DEVICES'] = 1
 
 class UnetTrainer():
     def __init__(
@@ -33,7 +34,7 @@ class UnetTrainer():
 
     def _initialise(self):
         torch.cuda.empty_cache()
-        self.device = torch.device("cuda:1")
+        #self.device = torch.device("cuda:1")
         self.model.to(self.device)
 
     def _compute_metrics(self, mask, predicted_mask):
