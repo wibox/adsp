@@ -180,7 +180,7 @@ model = UNET()
 from pytorch_lightning import Trainer
 from Trainer.unet_trainerv2 import UNetModule
 
-criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(5,0))
+criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(5.0))
 module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
 trainer = Trainer(max_epochs=15, accelerator="gpu")
 trainer.fit(model=module, train_dataloaders=train_loader)
