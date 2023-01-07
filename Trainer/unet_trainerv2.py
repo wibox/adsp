@@ -2,7 +2,7 @@ import pytorch_lightning as pl
 import torch
 import torch.nn as nn
 from torch.optim import AdamW, Optimizer
-from torchmetrics.classification import BinaryF1Score, BinaryJaccardIndex
+from torchmetrics import F1Score, JaccardIndex
 
 
 class UNetModule(pl.LightningModule):
@@ -13,8 +13,8 @@ class UNetModule(pl.LightningModule):
         self.criterion = criterion
         self.lr = learning_rate
         self.plot_every = plot_every
-        self.iou = BinaryJaccardIndex()
-        self.f1 = BinaryF1Score()
+        self.iou = JaccardIndex()
+        self.f1 = F1Score()
 
     def plot_images(self, x: torch.Tensor, y: torch.Tensor, p: torch.Tensor, mode: str = "train", step: int = 0):
         image = x[0][:3].cpu().numpy()
