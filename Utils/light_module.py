@@ -26,7 +26,7 @@ class UNetModule(pl.LightningModule):
 
     def training_step(self, batch: tuple, batch_idx: int):
         x, y = batch
-        y = y.unsqueeze(1)
+        #y = y.unsqueeze(1)
         logits = self.model(x)
         # tensor shapes [batch, 1, h, w]
         loss = self.criterion(logits, y.float())
