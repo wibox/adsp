@@ -1,4 +1,5 @@
 import pytorch_lightning as pl
+from pytorch_lightning.loggers import TensorBoardLogger
 import torch
 import torch.nn as nn
 from torch.optim import AdamW, Optimizer
@@ -15,6 +16,7 @@ class UNetModule(pl.LightningModule):
         self.plot_every = plot_every
         self.iou = BinaryJaccardIndex()
         self.f1 = BinaryF1Score()
+        self.logger = TensorBoardLogger(save_dir="logs/")
 
     def plot_images(self, x: torch.Tensor, y: torch.Tensor, p: torch.Tensor, mode: str = "train", step: int = 0):
         image = x[0][:3].cpu().numpy()
@@ -36,7 +38,7 @@ class UNetModule(pl.LightningModule):
         self.log("train_loss", loss)
         # debug images
         if self.global_step % self.plot_every == 0:
-            pass
+            self.plot_images(x, y, preds)
         return loss
 
     def training_epoch_end(self, outputs: list):
