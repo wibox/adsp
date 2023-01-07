@@ -37,7 +37,7 @@ class UNetModule(pl.LightningModule):
         # debug images
         if self.global_step % self.plot_every == 0:
             pass
-        return loss
+        return loss, self.iou
 
     def training_epoch_end(self, outputs: list):
         self.log("train_iou_epoch", self.iou)
@@ -45,7 +45,7 @@ class UNetModule(pl.LightningModule):
 
     def test_step(self, batch: tuple, batch_idx: int):
         x, y = batch
-        y = y.unsqueeze(1)
+        #y = y.unsqueeze(1)
         logits = self.model(x)
         loss = self.criterion(logits, y.float())
         self.iou(logits, y)
