@@ -13,8 +13,8 @@ class UNetModule(pl.LightningModule):
         self.criterion = criterion
         self.lr = learning_rate
         self.plot_every = plot_every
-        self.iou = JaccardIndex(task="binary", num_classes=1)
-        self.f1 = F1Score(task="binary", num_classes=1)
+        self.iou = JaccardIndex(task="binary", num_classes=2)
+        self.f1 = F1Score(task="binary", num_classes=2)
 
     def plot_images(self, x: torch.Tensor, y: torch.Tensor, p: torch.Tensor, mode: str = "train", step: int = 0):
         image = x[0][:3].cpu().numpy()
@@ -36,7 +36,7 @@ class UNetModule(pl.LightningModule):
         self.log("train_loss", loss)
         # debug images
         if self.global_step % self.plot_every == 0:
-            self.plot_images(x, y, preds)
+            pass
         return loss
 
     def training_epoch_end(self, outputs: list):
