@@ -160,6 +160,6 @@ if __name__ == "__main__":
 
     criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(5.0))
     module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
-    trainer = Trainer(max_epochs=4, accelerator="gpu", devices=1, num_nodes=1, logger=tb_logger)
+    trainer = Trainer(max_epochs=1, accelerator="gpu", devices=1, num_nodes=1, logger=tb_logger)
     trainer.fit(model=module, train_dataloaders=train_loader, val_dataloaders=val_loader)
     trainer.test(model=module, dataloaders=test_loader)
