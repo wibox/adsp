@@ -32,7 +32,8 @@ class OptimusPrime():
     
     def post_transforms(self) -> List[Any]:
     # using ImageNet image normalization
-        return [albu.Normalize(mean=self.mean, std=self.std), ToTensorV2()]
+        # return [albu.Normalize(mean=self.mean, std=self.std), ToTensorV2()]
+        return [ToTensorV2()]
 
     def channel_shuffle(self, p : float = .5) -> List[Any]:
         return [albu.ChannelShuffle(p=p)]
