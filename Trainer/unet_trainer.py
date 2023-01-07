@@ -98,6 +98,10 @@ class UnetTrainer():
         loss_10_batches = 0
         loss_epoch = 0
         for idx, (image, mask) in enumerate(loop):
+            num_pixels = 0
+            TP = 0
+            FP = 0
+            FN = 0
             # data to GPU
             image = image.to(self.device)
             mask = mask.to(self.device)
@@ -143,6 +147,10 @@ class UnetTrainer():
         self.model.eval()
         with torch.no_grad():
             for idx, (image, mask) in enumerate(self.val_loader):
+                num_pixels = 0
+                TP = 0
+                FP = 0
+                FN = 0
                 image = image.to(self.device)
                 mask = mask.to(self.device)
                 predicted_mask = self.model(image)
