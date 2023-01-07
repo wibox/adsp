@@ -36,44 +36,44 @@ class UnetTrainer():
         #self.device = torch.device("cuda:1")
         self.model.to(self.device)
 
-    def evalution_metrics(
-                        self,
-                        model,
-                        val_loader,
-                        loss_fn,
-                        device="cuda"):
-        num_correct = 0
-        num_pixels = 0
-        dice_score = 0
-        loss_epoch = 0
+    # def evalution_metrics(
+    #                     self,
+    #                     model,
+    #                     val_loader,
+    #                     loss_fn,
+    #                     device="cuda"):
+    #     num_correct = 0
+    #     num_pixels = 0
+    #     dice_score = 0
+    #     loss_epoch = 0
         
-        model.eval()
-        with torch.no_grad():
-            for idx, (image, mask) in enumerate(val_loader):
-                image = image.to(device)
-                mask = mask.float().unsqueeze(dim=1).to(self.device)
-                pred = model(image)
+    #     model.eval()
+    #     with torch.no_grad():
+    #         for idx, (image, mask) in enumerate(val_loader):
+    #             image = image.to(device)
+    #             mask = mask.float().unsqueeze(dim=1).to(self.device)
+    #             pred = model(image)
 
-                loss_epoch += loss_fn(pred, mask)
-                mask_pred = torch.sigmoid(pred)
-                mask_pred = (mask_pred > 0.5).float()
+    #             loss_epoch += loss_fn(pred, mask)
+    #             mask_pred = torch.sigmoid(pred)
+    #             mask_pred = (mask_pred > 0.5).float()
 
-                num_correct += (mask_pred == mask).sum()
-                num_pixels += torch.numel(mask_pred)
-                dice_score += (2 * (mask_pred * mask).sum()) / (
-                        (mask_pred + mask).sum() + 1e-8
-                )
+    #             num_correct += (mask_pred == mask).sum()
+    #             num_pixels += torch.numel(mask_pred)
+    #             dice_score += (2 * (mask_pred * mask).sum()) / (
+    #                     (mask_pred + mask).sum() + 1e-8
+    #             )
 
-        print(
-            f"Got {num_correct}/{num_pixels} with acc {(num_correct/num_pixels)*100:.2f}"
-        )
-        print(
-            f"==> valuation_loss: {loss_epoch/len(val_loader):2f}"
-        )    
+    #     print(
+    #         f"Got {num_correct}/{num_pixels} with acc {(num_correct/num_pixels)*100:.2f}"
+    #     )
+    #     print(
+    #         f"==> valuation_loss: {loss_epoch/len(val_loader):2f}"
+    #     )    
 
-        print(f"==> dice_score: {dice_score/len(val_loader)}")
+    #     print(f"==> dice_score: {dice_score/len(val_loader)}")
         
-        model.train()
+    #     model.train()
 
     def _compute_metrics(self, mask, predicted_mask):
         mask_predicted_mask = (torch.sigmoid(predicted_mask)>.5).float()
@@ -104,13 +104,26 @@ class UnetTrainer():
             # print("MASK SHAPE",mask.shape)
             # with torch.cuda.amp.autocast():
             out = self.model(image)
-            print("PREDICTION SHAPE", out.shape)
             # if pos_weight:
             #     loss_fn = torch.nn.BCEWithLogitsLoss(pos_weight=(mask==0.).sum()/mask.sum())
             loss = self.loss(out, mask)
             loss_10_batches += loss
             loss_epoch += loss
             #self._compute_metrics(mask = mask, predicted_mask=out)
+            mask_predicted_mask = (torch.sigmoid(out)>.5).float()
+
+            num_pixels += torch.numel(mask_predicted_mask)
+            TP += (mask_predicted_mask == mask).sum()
+            FP += (mask_predicted_mask - mask).sum()
+            FN += (mask - mask_predicted_mask).sum()
+
+            IoUScore += TP / (TP + FP + FN)
+
+            predicted_pixels = TP/num_pixels
+            iou_score = IoUScore/len(self.val_loader)
+
+            print(f" ===> Predicted pixels: {predicted_pixels} with accuracy: {predicted_pixels*100:2f}")
+            print(f" ===> IoU Score: {iou_score}")
 
         self.optimizer.zero_grad()
         self.scaler.scale(loss).backward()
@@ -135,7 +148,20 @@ class UnetTrainer():
                 predicted_mask = self.model(image)
 
                 loss_epoch += self.loss(predicted_mask, mask)
-                self._compute_metrics(mask = mask, predicted_mask=predicted_mask)
+                mask_predicted_mask = (torch.sigmoid(predicted_mask)>.5).float()
+
+                num_pixels += torch.numel(mask_predicted_mask)
+                TP += (mask_predicted_mask == mask).sum()
+                FP += (mask_predicted_mask - mask).sum()
+                FN += (mask - mask_predicted_mask).sum()
+
+            IoUScore += TP / (TP + FP + FN)
+
+            predicted_pixels = TP/num_pixels
+            iou_score = IoUScore/len(self.val_loader)
+
+        print(f" ===> Predicted pixels: {predicted_pixels} with accuracy: {predicted_pixels*100:2f}")
+        print(f" ===> IoU Score: {iou_score}")
         print(f" ===> Validation Loss: {loss_epoch/len(self.val_loader):2f}")
 
         self.model.train()
@@ -159,4 +185,4 @@ class UnetTrainer():
             print(f"Training epoch: {epoch}")
             self._train()
             print("Computing IoUScore on validation dataset")
-            #self._eval()
+            self._eval()
