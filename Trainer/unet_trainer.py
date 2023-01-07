@@ -102,6 +102,7 @@ class UnetTrainer():
             TP = 0
             FP = 0
             FN = 0
+            IoUScore = 0
             # data to GPU
             image = image.to(self.device)
             mask = mask.to(self.device)
@@ -151,6 +152,7 @@ class UnetTrainer():
                 TP = 0
                 FP = 0
                 FN = 0
+                IoUScore = 0
                 image = image.to(self.device)
                 mask = mask.to(self.device)
                 predicted_mask = self.model(image)
