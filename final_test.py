@@ -13,35 +13,9 @@ FORMATTED_DATASET_PATH = "/mnt/data1/adsp_data/formatted_colombaset"
 TEST_DATASET_PATH = "/mnt/data1/adsp_data/test_colombaset"
 FORMATTED_TEST_DATASET_PATH = "/mnt/data1/adsp_data/formatted_test_colombaset"
 
-mean = [
-    0.12375696117681859,
-    0.1092774636368323,
-    0.1010855203267882,
-    0.1142398616114001,
-    0.1592656692023089,
-    0.18147236008771792,
-    0.1745740312291377,
-    0.19501607349635292,
-    0.15428468872076637,
-    0.10905050699570007,
-]
-
-std = [
-    0.03958795985905458,
-    0.047778262752410296,
-    0.06636616706371974,
-    0.06358874912497474,
-    0.07744387147984592,
-    0.09101635085921553,
-    0.09218466562387101,
-    0.10164581233948201,
-    0.09991773043519253,
-    0.08780632509122865
-]
-
 my_transformer = lhtransformer.OptimusPrime(
-        mean=mean,
-        std=std
+        mean=None,
+        std=None
 )
 
 datascanner = dataset_scanner.DatasetScanner(
@@ -85,10 +59,6 @@ ds = image_dataset.ImageDataset(
 
 ds._load_tiles()
 
-test_transforms = my_transformer.compose([
-    my_transformer.post_transforms()
-])
-
 test_datascanner = dataset_scanner.DatasetScanner(
         master_folder_path=TEST_DATASET_PATH,
         log_file_path="Log/test_master_folder_log_colombaset.csv",
@@ -117,6 +87,9 @@ test_dataformatter = dataset_formatter.DatasetFormatter(
 
 test_dataformatter.tiling()
 
+test_transforms = my_transformer.compose([
+    my_transformer.post_transforms()
+])
 
 indices = np.arange(len(ds.post_tiles))
 train_indices, val_indices = train_test_split(indices, test_size=0.8, train_size=0.2, shuffle=True, random_state=777)
@@ -172,7 +145,7 @@ val_loader = DataLoader(val_ds, batch_size=4, shuffle=True, num_workers=1)
 test_loader = DataLoader(test_ds, batch_size=4, shuffle=True, num_workers=1)
 
 from Nnet.unet.unet import UNET
-from Trainer.unet_trainer import UnetTrainer
+from Utils.light_module import UNetModule
 import torch
 
 model = UNET()
@@ -185,4 +158,3 @@ module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
 trainer = Trainer(max_epochs=15, accelerator="gpu")
 trainer.fit(model=module, train_dataloaders=train_loader)
 trainer.test(model=module, dataloaders=test_loader)
-
