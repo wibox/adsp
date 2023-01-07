@@ -158,6 +158,6 @@ class ImageDataset(Dataset):
                 my_mask = applied_transform['mask'].numpy()
                 my_mask = self._make_channels_first(mask=my_mask)
                 my_mask = self._format_mask(mask=my_mask)
-                mask = (mask>0).astype(np.uint8)
+                my_mask = (my_mask>0).astype(np.uint8)
                 
             return my_image, my_mask
