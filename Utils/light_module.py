@@ -40,10 +40,8 @@ class UNetModule(pl.LightningModule):
         return loss
 
     def training_epoch_end(self, outputs: list):
-        # self.log("train_iou_epoch", self.iou)
-        # self.log("train_f1_epoch", self.f1)
-        print("train iou epoch ", self.iou)
-        print("train f1 epoch ", self.f1)
+        self.log("train_iou_epoch", self.iou)
+        self.log("train_f1_epoch", self.f1)
 
     def test_step(self, batch: tuple, batch_idx: int):
         x, y = batch

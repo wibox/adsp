@@ -144,7 +144,7 @@ if __name__ == "__main__":
 
     train_loader = DataLoader(train_ds, batch_size=4, shuffle=True, num_workers=4)
     val_loader = DataLoader(val_ds, batch_size=4, shuffle=True, num_workers=4)
-    test_loader = DataLoader(test_ds, batch_size=4, shuffle=True, num_workers=4)
+    test_loader = DataLoader(test_ds, batch_size=4, shuffle=False, num_workers=4, persistent_workers=True)
 
     from Nnet.unet.unet import UNET
     from Utils.light_module import UNetModule
@@ -157,6 +157,6 @@ if __name__ == "__main__":
 
     criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(5.0))
     module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
-    trainer = Trainer(max_epochs=4, accelerator="gpu")
+    trainer = Trainer(max_epochs=4, accelerator="gpu", devices=1, num_nodes=1)
     trainer.fit(model=module, train_dataloaders=train_loader)
     trainer.test(model=module, dataloaders=test_loader)
