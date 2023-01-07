@@ -34,6 +34,7 @@ class UNetModule(pl.LightningModule):
         self.iou(preds, y)
         self.f1(preds, y)
         self.log("train_loss", loss)
+        self.log("iou score", self.iou)
         # debug images
         if self.global_step % self.plot_every == 0:
             self.plot_images(x, y, preds)
