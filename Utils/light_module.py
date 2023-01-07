@@ -33,8 +33,8 @@ class UNetModule(pl.LightningModule):
         preds = torch.sigmoid(logits.detach())
         self.iou(preds, y)
         self.f1(preds, y)
-        self.log("train_loss", loss)
-        self.log("iou score", self.iou)
+        self.log("train_loss", loss, on_step=True, on_epoch=True, logger=True)
+        self.log("iou score", self.iou, on_step=True, on_epoch=True, logger=True)
         # debug images
         if self.global_step % self.plot_every == 0:
             self.plot_images(x, y, preds)
