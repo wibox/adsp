@@ -53,6 +53,7 @@ class UNetModule(pl.LightningModule):
         self.iou(preds, y)
         self.f1(preds, y)
         self.log("performace", {"score":self.iou, "loss":loss}, on_step=True, on_epoch=True, logger=True)
+        return loss
 
     def test_step(self, batch: tuple, batch_idx: int):
         x, y = batch
