@@ -40,7 +40,7 @@ if __name__ == "__main__":
             master_dict_filename="master_dict.json",
             tile_height=512,
             tile_width=512,
-            thr_pixels=112,
+            thr_pixels=0,
             use_pre=True,
             dataset="colombaset",
             verbose=1
@@ -81,7 +81,7 @@ if __name__ == "__main__":
             master_dict_filename="test_master_dict.json",
             tile_height=512,
             tile_width=512,
-            thr_pixels=112,
+            thr_pixels=0,
             use_pre=True,
             dataset="colombaset",
             verbose=1

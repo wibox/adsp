@@ -159,7 +159,5 @@ class ImageDataset(Dataset):
                 my_mask = self._make_channels_first(mask=my_mask)
                 my_mask = self._format_mask(mask=my_mask)
                 my_mask = (my_mask>0).astype(np.uint8)
-                if np.sum(np.isnan(my_mask)) > 0:
-                    print(np.sum(np.isnan(my_mask)))
                 
             return my_image, my_mask
