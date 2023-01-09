@@ -158,7 +158,7 @@ if __name__ == "__main__":
     from pytorch_lightning.loggers import TensorBoardLogger
     
     tb_logger = TensorBoardLogger(save_dir="logs/")
-    model = smp.Unet(encoder="resnet50", in_channels=10, encoder_weights=None)
+    model = smp.Unet(encoder_name="resnet50", in_channels=10, encoder_weights=None)
     criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(5.0))
     module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
     trainer = Trainer(max_epochs=15, accelerator="gpu", devices=1, num_nodes=1)
