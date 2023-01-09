@@ -7,6 +7,7 @@ from Utils import lhtransformer
 from sklearn.model_selection import train_test_split
 import numpy as np
 from torch.utils.data import DataLoader
+from pytorch_lightning import seed_everything
 
 INITIAL_DATASET_PATH = "/mnt/data1/adsp_data/colomba_dataset"
 FORMATTED_DATASET_PATH = "/mnt/data1/adsp_data/formatted_colombaset"
@@ -14,7 +15,7 @@ TEST_DATASET_PATH = "/mnt/data1/adsp_data/test_colombaset"
 FORMATTED_TEST_DATASET_PATH = "/mnt/data1/adsp_data/formatted_test_colombaset"
 
 if __name__ == "__main__":
-
+    seed_everything(777)
     my_transformer = lhtransformer.OptimusPrime(
             mean=None,
             std=None

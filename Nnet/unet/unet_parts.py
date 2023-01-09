@@ -108,7 +108,7 @@ class Decoder(nn.Module):
         for i in range(uphill):
 
             self.layers += [
-                nn.ConvTranspose2d(in_channels, out_channels, kernel_size=2, stride=2),
+                nn.ConvTranspose2d(in_channels, out_channels, kernel_size=2, stride=2), #FARE BILINEAR UPSAMPLING
                 CNNBlocks(n_conv=2, in_channels=in_channels,
                           out_channels=out_channels, padding=padding),
             ]
@@ -132,7 +132,7 @@ class Decoder(nn.Module):
                 # center_cropping the route tensor to make width and height match
                 # print("ROUTES CONNECTIONS PRE-CROP", routes_connection[-1].shape)
                 # print("X.SHAPE[2] PRE-CROP", x.shape[2])
-                routes_connection[-1] = center_crop(routes_connection[-1], x.shape[2])
+                routes_connection[-1] = center_crop(routes_connection[-1], x.shape[2]) #CAMBIARE CON BILINEAR INTERPOLATION DELLO SKIP PRECEDENTE
                 # print("ROUTES CONNECTION POST-CROP", routes_connection[-1].shape)
                 # concatenating tensors channel-wise
                 x = torch.cat([x, routes_connection.pop(-1)], dim=1)
