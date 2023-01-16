@@ -32,7 +32,7 @@ if __name__ == "__main__":
 	])
 
 	test_transforms = my_transformer.compose([
-		my_transformer.post_transforms()
+		my_transformer.post_transforms_imagenet()
 	])
 
 	datascanner = dataset_scanner.DatasetScanner(
