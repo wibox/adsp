@@ -5,12 +5,8 @@ from albumentations.pytorch import ToTensorV2
 
 class OptimusPrime():
     def __init__(self,
-                mean : List[float],
-                std : List[float],
                 tile_dimension : int = 512,
                 ):
-        self.mean = mean
-        self.std = std
         self.tile_dimension = tile_dimension
         
     def compose(self, transforms_to_compose : List[Any] = None) -> albu.Compose:
