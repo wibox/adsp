@@ -26,32 +26,60 @@ class OptimusPrime():
             return result
         else:
             raise Exception("Empty set of transformations to compose passed.")
-    
-    # def pre_transforms(self) -> List[Any]:
-    #     return [albu.Resize(self.tile_dimension, self.tile_dimension, p=1)]
-    
-    def post_transforms(self) -> List[Any]:
-    # using ImageNet image normalization
-        # return [albu.Normalize(mean=self.mean, std=self.std), ToTensorV2()]
-        return [ToTensorV2()]
 
-    def channel_shuffle(self, p : float = .5) -> List[Any]:
-        return [albu.ChannelShuffle(p=p)]
+    def post_transforms_imagenet(self) -> List[Any]:
+        mean = [0.485, 0.456, 0.406, 0.485, 0.456, 0.406, 0.485, 0.456, 0.406, 0.485]
+        std = [0.229, 0.224, 0.225, 0.229, 0.224, 0.225, 0.229, 0.224, 0.225, 0.229]
+        return [albu.Normalize(mean=mean, std=std), ToTensorV2()]
 
+    def post_transforms_bigearthnet(self) -> List[Any]:
+        BAND_STATS_S2 = {
+        "mean": {
+            "B03": 614.21682446,
+            "B02": 429.9430203,
+            "B01": 340.76769064,
+            "B04": 590.23569706,
+            "B05": 950.68368468,
+            "B06": 1792.46290469,
+            "B07": 2075.46795189,
+            "B08": 2218.94553375,
+            "B09": 2246.0605464,
+            "B11": 1594.42694882
+        },
+        "std": {
+            "B03": 582.87945694,
+            "B02": 572.41639287,
+            "B01": 554.81258967,
+            "B04": 675.88746967,
+            "B05": 729.89827633,
+            "B06": 1096.01480586,
+            "B07": 1273.45393088,
+            "B08": 1365.45589904,
+            "B09": 1302.3292881,
+            "B11": 1079.19066363
+            },
+        }
+        SHUB_MEAN = [ x / 10000 for x in BAND_STATS_S2["mean"].values()]
+        SHUB_STD = [ x / 10000 for x in BAND_STATS_S2["std"].values()]
+        return [albu.Normalize(mean=SHUB_MEAN, std=SHUB_STD), ToTensorV2()]
+
+    # def channel_shuffle(self, p : float = .5) -> List[Any]:
+    #     return [albu.ChannelShuffle(p=p)]
+    ###
     def random_brightness_contrast(self, brightness_limit : float = .2, contrast_limit : float = .2, brightness_by_max : bool = True, p : float = .5) -> List[Any]:
         return [albu.RandomBrightnessContrast(brightness_limit=brightness_limit, contrast_limit=contrast_limit, brightness_by_max=brightness_by_max, p=p)]
 
-    def hue_saturation(self, hue_shift_limit : int = 20, val_shift_limit : int = 20, sat_shift_limit : int = 30, p : float = .5) -> List[Any]:
-        return [albu.HueSaturationValue(hue_shift_limit=hue_shift_limit, val_shift_limit=val_shift_limit, sat_shift_limit=sat_shift_limit, p=p)]
-
+    # def hue_saturation(self, hue_shift_limit : int = 20, val_shift_limit : int = 20, sat_shift_limit : int = 30, p : float = .5) -> List[Any]:
+    #     return [albu.HueSaturationValue(hue_shift_limit=hue_shift_limit, val_shift_limit=val_shift_limit, sat_shift_limit=sat_shift_limit, p=p)]
+    ### mean 0 var 250 - 1250
     def gauss_noise(self, var_limit : Tuple[float, float], mean : float, per_channel : bool = True, p : float = .5) -> List[Any]:
         return [albu.GaussNoise(var_limit=var_limit, mean=mean, per_channel=per_channel, p=p)]
 
-    def flip(self, p : float = .5) -> List[Any]:
-        return [albu.Flip(p=p)]
+    # def flip(self, p : float = .5) -> List[Any]:
+    #     return [albu.Flip(p=p)]
 
-    def rotate(self, limit : int = 360, p : float = .5) -> List[Any]:
-        return [albu.Rotate(limit=limit, p=p)]
-
+    # def rotate(self, limit : int = 360, p : float = .5) -> List[Any]:
+    #     return [albu.Rotate(limit=limit, p=p)]
+    ###
     def fixed_rotate(self, p : float = .5) -> List[Any]:
         return [albu.RandomRotate90(p=p)]

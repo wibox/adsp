@@ -45,15 +45,15 @@ class UNetModule(pl.LightningModule):
         self.log("train_iou_epoch", self.iou)
         self.log("train_f1_epoch", self.f1)
 
-    def validation_step(self, batch : tuple, batch_idx : int):
-        x, y = batch
-        logits = self.model(x)
-        loss = self.criterion(logits, y.float())
-        preds = torch.sigmoid(logits.detach())
-        self.iou(preds, y)
-        self.f1(preds, y)
-        self.log("performace", {"score":self.iou, "loss":loss}, on_step=True, on_epoch=True, logger=True)
-        return loss
+    # def validation_step(self, batch : tuple, batch_idx : int):
+    #     x, y = batch
+    #     logits = self.model(x)
+    #     loss = self.criterion(logits, y.float())
+    #     preds = torch.sigmoid(logits.detach())
+    #     self.iou(preds, y)
+    #     self.f1(preds, y)
+    #     self.log("performace", {"score":self.iou, "loss":loss}, on_step=True, on_epoch=True, logger=True)
+    #     return loss
 
     def test_step(self, batch: tuple, batch_idx: int):
         x, y = batch

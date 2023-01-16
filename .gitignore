@@ -14,3 +14,4 @@ log.txt
 .vscode
 *.ipynb
 .tif
+.pth.tar
