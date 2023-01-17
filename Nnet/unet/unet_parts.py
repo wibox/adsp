@@ -133,7 +133,7 @@ class Decoder(nn.Module):
                 # center_cropping the route tensor to make width and height match
                 # print("ROUTES CONNECTIONS PRE-CROP", routes_connection[-1].shape)
                 # print("X.SHAPE[2] PRE-CROP", x.shape[2])
-                # routes_connection[-1] = center_crop(routes_connection[-1], x.shape[2]) #CAMBIARE CON BILINEAR INTERPOLATION DELLO SKIP PRECEDENTE
+                routes_connection[-1] = center_crop(routes_connection[-1], x.shape[2]) #CAMBIARE CON BILINEAR INTERPOLATION DELLO SKIP PRECEDENTE
                 # print("ROUTES CONNECTION POST-CROP", routes_connection[-1].shape)
                 # concatenating tensors channel-wise
                 x = torch.cat([x, routes_connection.pop(-1)], dim=1)
