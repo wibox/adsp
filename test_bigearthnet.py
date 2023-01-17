@@ -114,8 +114,8 @@ if __name__ == "__main__":
 	)
 	test_ds._load_tiles()
 
-	train_loader = DataLoader(ds, batch_size=4, shuffle=True, num_workers=1)
-	test_loader = DataLoader(test_ds, batch_size=4, shuffle=False, num_workers=1, persistent_workers=True)
+	train_loader = DataLoader(ds, batch_size=4, shuffle=True, num_workers=4)
+	test_loader = DataLoader(test_ds, batch_size=4, shuffle=False, num_workers=4, persistent_workers=True)
 
 	tb_logger = TensorBoardLogger(save_dir="logs/")
 	model = smp.Unet(encoder_name="resnet50", in_channels=12, encoder_weights=None)
