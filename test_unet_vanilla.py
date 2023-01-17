@@ -124,3 +124,5 @@ if __name__ == "__main__":
     trainer = Trainer(max_epochs=5, accelerator="gpu", devices=1, num_nodes=1)
     trainer.fit(model=module, train_dataloaders=train_loader)
     trainer.test(model=module, dataloaders=test_loader)
+    print("Saving model...")
+    torch.save(model.state_dict(), "vanilla.pth")
