@@ -5,7 +5,7 @@ import torch.nn as nn
 class UNET(nn.Module):
     def __init__(
         self,
-        in_channels : int = 12,
+        in_channels : int = 10,
         first_out_channels : int = 64, # number of channels for the output feature map
         exit_channels : int = 1, # number of channels for Decoder's last layer
         downhill : int = 4, # number of downsamping/upsampling layers in Encoder/Decoder
