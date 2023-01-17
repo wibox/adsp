@@ -30,7 +30,7 @@ if __name__ == "__main__":
 		my_transformer.post_transforms_bigearthnet()
 	])
 	test_transforms = my_transformer.compose([
-		my_transformer.post_transforms()
+		my_transformer.post_transforms_bigearthnet()
 	])
 
 	datascanner = dataset_scanner.DatasetScanner(
