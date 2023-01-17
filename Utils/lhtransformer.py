@@ -23,6 +23,9 @@ class OptimusPrime():
         else:
             raise Exception("Empty set of transformations to compose passed.")
 
+    def post_transforms_vanilla(self) -> List[Any]:
+        return [ToTensorV2()]
+
     def post_transforms_imagenet(self) -> List[Any]:
         mean = [0.485, 0.456, 0.406, 0.485, 0.456, 0.406, 0.485, 0.456, 0.406, 0.485]
         std = [0.229, 0.224, 0.225, 0.229, 0.224, 0.225, 0.229, 0.224, 0.225, 0.229]
