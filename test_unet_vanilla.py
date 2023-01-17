@@ -12,7 +12,8 @@ import torch
 from pytorch_lightning import Trainer
 from Utils.light_module import UNetModule
 from pytorch_lightning.loggers import TensorBoardLogger
-from Nnet.unet.unet import UNET
+# from Nnet.unet.unet import UNET
+import segmentation_models_pytorch as smp
 
 INITIAL_DATASET_PATH = "/mnt/data1/adsp_data/colomba_dataset"
 FORMATTED_DATASET_PATH = "/mnt/data1/adsp_data/formatted_colombaset"
@@ -114,9 +115,9 @@ if __name__ == "__main__":
     )
     test_ds._load_tiles()
 
-    train_loader = DataLoader(ds, batch_size=4, shuffle=True, num_workers=1)
-    test_loader = DataLoader(test_ds, batch_size=4, shuffle=False, num_workers=1, persistent_workers=True)
-    model = UNET()
+    train_loader = DataLoader(ds, batch_size=4, shuffle=True, num_workers=4)
+    test_loader = DataLoader(test_ds, batch_size=4, shuffle=False, num_workers=4, persistent_workers=True)
+    model = smp.Unet(encoder_name="resnet50", encoder_weights=None, in_channels=10, classes=1, encoder_depth=4)
     tb_logger = TensorBoardLogger(save_dir="logs/")
     criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(1.0))
     module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)

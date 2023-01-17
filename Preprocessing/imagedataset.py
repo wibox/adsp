@@ -110,8 +110,8 @@ class ImageDataset(Dataset):
         _formatted_image.append(img[7, :, :])
         _formatted_image.append(img[8, :, :])
         _formatted_image.append(img[9, :, :])
-        # _formatted_image.append(img[10, :, :])
-        # _formatted_image.append(img[11, :, :])
+        _formatted_image.append(img[10, :, :])
+        _formatted_image.append(img[11, :, :])
         _formatted_image = np.array(_formatted_image)
         return np.clip(_formatted_image, 0, 1)
 
