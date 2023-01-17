@@ -117,7 +117,7 @@ if __name__ == "__main__":
 
     train_loader = DataLoader(ds, batch_size=4, shuffle=True, num_workers=4)
     test_loader = DataLoader(test_ds, batch_size=4, shuffle=False, num_workers=4, persistent_workers=True)
-    model = smp.Unet(encoder_name="resnet50", encoder_weights=None, in_channels=12, classes=1, encoder_depth=4)
+    model = smp.Unet(encoder_name="resnet50", encoder_weights=None, in_channels=12, classes=1)
     tb_logger = TensorBoardLogger(save_dir="logs/")
     criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(1.0))
     module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
