@@ -119,7 +119,7 @@ if __name__ == "__main__":
 
 	tb_logger = TensorBoardLogger(save_dir="logs/")
 	model = smp.Unet(encoder_name="resnet50", in_channels=12, encoder_weights=None)
-	model.encoder.load_state_dict("checkpoint-30.pth.tar", strict=False)
+	model.encoder.load_state_dict(torch.load("checkpoint-30.pth.tar"), strict=False)
 	criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(1.0))
 	module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
 	trainer = Trainer(max_epochs=5, accelerator="gpu", devices=1, num_nodes=1)
