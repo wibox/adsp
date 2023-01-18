@@ -13,6 +13,8 @@ import segmentation_models_pytorch as smp
 from pytorch_lightning import Trainer
 from Utils.light_module import UNetModule
 from pytorch_lightning.loggers import TensorBoardLogger
+import random
+import numpy as np
 
 INITIAL_DATASET_PATH = "/mnt/data1/adsp_data/colomba_dataset"
 FORMATTED_DATASET_PATH = "/mnt/data1/adsp_data/formatted_colombaset"
@@ -20,13 +22,16 @@ TEST_DATASET_PATH = "/mnt/data1/adsp_data/test_colombaset"
 FORMATTED_TEST_DATASET_PATH = "/mnt/data1/adsp_data/formatted_test_colombaset"
 
 if __name__ == "__main__":
-	seed_everything(51996)
+	# seed_everything(51996)
+	random.seed(51996)
+	np.random.seed(51996)
+	torch.manual_seed(51996)
 
 	my_transformer = lhtransformer.OptimusPrime()
 	train_transforms = my_transformer.compose([
-		my_transformer.gauss_noise(var_limit=(250, 1250), mean=0),
-		my_transformer.random_brightness_contrast(),
-		my_transformer.fixed_rotate(),
+		# my_transformer.gauss_noise(var_limit=(250, 1250), mean=0),
+		# my_transformer.random_brightness_contrast(),
+		# my_transformer.fixed_rotate(),
 		my_transformer.post_transforms_bigearthnet()
 	])
 	test_transforms = my_transformer.compose([
@@ -118,12 +123,12 @@ if __name__ == "__main__":
 	test_loader = DataLoader(test_ds, batch_size=4, shuffle=False, num_workers=4, persistent_workers=True)
 
 	tb_logger = TensorBoardLogger(save_dir="logs/")
-	model = smp.Unet(encoder_name="resnet50", in_channels=12, encoder_weights=None)
-	model.encoder.load_state_dict(torch.load("checkpoint-30.pth.tar"), strict=False)
+	model = smp.Unet(encoder_name="resnet50", in_channels=10, encoder_weights=None)
+	model.encoder.load_state_dict(torch.load("models/checkpoint-30.pth.tar"), strict=False)
 	criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(1.0))
 	module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
 	trainer = Trainer(max_epochs=5, accelerator="gpu", devices=1, num_nodes=1)
 	trainer.fit(model=module, train_dataloaders=train_loader)
 	trainer.test(model=module, dataloaders=test_loader)
 	print("Saving model...")
-	torch.save(model.state_dict(), "ben.pth")
+	torch.save(model.state_dict(), "models/ben.pth")

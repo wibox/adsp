@@ -27,9 +27,10 @@ class OptimusPrime():
         return [ToTensorV2()]
 
     def post_transforms_imagenet(self) -> List[Any]:
-        mean = [0.485, 0.456, 0.406, 0.485, 0.456, 0.406, 0.485, 0.456, 0.406, 0.485, 0.456, 0.406]
-        std = [0.229, 0.224, 0.225, 0.229, 0.224, 0.225, 0.229, 0.224, 0.225, 0.229, 0.224, 0.225]
-        return [albu.Normalize(mean=mean, std=std), ToTensorV2()]
+        mean = [0.485, 0.456, 0.406, 0.485, 0.456, 0.406, 0.485, 0.456, 0.406, 0.485]#, 0.456, 0.406]
+        std = [0.229, 0.224, 0.225, 0.229, 0.224, 0.225, 0.229, 0.224, 0.225, 0.229]#, 0.224, 0.225]
+        # return [albu.Normalize(mean=mean, std=std), ToTensorV2()]
+        return [ToTensorV2()]
 
     def post_transforms_bigearthnet(self) -> List[Any]:
         BAND_STATS_S2 = {
@@ -64,7 +65,8 @@ class OptimusPrime():
         }
         SHUB_MEAN = [ x / 10000 for x in BAND_STATS_S2["mean"].values()]
         SHUB_STD = [ x / 10000 for x in BAND_STATS_S2["std"].values()]
-        return [albu.Normalize(mean=SHUB_MEAN, std=SHUB_STD), ToTensorV2()]
+        # return [albu.Normalize(mean=SHUB_MEAN, std=SHUB_STD), ToTensorV2()]
+        return [ToTensorV2()]
 
     # def channel_shuffle(self, p : float = .5) -> List[Any]:
     #     return [albu.ChannelShuffle(p=p)]

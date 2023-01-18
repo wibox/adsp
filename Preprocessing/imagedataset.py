@@ -100,7 +100,7 @@ class ImageDataset(Dataset):
 
     def _format_image(self, img : np.ndarray = None) -> Union[None, np.ndarray]:
         _formatted_image = list()
-        _formatted_image.append(img[0, :, :])
+        #_formatted_image.append(img[0, :, :])
         _formatted_image.append(img[1, :, :])
         _formatted_image.append(img[2, :, :])
         _formatted_image.append(img[3, :, :])
@@ -109,7 +109,7 @@ class ImageDataset(Dataset):
         _formatted_image.append(img[6, :, :])
         _formatted_image.append(img[7, :, :])
         _formatted_image.append(img[8, :, :])
-        _formatted_image.append(img[9, :, :])
+        #_formatted_image.append(img[9, :, :])
         _formatted_image.append(img[10, :, :])
         _formatted_image.append(img[11, :, :])
         _formatted_image = np.array(_formatted_image)
