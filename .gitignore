@@ -17,4 +17,4 @@ log.txt
 *.tar
 index
 models/*
-lightining_logs/*
+lightning_logs
