@@ -38,7 +38,7 @@ for model in models:
         )
         print("Computing output...")
         output_formatter.compute_output()
-        merge_tiles(activations_path="/mnt/data1/adsp_data/vanilla_test_output_colombaset")
+        #merge_tiles(activations_path="/mnt/data1/adsp_data/vanilla_test_output_colombaset")
     elif model == "imagenet":
         print("Building network with finetuned model over imagenet pretrain")
         net = smp.Unet(encoder_name="resnet50", in_channels=10, encoder_weights="imagenet")
@@ -53,7 +53,7 @@ for model in models:
         )
         print("Computing output...")
         output_formatter.compute_output()
-        merge_tiles(activations_path="/mnt/data1/adsp_data/imagenet_test_output_colombaset/")
+        #merge_tiles(activations_path="/mnt/data1/adsp_data/imagenet_test_output_colombaset/")
     elif model == "bigearthnet":
         print("Building network with finetuned model over bigearthnet pretrain")
         net = smp.Unet(encoder_name="resnet50", in_channels=10, encoder_weights=None)
@@ -68,4 +68,4 @@ for model in models:
         )
         print("Computing output...")
         output_formatter.compute_output()
-        merge_tiles(activations_path="/mnt/data1/adsp_data/ben_test_output_colombaset")
+        #merge_tiles(activations_path="/mnt/data1/adsp_data/ben_test_output_colombaset")

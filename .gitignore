@@ -12,7 +12,6 @@ checkpoints
 train_log
 log.txt
 .vscode
-*.ipynb
 .tif
 *.tar
 index
