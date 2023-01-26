@@ -11,6 +11,7 @@ import rasterio as rio
 class ImageDataset(Dataset):
     def __init__(
         self,
+        dataset_type : str,
         formatted_folder_path : str = None,
         log_folder : str = None,
         master_dict=None,
@@ -21,6 +22,7 @@ class ImageDataset(Dataset):
         return_path : bool = False
     ):
 
+        self.dataset_type=dataset_type
         self.formatted_folder_path=formatted_folder_path
         self.log_folder=log_folder
         self.master_dict=master_dict
@@ -33,6 +35,26 @@ class ImageDataset(Dataset):
         self.post_tiles = list()
         self.mask_tiles = list()
         self.activations = os.listdir(self.formatted_folder_path)
+        self.bands = {
+                "B01": 0,
+                "B02": 1,
+                "B03": 2,
+                "B04": 3,
+                "B05": 4,
+                "B06": 5,
+                "B07": 6,
+                "B08": 7,
+                "B8A": 8,
+                "B09": 9,
+                # "B10": 10,
+                "B11": 11,
+                "B12": 12,
+        }
+        if self.dataset_type == "vanilla" or self.dataset_type == "ben":
+            self.bands_name = ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B11", "B12"]
+        else:
+            self.bands_name = ["B04", "B03", "B02", "B05", "B06", "B07", "B08", "B8A", "B11", "B12"]
+        self.bands_idx = [self.bands[x]+1 for x in self.bands_name]
 
         try:
             loading_completed = False
@@ -77,12 +99,15 @@ class ImageDataset(Dataset):
         finally:
             return completed
 
-    def _read_tile_image(self, tile_path : str = None) -> Union[np.ndarray, None]:
+    def _read_tile_image(self, is_tile : bool, tile_path : str = None) -> Union[np.ndarray, None]:
         current_image = None
         try:
             if tile_path is not None:
                 with rio.open(tile_path) as input_tile_path:
-                    current_image = input_tile_path.read()
+                    if is_tile:
+                        current_image = input_tile_path.read(self.bands_idx)
+                    else:
+                        current_image = input_tile_path.read()
             else:
                 raise Exception("Provided empty tile!")
         except Exception as e:
@@ -99,21 +124,21 @@ class ImageDataset(Dataset):
         return _swap_image, _swap_mask
 
     def _format_image(self, img : np.ndarray = None) -> Union[None, np.ndarray]:
-        _formatted_image = list()
-        #_formatted_image.append(img[0, :, :])
-        _formatted_image.append(img[1, :, :])
-        _formatted_image.append(img[2, :, :])
-        _formatted_image.append(img[3, :, :])
-        _formatted_image.append(img[4, :, :])
-        _formatted_image.append(img[5, :, :])
-        _formatted_image.append(img[6, :, :])
-        _formatted_image.append(img[7, :, :])
-        _formatted_image.append(img[8, :, :])
-        #_formatted_image.append(img[9, :, :])
-        _formatted_image.append(img[10, :, :])
-        _formatted_image.append(img[11, :, :])
-        _formatted_image = np.array(_formatted_image)
-        return np.clip(_formatted_image, 0, 1)
+        # _formatted_image = list()
+        # #_formatted_image.append(img[0, :, :])
+        # _formatted_image.append(img[1, :, :])
+        # _formatted_image.append(img[2, :, :])
+        # _formatted_image.append(img[3, :, :])
+        # _formatted_image.append(img[4, :, :])
+        # _formatted_image.append(img[5, :, :])
+        # _formatted_image.append(img[6, :, :])
+        # _formatted_image.append(img[7, :, :])
+        # _formatted_image.append(img[8, :, :])
+        # #_formatted_image.append(img[9, :, :])
+        # _formatted_image.append(img[10, :, :])
+        # _formatted_image.append(img[11, :, :])
+        # _formatted_image = np.array(_formatted_image)
+        return np.clip(img, 0, 1)
 
     def _format_mask(self, mask : np.ndarray = None) -> Union[None, np.ndarray]:
         return np.clip(mask, 0, 1)
@@ -149,8 +174,8 @@ class ImageDataset(Dataset):
 
         else:
 
-            my_image = self._read_tile_image(tile_path=self.post_tiles[idx])
-            my_mask = self._read_tile_image(tile_path=self.mask_tiles[idx])
+            my_image = self._read_tile_image(tile_path=self.post_tiles[idx], is_tile=True)
+            my_mask = self._read_tile_image(tile_path=self.mask_tiles[idx], is_tile=False)
 
             if self.transformations is not None:
                 my_image = self._format_image(img=my_image)

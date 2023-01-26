@@ -32,9 +32,10 @@ if __name__ == "__main__":
 
 	my_transformer = lhtransformer.OptimusPrime()
 	train_transforms = my_transformer.compose([
-		my_transformer.gauss_noise(var_limit=(250, 1250), mean=0),
-		my_transformer.random_brightness_contrast(),
-		my_transformer.fixed_rotate(),
+		# my_transformer.gauss_noise(var_limit=(250, 1250), mean=0),
+		# my_transformer.random_brightness_contrast(),
+		# my_transformer.fixed_rotate(),
+		my_transformer.shift_scale_rotate(),
 		my_transformer.post_transforms_imagenet()
 	])
 
@@ -71,6 +72,7 @@ if __name__ == "__main__":
 	dataformatter.tiling()
 
 	ds = image_dataset.ImageDataset(
+		dataset_type="imagenet",
 		formatted_folder_path=FORMATTED_DATASET_PATH,
 		log_folder="Log",
 		master_dict="master_dict.json",
@@ -112,6 +114,7 @@ if __name__ == "__main__":
 	test_dataformatter.tiling()
 
 	test_ds = image_dataset.ImageDataset(
+		dataset_type="imagenet",
 		formatted_folder_path=FORMATTED_TEST_DATASET_PATH,
 		log_folder="Log",
 		master_dict="test_master_dict.json",
@@ -131,7 +134,8 @@ if __name__ == "__main__":
 	model.encoder.load_state_dict(torch.load("models/checkpoints/10bandsimagenet.pth"))
 	criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(1.0))
 	module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
-	trainer = Trainer(max_epochs=5, accelerator="gpu", devices=1, num_nodes=1)
+	logger = TensorBoardLogger("tb_logs", name="image_net")
+	trainer = Trainer(max_epochs=3, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
 	trainer.fit(model=module, train_dataloaders=train_loader)
 	trainer.test(model=module, dataloaders=test_loader)
 	print("Saving model...")

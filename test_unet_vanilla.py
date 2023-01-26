@@ -32,9 +32,10 @@ if __name__ == "__main__":
 
     my_transformer = lhtransformer.OptimusPrime()
     train_transforms = my_transformer.compose([
-    my_transformer.gauss_noise(var_limit=(250, 1250), mean=0),
-    my_transformer.random_brightness_contrast(),
-    my_transformer.fixed_rotate(),
+    # my_transformer.gauss_noise(var_limit=(250, 1250), mean=0),
+    # my_transformer.random_brightness_contrast(),
+    # my_transformer.fixed_rotate(),
+    my_transformer.shift_scale_rotate(),
     my_transformer.post_transforms_vanilla()
     ])
     test_transforms = my_transformer.compose([
@@ -70,6 +71,7 @@ if __name__ == "__main__":
     dataformatter.tiling()
 
     ds = image_dataset.ImageDataset(
+        dataset_type="vanilla",
         formatted_folder_path=FORMATTED_DATASET_PATH,
         log_folder="Log",
         master_dict="master_dict.json",
@@ -111,6 +113,7 @@ if __name__ == "__main__":
     test_dataformatter.tiling()
 
     test_ds = image_dataset.ImageDataset(
+        dataset_type="vanilla",
         formatted_folder_path=FORMATTED_TEST_DATASET_PATH,
         log_folder="Log",
         master_dict="test_master_dict.json",
@@ -124,11 +127,12 @@ if __name__ == "__main__":
 
     train_loader = DataLoader(ds, batch_size=4, shuffle=True, num_workers=15, worker_init_fn=seed_worker, generator=g)
     test_loader = DataLoader(test_ds, batch_size=4, shuffle=False, num_workers=15, persistent_workers=True, worker_init_fn=seed_worker)
-    model = smp.Unet(encoder_name="resnet50", encoder_weights=None, in_channels=10)
+    model = smp.Unet(encoder_name="resnet50", encoder_weights=None, in_channels=12)
     tb_logger = TensorBoardLogger(save_dir="logs/")
     criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(1.0))
     module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
-    trainer = Trainer(max_epochs=5, accelerator="gpu", devices=1, num_nodes=1)
+    logger = TensorBoardLogger("tb_logs", name="vanilla_net")
+    trainer = Trainer(max_epochs=3, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
     trainer.fit(model=module, train_dataloaders=train_loader)
     trainer.test(model=module, dataloaders=test_loader)
     print("Saving model...")

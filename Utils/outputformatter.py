@@ -40,6 +40,24 @@ class OutputFormatter():
 
         self.output_path = None
 
+        self.bands = {
+                "B01": 0,
+                "B02": 1,
+                "B03": 2,
+                "B04": 3,
+                "B05": 4,
+                "B06": 5,
+                "B07": 6,
+                "B08": 7,
+                "B8A": 8,
+                "B09": 9,
+                "B10": 10,
+                "B11": 11,
+                "B12": 12,
+        }
+        self.bands_name = ["B04", "B03", "B02", "B05", "B06", "B07", "B08", "B8A", "B11", "B12"]
+        self.bands_idx = [self.bands[x] for x in self.bands_name]
+
     def _initialize(self):
         if not os.path.exists(os.path.join(self.filepath, self.test_output_path)):
             print(f"Creating test's output folder: {os.path.join(self.filepath, self.test_output_path)}")

@@ -65,6 +65,23 @@ def get_tiles(ds):
     """
     Generator used to yield tiles one at a time. Employed in self.tiling()
     """
+    # bands = {
+    #         "B01": 0,
+    #         "B02": 1,
+    #         "B03": 2,
+    #         "B04": 3,
+    #         "B05": 4,
+    #         "B06": 5,
+    #         "B07": 6,
+    #         "B08": 7,
+    #         "B8A": 8,
+    #         "B09": 9,
+    #         "B10": 10,
+    #         "B11": 11,
+    #         "B12": 12,
+    # }
+    # bands_name = ["B04", "B03", "B02", "B05", "B06", "B07", "B08", "B8A", "B11", "B12"]
+    # bands_idx = [bands[x] for x in bands_name]
     # shape = (c, h, w) questa è l'immagine intera
     img_as_np = ds.read()
     ncols, nrows = ds.meta['width'], ds.meta['height']
@@ -86,6 +103,23 @@ def get_tiles(ds):
         yield window, transform
 
 def tiling(initial_img_path : str, output_path_str : str = "tmp/tiles"):
+    # bands = {
+    #         "B01": 0,
+    #         "B02": 1,
+    #         "B03": 2,
+    #         "B04": 3,
+    #         "B05": 4,
+    #         "B06": 5,
+    #         "B07": 6,
+    #         "B08": 7,
+    #         "B8A": 8,
+    #         "B09": 9,
+    #         "B10": 10,
+    #         "B11": 11,
+    #         "B12": 12,
+    # }
+    # bands_name = ["B04", "B03", "B02", "B05", "B06", "B07", "B08", "B8A", "B11", "B12"]
+    # bands_idx = [bands[x] for x in bands_name]
     try:
         if not os.path.exists("tmp/tiles/"):
             print("Creating log folders...")
@@ -142,36 +176,58 @@ def merge_tiles(test_img_path : str) -> bool:
     return empty_final_canvas, starting_img.shape[2]
 
 
-def make_predictions(model : Any, tiles_path : str = "tmp/tiles") -> bool:
+def make_predictions(model : Any, model_type : str, tiles_path : str = "tmp/tiles") -> bool:
+
+    bands = {
+            "B01": 0,
+            "B02": 1,
+            "B03": 2,
+            "B04": 3,
+            "B05": 4,
+            "B06": 5,
+            "B07": 6,
+            "B08": 7,
+            "B8A": 8,
+            "B09": 9,
+            "B11": 11,
+            "B12": 12,
+    }
+    if model_type == "vanilla" or model_type == "ben":
+        bands_name = ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B11", "B12"]
+    else:
+        bands_name = ["B04", "B03", "B02", "B05", "B06", "B07", "B08", "B8A", "B11", "B12"]
+    bands_idx = [bands[x]+1 for x in bands_name]
+
     if not os.path.exists("tmp/predictions/"):
         os.makedirs("tmp/predictions/")
     
     for tile_info in tqdm(glob.glob(f"{tiles_path}/*.tif")):
         bound1, bound2 = tile_info.split("_")[1], tile_info.split("_")[2].split(".")[0]
-        current_tile = format_image(img=rio.open(tile_info, "r").read())
+        current_tile = format_image(img=rio.open(tile_info, "r").read(bands_idx))
         current_tile = np.expand_dims(current_tile, axis=0)
         prediction = model(torch.tensor(current_tile))
+        prediction = torch.sigmoid(prediction)
         prediction = prediction.detach().numpy()
-        prediction = np.where(prediction[0] > .5, 1, 0)
+        prediction = np.where(prediction[0] > .5, 0, 1)
         with rio.open(f"tmp/predictions/pred_{bound1}_{bound2}.tif", "w", driver="GTiff", height=512, width=512, count=1, dtype=str(prediction.dtype)) as outds:
             outds.write(prediction)
 
 def format_image(img : np.ndarray = None) -> Union[None, np.ndarray]:
-    _formatted_image = list()
-    #_formatted_image.append(img[0, :, :])
-    _formatted_image.append(img[1, :, :])
-    _formatted_image.append(img[2, :, :])
-    _formatted_image.append(img[3, :, :])
-    _formatted_image.append(img[4, :, :])
-    _formatted_image.append(img[5, :, :])
-    _formatted_image.append(img[6, :, :])
-    _formatted_image.append(img[7, :, :])
-    _formatted_image.append(img[8, :, :])
-    #_formatted_image.append(img[9, :, :])
-    _formatted_image.append(img[10, :, :])
-    _formatted_image.append(img[11, :, :])
-    _formatted_image = np.array(_formatted_image)
-    return np.clip(_formatted_image, 0, 1)
+    # _formatted_image = list()
+    # #_formatted_image.append(img[0, :, :])
+    # _formatted_image.append(img[1, :, :])
+    # _formatted_image.append(img[2, :, :])
+    # _formatted_image.append(img[3, :, :])
+    # _formatted_image.append(img[4, :, :])
+    # _formatted_image.append(img[5, :, :])
+    # _formatted_image.append(img[6, :, :])
+    # _formatted_image.append(img[7, :, :])
+    # _formatted_image.append(img[8, :, :])
+    # #_formatted_image.append(img[9, :, :])
+    # _formatted_image.append(img[10, :, :])
+    # _formatted_image.append(img[11, :, :])
+    # _formatted_image = np.array(_formatted_image)
+    return np.clip(img, 0, 1)
 
 def format_mask(mask : np.ndarray = None) -> Union[None, np.ndarray]:
     return np.clip(mask, 0, 1)

@@ -88,3 +88,6 @@ class OptimusPrime():
     ###
     def fixed_rotate(self, p : float = .5) -> List[Any]:
         return [albu.RandomRotate90(p=p)]
+
+    def shift_scale_rotate(self, p : float = 1.0) -> List[Any]:
+        return [albu.ShiftScaleRotate(p=p)]
