@@ -206,9 +206,9 @@ def make_predictions(model : Any, model_type : str, tiles_path : str = "tmp/tile
         current_tile = format_image(img=rio.open(tile_info, "r").read(bands_idx))
         current_tile = np.expand_dims(current_tile, axis=0)
         prediction = model(torch.tensor(current_tile))
-        prediction = torch.sigmoid(prediction)
-        prediction = prediction.detach().numpy()
-        prediction = np.where(prediction[0] > .5, 0, 1)
+        prediction = torch.sigmoid(prediction.detach())
+        prediction = prediction.numpy()
+        prediction = np.where(prediction[0] > .5, 1, 0).astype(np.float32)
         with rio.open(f"tmp/predictions/pred_{bound1}_{bound2}.tif", "w", driver="GTiff", height=512, width=512, count=1, dtype=str(prediction.dtype)) as outds:
             outds.write(prediction)
 

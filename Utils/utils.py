@@ -69,3 +69,15 @@ class Configurator():
 
     def get_config(self) -> dict:
         return self.config
+
+def freeze_encoder(model):
+    for child in model.encoder.children():
+        for param in child.parameters():
+            param.requires_grad = False
+    return None
+
+def unfreeze(model):
+    for child in model.children():
+        for param in child.parameters():
+            param.requires_grad = True
+    return None

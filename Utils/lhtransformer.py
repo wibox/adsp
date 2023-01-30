@@ -63,6 +63,8 @@ class OptimusPrime():
                 "B12": 818.86747235,
             },
         }
+        # SHUB_MEAN = [ x / 10000 for x in BAND_STATS_S2["mean"].values()]
+        # SHUB_STD = [ x / 10000 for x in BAND_STATS_S2["std"].values()]
         SHUB_MEAN = [ x / 10000 for x in BAND_STATS_S2["mean"].values()]
         SHUB_STD = [ x / 10000 for x in BAND_STATS_S2["std"].values()]
         # return [albu.Normalize(mean=SHUB_MEAN, std=SHUB_STD), ToTensorV2()]
@@ -89,5 +91,5 @@ class OptimusPrime():
     def fixed_rotate(self, p : float = .5) -> List[Any]:
         return [albu.RandomRotate90(p=p)]
 
-    def shift_scale_rotate(self, p : float = 1.0) -> List[Any]:
+    def shift_scale_rotate(self, p : float = .5) -> List[Any]:
         return [albu.ShiftScaleRotate(p=p)]

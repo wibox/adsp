@@ -1,6 +1,6 @@
 from Preprocessing import datasetformatter as dataset_formatter
 from Preprocessing import datasetscanner as dataset_scanner
-from Preprocessing import imagedataset as image_dataset
+from Preprocessing import colombadataset as image_dataset
 
 from Utils import lhtransformer
 
@@ -71,8 +71,8 @@ if __name__ == "__main__":
 
 	dataformatter.tiling()
 
-	ds = image_dataset.ImageDataset(
-		dataset_type="imagenet",
+	ds = image_dataset.ColombaDataset(
+		model_type="imagenet",
 		formatted_folder_path=FORMATTED_DATASET_PATH,
 		log_folder="Log",
 		master_dict="master_dict.json",
@@ -113,8 +113,8 @@ if __name__ == "__main__":
 
 	test_dataformatter.tiling()
 
-	test_ds = image_dataset.ImageDataset(
-		dataset_type="imagenet",
+	test_ds = image_dataset.ColombaDataset(
+		model_type="imagenet",
 		formatted_folder_path=FORMATTED_TEST_DATASET_PATH,
 		log_folder="Log",
 		master_dict="test_master_dict.json",

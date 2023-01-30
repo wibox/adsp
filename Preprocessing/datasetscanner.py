@@ -67,30 +67,60 @@ class DatasetScanner():
             return self.valid_list, self.ignore_list
 
     def handle_full_effis(self):
-        """
-        THIS WHOLE FUNCTION WILL PROBABLY BE REFACTORED.
-        """
-        try:
-            if not self.valid_list:
-                with open(f"{self.log_file_path}", "a") as log_file:
-                    #self.scan_master_folder().
-                    for path in list(filter(lambda folder : os.isdir(folder), self.scan_master_folder())):
-                        if self.verbose==1:
-                            print(f"Writing {path} record into log file: {self.log_file_path}")
-                    log_file.write(f"{path}")
-            else:
-                with open(f"{self.log_file_path}", "a") as log_file:
-                    for path in self.valid_list:
-                        if self.verbose==1:
-                            print(f"Writing {path} record into log file: {self.log_file_path}")
-                    log_file.write(f"{path}")
-        except:
-            print(f"Error writing act_id info into log file: {self.log_file_path}")
-        finally:
-            return True
+        pass
 
     def handle_sub_effis(self):
-        pass
+        """Directly creates master_dict_effis.json with structure: {"processing_info":{<act_id>:{"tile_info_post":[], "tile_info_mask":[]}}}
+        master_folder_path = /mnt/data1/adsp_data/effis
+        """
+        master_dict_train_effis = {}
+        master_dict_val_effis = {}
+        # popolo i dizionari con le relative chiavi (train/val)
+        for train_act_id in glob.glob(f"{self.master_folder_path}/ann/train/*.tif"):
+            train_activation_id = train_act_id.split("/")[-1].split("_")[0]
+            master_dict_train_effis[f"{train_activation_id}"] = {"tile_info_post":list(), "tile_info_mask":list()}
+        for val_act_id in glob.glob(f"{self.master_folder_path}/ann/val/*.tif"):
+            val_activation_id = val_act_id.split("/")[-1].split("_")[0]
+            master_dict_val_effis[f"{val_activation_id}"] = {"tile_info_post":list(), "tile_info_mask":list()}
+        # qui costruisco le informazioni di post e mask per ogni attivazione
+        for subdir in glob.glob(f"{self.master_folder_path}/*"):
+            subdir = subdir.split("/")[-1]
+            if subdir == "ann":
+                for kind in glob.glob(f"{self.master_folder_path}/{subdir}/*"):
+                    kind = kind.split("/")[-1]
+                    if kind == "train":
+                        print("Loading data for effis training masks")
+                        for act_item in tqdm(os.listdir(f"{self.master_folder_path}/{subdir}/{kind}/")):
+                            act_id = act_item.split("_")[0]
+                            info = f"{self.master_folder_path}/{subdir}/{kind}/{act_item}"
+                            master_dict_train_effis[act_id]["tile_info_mask"].append(info)
+                    elif kind == "val":
+                        print("Loading data for effis validation masks")
+                        for act_item in tqdm(os.listdir(f"{self.master_folder_path}/{subdir}/{kind}/")):
+                            act_id = act_item.split("_")[0]
+                            info = f"{self.master_folder_path}/{subdir}/{kind}/{act_item}"
+                            master_dict_val_effis[act_id]["tile_info_mask"].append(info)
+            elif subdir == "img":
+                for kind in glob.glob(f"{self.master_folder_path}/{subdir}/*"):
+                    kind = kind.split("/")[-1]
+                    if kind == "train":
+                        print("Loading data for effis training tiles")
+                        for act_item in tqdm(os.listdir(f"{self.master_folder_path}/{subdir}/{kind}/")):
+                            act_id = act_item.split("_")[0]
+                            info = f"{self.master_folder_path}/{subdir}/{kind}/{act_item}"
+                            master_dict_train_effis[act_id]["tile_info_post"].append(info)
+                    elif kind == "val":
+                        print("Loading data for effis validation tiles")
+                        for act_item in tqdm(os.listdir(f"{self.master_folder_path}/{subdir}/{kind}/")):
+                            act_id = act_item.split("_")[0]
+                            info = f"{self.master_folder_path}/{subdir}/{kind}/{act_item}"
+                            master_dict_val_effis[act_id]["tile_info_post"].append(info)
+
+        with open("Log/master_dict_train_effis.json", "w") as train_out_md:
+            json.dump(master_dict_train_effis, train_out_md, indent=4)
+
+        with open("Log/master_dict_val_effis.json", "w") as val_out_md:
+            json.dump(master_dict_val_effis, val_out_md, indent=4)
 
     def handle_colombaset(self) -> bool:
         """
@@ -151,10 +181,14 @@ class DatasetScanner():
         """
         Simple wrapper function.
         """
+        completed = False
         if self.dataset == "full-effis":
             self.handle_full_effis()
+            completed = True
         elif self.dataset == "sub-effis":
             self.handle_sub_effis()
+            completed = True
         elif self.dataset == "colombaset":
             completed = self.handle_colombaset()
+            completed = True
         return completed

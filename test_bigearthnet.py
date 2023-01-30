@@ -1,6 +1,6 @@
 from Preprocessing import datasetformatter as dataset_formatter
 from Preprocessing import datasetscanner as dataset_scanner
-from Preprocessing import imagedataset as image_dataset
+from Preprocessing import colombadataset as image_dataset
 
 from Utils import lhtransformer
 
@@ -15,7 +15,7 @@ from Utils.light_module import UNetModule
 from pytorch_lightning.loggers import TensorBoardLogger
 import random
 import numpy as np
-from Utils.utils import seed_worker
+from Utils.utils import seed_worker, freeze_encoder
 
 INITIAL_DATASET_PATH = "/mnt/data1/adsp_data/colomba_dataset"
 FORMATTED_DATASET_PATH = "/mnt/data1/adsp_data/formatted_colombaset"
@@ -35,7 +35,7 @@ if __name__ == "__main__":
 		# my_transformer.gauss_noise(var_limit=(250, 1250), mean=0),
 		# my_transformer.random_brightness_contrast(),
 		# my_transformer.fixed_rotate(),
-		my_transformer.shift_scale_rotate(),
+		# my_transformer.shift_scale_rotate(),
 		my_transformer.post_transforms_bigearthnet()
 	])
 	test_transforms = my_transformer.compose([
@@ -70,8 +70,8 @@ if __name__ == "__main__":
 
 	dataformatter.tiling()
 
-	ds = image_dataset.ImageDataset(
-		dataset_type="ben",
+	ds = image_dataset.ColombaDataset(
+		model_type="ben",
 		formatted_folder_path=FORMATTED_DATASET_PATH,
 		log_folder="Log",
 		master_dict="master_dict.json",
@@ -112,8 +112,8 @@ if __name__ == "__main__":
 
 	test_dataformatter.tiling()
 
-	test_ds = image_dataset.ImageDataset(
-		dataset_type="ben",
+	test_ds = image_dataset.ColombaDataset(
+		model_type="ben",
 		formatted_folder_path=FORMATTED_TEST_DATASET_PATH,
 		log_folder="Log",
 		master_dict="test_master_dict.json",
@@ -131,6 +131,7 @@ if __name__ == "__main__":
 	tb_logger = TensorBoardLogger(save_dir="logs/")
 	model = smp.Unet(encoder_name="resnet50", in_channels=12, encoder_weights=None)
 	model.encoder.load_state_dict(torch.load("models/checkpoints/checkpoint-30.pth.tar"), strict=False)
+	freeze_encoder(model=model)
 	criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(1.0))
 	module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
 	logger = TensorBoardLogger("tb_logs", name="ben_net")

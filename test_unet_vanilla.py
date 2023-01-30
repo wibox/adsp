@@ -1,6 +1,6 @@
 from Preprocessing import datasetformatter as dataset_formatter
 from Preprocessing import datasetscanner as dataset_scanner
-from Preprocessing import imagedataset as image_dataset
+from Preprocessing import colombadataset as image_dataset
 
 from Utils import lhtransformer
 
@@ -35,7 +35,6 @@ if __name__ == "__main__":
     # my_transformer.gauss_noise(var_limit=(250, 1250), mean=0),
     # my_transformer.random_brightness_contrast(),
     # my_transformer.fixed_rotate(),
-    my_transformer.shift_scale_rotate(),
     my_transformer.post_transforms_vanilla()
     ])
     test_transforms = my_transformer.compose([
@@ -70,8 +69,8 @@ if __name__ == "__main__":
 
     dataformatter.tiling()
 
-    ds = image_dataset.ImageDataset(
-        dataset_type="vanilla",
+    ds = image_dataset.ColombaDataset(
+        model_type="vanilla",
         formatted_folder_path=FORMATTED_DATASET_PATH,
         log_folder="Log",
         master_dict="master_dict.json",
@@ -112,8 +111,8 @@ if __name__ == "__main__":
 
     test_dataformatter.tiling()
 
-    test_ds = image_dataset.ImageDataset(
-        dataset_type="vanilla",
+    test_ds = image_dataset.ColombaDataset(
+        model_type="vanilla",
         formatted_folder_path=FORMATTED_TEST_DATASET_PATH,
         log_folder="Log",
         master_dict="test_master_dict.json",
