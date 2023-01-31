@@ -26,9 +26,6 @@ if __name__ == "__main__":
 
     my_transformer = lhtransformer.OptimusPrime()
     train_transforms = my_transformer.compose([
-        # my_transformer.gauss_noise(var_limit=(250, 1250), mean=0),
-        # my_transformer.random_brightness_contrast(),
-        # my_transformer.fixed_rotate(),
         my_transformer.shift_scale_rotate(),
         my_transformer.post_transforms_bigearthnet()
     ])
@@ -104,14 +101,12 @@ if __name__ == "__main__":
 
     ds._load_tiles()
 
-    train_loader = DataLoader(effis_train, batch_size=5, shuffle=True, num_workers=15, worker_init_fn=seed_worker, generator=g)
-    val_loader = DataLoader(effis_val, batch_size=5, shuffle=False, num_workers=15, worker_init_fn=seed_worker, generator=g)
-    test_loader = DataLoader(ds, batch_size=5, shuffle=False, num_workers=15, persistent_workers=True, worker_init_fn=seed_worker, generator=g)
+    train_loader = DataLoader(effis_train, batch_size=5, shuffle=True, num_workers=10, worker_init_fn=seed_worker, generator=g)
+    val_loader = DataLoader(effis_val, batch_size=5, shuffle=False, num_workers=10, worker_init_fn=seed_worker, generator=g)
+    test_loader = DataLoader(ds, batch_size=5, shuffle=False, num_workers=10, persistent_workers=True, worker_init_fn=seed_worker, generator=g)
 
     tb_logger = TensorBoardLogger(save_dir="logs/")
     model = smp.Unet(encoder_name="resnet50", in_channels=12, encoder_weights=None)
-    # model.encoder.load_state_dict(torch.load("models/checkpoints/checkpoint-30.pth.tar"), strict=False)
-    # freeze_encoder(model=model)
     criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(3.0))
     module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
     logger = TensorBoardLogger("tb_logs", name="effis_vanilla_net")

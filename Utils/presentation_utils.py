@@ -3,6 +3,7 @@ import numpy as np
 from .errors import *
 import itertools
 import rasterio as rio
+from rasterio.plot import show
 import os
 import glob
 import torch
@@ -65,23 +66,6 @@ def get_tiles(ds):
     """
     Generator used to yield tiles one at a time. Employed in self.tiling()
     """
-    # bands = {
-    #         "B01": 0,
-    #         "B02": 1,
-    #         "B03": 2,
-    #         "B04": 3,
-    #         "B05": 4,
-    #         "B06": 5,
-    #         "B07": 6,
-    #         "B08": 7,
-    #         "B8A": 8,
-    #         "B09": 9,
-    #         "B10": 10,
-    #         "B11": 11,
-    #         "B12": 12,
-    # }
-    # bands_name = ["B04", "B03", "B02", "B05", "B06", "B07", "B08", "B8A", "B11", "B12"]
-    # bands_idx = [bands[x] for x in bands_name]
     # shape = (c, h, w) questa è l'immagine intera
     img_as_np = ds.read()
     ncols, nrows = ds.meta['width'], ds.meta['height']
@@ -103,23 +87,6 @@ def get_tiles(ds):
         yield window, transform
 
 def tiling(initial_img_path : str, output_path_str : str = "tmp/tiles"):
-    # bands = {
-    #         "B01": 0,
-    #         "B02": 1,
-    #         "B03": 2,
-    #         "B04": 3,
-    #         "B05": 4,
-    #         "B06": 5,
-    #         "B07": 6,
-    #         "B08": 7,
-    #         "B8A": 8,
-    #         "B09": 9,
-    #         "B10": 10,
-    #         "B11": 11,
-    #         "B12": 12,
-    # }
-    # bands_name = ["B04", "B03", "B02", "B05", "B06", "B07", "B08", "B8A", "B11", "B12"]
-    # bands_idx = [bands[x] for x in bands_name]
     try:
         if not os.path.exists("tmp/tiles/"):
             print("Creating log folders...")
@@ -157,27 +124,22 @@ def merge_tiles(test_img_path : str) -> bool:
         col_idx.add(col)
         row_idx.add(row)
 
-    # print(sorted(col_idx), sorted(row_idx))
     columns = list()
     for col_id in sorted(col_idx):
         initial_canvas = np.empty(shape=(1, 512, 512))
         for row_id in sorted(row_idx):
             new_patch = rio.open(f"tmp/predictions/pred_{col_id}_{row_id}.tif", "r").read()
-            offset = 512-(row_id-512) if row_id%512 != 0 else 0
+            # offset = 512-(row_id-512) if row_id%512 != 0 else 0
+            offset = 512-(row_id%512) if row_id%512 != 0 else 0
             initial_canvas = np.concatenate((initial_canvas, new_patch[:, offset:, :]), axis=1)
         columns.append(initial_canvas[:, 512:, :])
-    # print(len(columns))
     empty_final_canvas = np.empty(shape=(1, starting_img.shape[1], 512))
     for column in columns:
+        print(column.shape)
         empty_final_canvas = np.concatenate((empty_final_canvas, column[:, :, :]), axis=2)
-
-    # show(empty_final_canvas[:, :, 512:starting_img.shape[2]+512], cmap="terrain")
-    # empty_final_canvas.shape
     return empty_final_canvas, starting_img.shape[2]
 
-
 def make_predictions(model : Any, model_type : str, tiles_path : str = "tmp/tiles") -> bool:
-
     bands = {
             "B01": 0,
             "B02": 1,
@@ -192,7 +154,7 @@ def make_predictions(model : Any, model_type : str, tiles_path : str = "tmp/tile
             "B11": 11,
             "B12": 12,
     }
-    if model_type == "vanilla" or model_type == "ben":
+    if model_type == "vanilla" or model_type == "ben" or model_type=="effis":
         bands_name = ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B11", "B12"]
     else:
         bands_name = ["B04", "B03", "B02", "B05", "B06", "B07", "B08", "B8A", "B11", "B12"]
@@ -208,26 +170,19 @@ def make_predictions(model : Any, model_type : str, tiles_path : str = "tmp/tile
         prediction = model(torch.tensor(current_tile))
         prediction = torch.sigmoid(prediction.detach())
         prediction = prediction.numpy()
-        prediction = np.where(prediction[0] > .5, 1, 0).astype(np.float32)
+        prediction = np.where(prediction[0] > .5, 0, 1).astype(np.float32)
+        # show(prediction, cmap="gray")
         with rio.open(f"tmp/predictions/pred_{bound1}_{bound2}.tif", "w", driver="GTiff", height=512, width=512, count=1, dtype=str(prediction.dtype)) as outds:
             outds.write(prediction)
 
 def format_image(img : np.ndarray = None) -> Union[None, np.ndarray]:
-    # _formatted_image = list()
-    # #_formatted_image.append(img[0, :, :])
-    # _formatted_image.append(img[1, :, :])
-    # _formatted_image.append(img[2, :, :])
-    # _formatted_image.append(img[3, :, :])
-    # _formatted_image.append(img[4, :, :])
-    # _formatted_image.append(img[5, :, :])
-    # _formatted_image.append(img[6, :, :])
-    # _formatted_image.append(img[7, :, :])
-    # _formatted_image.append(img[8, :, :])
-    # #_formatted_image.append(img[9, :, :])
-    # _formatted_image.append(img[10, :, :])
-    # _formatted_image.append(img[11, :, :])
-    # _formatted_image = np.array(_formatted_image)
     return np.clip(img, 0, 1)
 
 def format_mask(mask : np.ndarray = None) -> Union[None, np.ndarray]:
     return np.clip(mask, 0, 1)
+
+def write_results(final_img : np.ndarray) -> bool:
+    height = final_img.shape[1]
+    width = final_img.shape[2]
+    with rio.open("tmp/example.tif", "w", driver="GTiff", height=height, width=width, count=1, dtype=str(final_img.dtype)) as outds:
+        outds.write(final_img)

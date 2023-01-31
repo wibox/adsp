@@ -212,8 +212,8 @@ class ColombaDataset(Dataset):
                 # my_image = self.perform_min_max(input_img=my_image, dataset_type=self.dataset_type)
                 my_mask = applied_transform['mask'].numpy()
                 my_mask = self._make_channels_first(mask=my_mask)
-                # my_mask = self._format_mask(mask=my_mask)
-                # my_image = self._format_image(img=my_image)
+                my_mask = self._format_mask(mask=my_mask)
+                my_image = self._format_image(img=my_image)
                 my_mask = (my_mask>0).astype(np.uint8)
                 
             return my_image, my_mask

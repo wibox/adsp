@@ -32,9 +32,6 @@ if __name__ == "__main__":
 
 	my_transformer = lhtransformer.OptimusPrime()
 	train_transforms = my_transformer.compose([
-		# my_transformer.gauss_noise(var_limit=(250, 1250), mean=0),
-		# my_transformer.random_brightness_contrast(),
-		# my_transformer.fixed_rotate(),
 		my_transformer.shift_scale_rotate(),
 		my_transformer.post_transforms_imagenet()
 	])
@@ -130,7 +127,7 @@ if __name__ == "__main__":
 	test_loader = DataLoader(test_ds, batch_size=4, shuffle=False, num_workers=10, persistent_workers=True, worker_init_fn=seed_worker, generator=g)
 
 	tb_logger = TensorBoardLogger(save_dir="logs/")
-	model = smp.Unet(encoder_name="resnet50", in_channels=10, encoder_weights="imagenet")
+	model = smp.Unet(encoder_name="resnet50", in_channels=10, encoder_weights="imagenet", classes=1)
 	model.encoder.load_state_dict(torch.load("models/checkpoints/10bandsimagenet.pth"))
 	criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(1.0))
 	module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
