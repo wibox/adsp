@@ -1,3 +1,9 @@
 {
-    "":1
+    "EMS_DATASET_PATH" : "/mnt/data1/adsp_data/colomba_dataset",
+    "FORMATTED_EMS_PATH" : "/mnt/data1/adsp_data/formatted_colombaset",
+    "TEST_EMS_PATH" : "/mnt/data1/adsp_data/test_colombaset",
+    "FORMATTED_TEST_EMS_PATH" : "/mnt/data1/adsp_data/formatted_test_colombaset",
+    "COMPLETE_EMS_PATH" : "/mnt/data1/adsp_data/complete_colombaset",
+    "FORMATTED_COMPLETE_EMS_PATH" : "/mnt/data1/adsp_data/formatted_complete_colombaset",
+    "EFFIS_PATH" : "/mnt/data1/adsp_data/effis"
 }

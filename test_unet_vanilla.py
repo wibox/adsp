@@ -1,22 +1,18 @@
 from Preprocessing import datasetformatter as dataset_formatter
 from Preprocessing import datasetscanner as dataset_scanner
 from Preprocessing import colombadataset as image_dataset
-
 from Utils import lhtransformer
+from Utils.light_module import UNetModule
+from Utils.utils import seed_worker, freeze_encoder, Configurator
 
 from torch.utils.data import DataLoader
-from pytorch_lightning import seed_everything
-
-from Utils.light_module import UNetModule
 import torch
-from pytorch_lightning import Trainer
-from Utils.light_module import UNetModule
-from pytorch_lightning.loggers import TensorBoardLogger
 import segmentation_models_pytorch as smp
-from Utils.outputformatter import OutputFormatter
-from Utils.utils import *
+from pytorch_lightning import Trainer
+from pytorch_lightning.loggers import TensorBoardLogger
 import random
 import numpy as np
+from termcolor import colored
 
 INITIAL_DATASET_PATH = "/mnt/data1/adsp_data/colomba_dataset"
 FORMATTED_DATASET_PATH = "/mnt/data1/adsp_data/formatted_colombaset"
@@ -24,6 +20,13 @@ TEST_DATASET_PATH = "/mnt/data1/adsp_data/test_colombaset"
 FORMATTED_TEST_DATASET_PATH = "/mnt/data1/adsp_data/formatted_test_colombaset"
 
 if __name__ == "__main__":
+    print(colored("Fine-Tuning and testing UNET over BigEarthNet pretrain", "green"))
+    configurator = Configurator(filepath="config", filename="config.json")
+    config = configurator.get_config()
+    INITIAL_DATASET_PATH = config["EMS_DATASET_PATH"]
+    FORMATTED_DATASET_PATH = config["FORMATTED_EMS_PATH"]
+    TEST_DATASET_PATH = config["TEST_EMS_PATH"]
+    FORMATTED_TEST_DATASET_PATH = config["FORMATTED_TEST_EMS_PATH"]
     random.seed(51996)
     np.random.seed(51996)
     torch.manual_seed(51996)
@@ -59,7 +62,7 @@ if __name__ == "__main__":
         master_dict_filename="master_dict.json",
         tile_height=512,
         tile_width=512,
-        thr_pixels=0,
+        thr_pixels=112,
         use_pre=True,
         dataset="colombaset",
         verbose=1
@@ -73,8 +76,6 @@ if __name__ == "__main__":
         log_folder="Log",
         master_dict="master_dict.json",
         transformations=train_transforms,
-        use_pre=False,
-        verbose=1,
         specific_indeces=None,
         return_path=False
     )
@@ -101,7 +102,7 @@ if __name__ == "__main__":
         master_dict_filename="test_master_dict.json",
         tile_height=512,
         tile_width=512,
-        thr_pixels=0,
+        thr_pixels=112,
         use_pre=True,
         dataset="colombaset",
         verbose=1
@@ -115,8 +116,6 @@ if __name__ == "__main__":
         log_folder="Log",
         master_dict="test_master_dict.json",
         transformations=test_transforms,
-        use_pre=False,
-        verbose=1,
         specific_indeces=None,
         return_path=False
     )
@@ -127,10 +126,10 @@ if __name__ == "__main__":
 
     model = smp.Unet(encoder_name="resnet50", encoder_weights=None, in_channels=12, classes=1)
     tb_logger = TensorBoardLogger(save_dir="logs/")
-    criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(5.0))
+    criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(3.0))
     module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
     logger = TensorBoardLogger("tb_logs", name="vanilla_net")
-    trainer = Trainer(max_epochs=3, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
+    trainer = Trainer(max_epochs=5, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
     trainer.fit(model=module, train_dataloaders=train_loader)
     trainer.test(model=module, dataloaders=test_loader)
     print("Saving model...")

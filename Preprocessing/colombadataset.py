@@ -3,8 +3,9 @@ import os
 
 from typing import *
 
-import torch
+from termcolor import colored
 from torch.utils.data.dataset import Dataset
+import torch
 import numpy as np
 import rasterio as rio
 
@@ -16,8 +17,6 @@ class ColombaDataset(Dataset):
         log_folder : str = None,
         master_dict=None,
         transformations : List[Any] = None,
-        use_pre : bool = False,
-        verbose : int = 0,
         specific_indeces : List[int] = 0,
         return_path : bool = False
     ):
@@ -27,8 +26,6 @@ class ColombaDataset(Dataset):
         self.log_folder=log_folder
         self.master_dict=master_dict
         self.transformations=transformations
-        self.use_pre=use_pre
-        self.verbose=verbose
         self.specific_indeces = specific_indeces
         self.return_path = return_path # if True returns tile path, il False return np.ndarray of tiles
 
@@ -90,10 +87,8 @@ class ColombaDataset(Dataset):
         self.SHUB_STD = [ x for x in self.BAND_STATS_S2["std"].values()]
 
         try:
-            loading_completed = False
             with open(os.path.join(self.log_folder, self.master_dict), "r") as md: #master_dict
                 self.loaded_tile_data = json.load(md) # questo è il dizionario completo
-            loading_completed = True
         except OSError as ose:
             print(ose)
         finally:
@@ -112,7 +107,7 @@ class ColombaDataset(Dataset):
                 self.post_tiles.extend(self.loaded_tile_data['processing_info'][activation_idx][current_key]["tile_info_post"][0])
                 self.mask_tiles.extend(self.loaded_tile_data['processing_info'][activation_idx][current_key]["tile_info_mask"][0])
             completed = True
-            print("Tiles loaded successfully!")
+            print(colored("Tiles loaded successfully!", "green"))
 
             # Ritorna uno specifico subset di post_tiles e mask_tiles (da estendere per pre)
             # se specificati in self.specific_indeces
@@ -148,15 +143,15 @@ class ColombaDataset(Dataset):
         finally:
             return current_image
 
-    def _make_channels_first(self, mask : np.ndarray) -> np.ndarray:
-        return np.moveaxis(mask, -1, 0)
+    def _make_channels_first(self, mask : np.ndarray) -> torch.Tensor:
+        return torch.moveaxis(mask, -1, 0)
 
     def _make_channels_last(self, image : np.ndarray, mask : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         _swap_image = np.moveaxis(image, 0, -1)
         _swap_mask = np.moveaxis(mask, 0, -1)
         return _swap_image, _swap_mask
 
-    def perform_min_max(self, input_img : np.ndarray, dataset_type:str):
+    def _perform_min_max(self, input_img : np.ndarray):
         mean = np.array(self.SHUB_MEAN)
         std = np.array(self.SHUB_STD)
         mins = (mean - 2 * std)[:, None, None].astype(np.float32)
@@ -164,11 +159,11 @@ class ColombaDataset(Dataset):
         output_img = (input_img - mins) / (maxs-mins)
         return output_img
 
-    def _format_image(self, img : np.ndarray = None) -> Union[None, np.ndarray]:
-        return np.clip(img, 0, 1)
+    def _format_image(self, img : np.ndarray = None) -> Union[None, torch.Tensor]:
+        return torch.clip(img, 0, 1)
 
-    def _format_mask(self, mask : np.ndarray = None) -> Union[None, np.ndarray]:
-        return np.clip(mask, 0, 1)
+    def _format_mask(self, mask : np.ndarray = None) -> Union[None, torch.Tensor]:
+        return torch.clip(mask, 0, 1)
 
     def __len__(self) -> int:
         if len(self.post_tiles) == len(self.mask_tiles):
@@ -205,15 +200,13 @@ class ColombaDataset(Dataset):
             my_mask = self._read_tile_image(tile_path=self.mask_tiles[idx], is_tile=False)
 
             if self.transformations is not None:
-                # my_image = self._format_image(img=my_image)
                 my_image, my_mask = self._make_channels_last(image=my_image, mask=my_mask)
                 applied_transform = self.transformations(image=my_image, mask=my_mask)
-                my_image = applied_transform['image'].numpy()
-                # my_image = self.perform_min_max(input_img=my_image, dataset_type=self.dataset_type)
-                my_mask = applied_transform['mask'].numpy()
+                my_image = applied_transform['image']
+                my_mask = applied_transform['mask']
                 my_mask = self._make_channels_first(mask=my_mask)
                 my_mask = self._format_mask(mask=my_mask)
                 my_image = self._format_image(img=my_image)
-                my_mask = (my_mask>0).astype(np.uint8)
+                # my_mask = (my_mask>0).astype(np.uint8)
                 
             return my_image, my_mask

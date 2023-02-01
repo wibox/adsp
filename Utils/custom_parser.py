@@ -1,36 +1,13 @@
 import argparse
+import multiprocessing
 def custom_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--net-type",
-        type=str,
-        default="argonet",
-        help="Type of neural network to be used: argonet/dovenet."
-        )
-    parser.add_argument(
-        "--dataset",
-        type=str,
-        default="colombaset",
-        help="Dataset to be used either for training, testing or validation. Use colombaset/full-effis/sub-effis"
+        "--seed",
+        type=int,
+        default=51996,
+        help="Seed value for reproducibility."
     )
-    parser.add_argument(
-        "--master-folder",
-        type=str,
-        default=None,
-        help="Path to data folder, to be specified according to position of <dataset>."
-    )
-    parser.add_argument(
-        "--validation-file",
-        type=str,
-        default=None,
-        help="Validation.json used to filter useful activations (those which contain pre, post and mask)."
-    )
-    parser.add_argument(
-        "--log-path", 
-        type=str, 
-        default="log/", 
-        help="Location of general log files."
-        )
     parser.add_argument(
         "--tile-size", 
         type=int, 
@@ -50,15 +27,46 @@ def custom_parser():
         help="Either to use or not use the pre-fire of each activation in the provided dataset: True/False."
         )
     parser.add_argument(
-        "--op",
+        "--dataset",
         type=str,
-        default="train",
-        help="Train, test or validate a specific dataset: use train/test/val."
+        choices=["vanilla", "ben", "effis", "imagenet"],
+        default="ben",
+        help="Decides the dataset to be used with underlying UNET."
     )
     parser.add_argument(
-        "--activation-function",
+        "--epochs",
+        type=int,
+        default=5,
+        help="Number of epochs used to fine-tune or train from scratch."
+    )
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=5,
+        help="Batch size used for dataloaders."
+    )
+    parser.add_argument(
+        "--num-workers",
+        type=int,
+        default=multiprocessing.cpu_count(),
+        help="Number of workers used in dataloaders."
+    )
+    parser.add_argument(
+        "--freeze-encoder",
+        type=bool,
+        default=False,
+        help="Wheather to freeze or not the current encoder's weights."
+    )
+    parser.add_argument(
+        "--encoder-name",
         type=str,
-        default="ReLU",
-        help="Activation function to be used through torch utilities: ReLU, Tanh, LeakyReLU"
+        default="resnet50",
+        help="Encoder to be used in Segmentation Models Pytorch implementation of Unet."
+    )
+    parser.add_argument(
+        "--save",
+        type=bool,
+        default=True,
+        help="Wheather to save or not the trained model in models/trained_models/"
     )
     return parser.parse_args()

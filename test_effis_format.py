@@ -1,29 +1,34 @@
 from Preprocessing import datasetformatter as dataset_formatter
 from Preprocessing import datasetscanner as dataset_scanner
-from Preprocessing import colombadataset as colombaset
-from Preprocessing import effisdataset as effiset
-
+from Preprocessing import colombadataset, effisdataset
 from Utils import lhtransformer
+from Utils.light_module import UNetModule
+from Utils.utils import seed_worker, Configurator
+
 from torch.utils.data import DataLoader
-from Utils.utils import seed_worker, freeze_encoder
+import torch
 import segmentation_models_pytorch as smp
 from pytorch_lightning import Trainer
-from Utils.light_module import UNetModule
 from pytorch_lightning.loggers import TensorBoardLogger
-
-import numpy as np
 import random
-import torch
+import numpy as np
+from termcolor import colored
 
 INITIAL_DATASET_PATH = "/mnt/data1/adsp_data/effis"
 
 if __name__ == "__main__":
+    print(colored("Fine-Tuning and testing UNET over BigEarthNet pretrain", "green"))
+    configurator = Configurator(filepath="config", filename="config.json")
+    config = configurator.get_config()
+    EFFIS_PATH = config["EFFIS_PATH"]
+    COMPLETE_EMS_PATH = config["COMPLETE_EMS_PATH"]
+    FORMATTED_COMPLETE_EMS_PATH = config["FORMATTED_COMPLETE_EMS_PATH"]
     random.seed(51996)
     np.random.seed(51996)
     torch.manual_seed(51996)
     g = torch.Generator()
     g.manual_seed(51996)
-
+    
     my_transformer = lhtransformer.OptimusPrime()
     train_transforms = my_transformer.compose([
         my_transformer.shift_scale_rotate(),
@@ -34,24 +39,22 @@ if __name__ == "__main__":
     ])
 
     datascanner = dataset_scanner.DatasetScanner(
-    master_folder_path=INITIAL_DATASET_PATH,
+    master_folder_path=EFFIS_PATH,
     log_file_path="",
     validation_file_path=None,
     dataset="sub-effis",
     verbose=1
     )
-
-    # datascanner.scan_master_folder()
     datascanner.log_to_file()
 
-    effis_train = effiset.EffisDataset(
+    effis_train = effisdataset.EffisDataset(
         log_folder="Log/",
         master_dict = "master_dict_train_effis.json",
         transformations = None
     )
     effis_train._load_tiles()
 
-    effis_val = effiset.EffisDataset(
+    effis_val = effisdataset.EffisDataset(
         log_folder="Log/",
         master_dict = "master_dict_val_effis.json",
         transformations = None
@@ -60,7 +63,7 @@ if __name__ == "__main__":
 
     #### COLOMBASET ###
     ds_colomba = dataset_scanner.DatasetScanner(
-        master_folder_path="/mnt/data1/adsp_data/complete_colombaset/",
+        master_folder_path=COMPLETE_EMS_PATH,
         log_file_path="Log/master_folder_log_complete_colombaset.csv",
         validation_file_path=None,
         dataset="colombaset",
@@ -72,14 +75,14 @@ if __name__ == "__main__":
     ds_colomba.log_to_file()
 
     dataformatter = dataset_formatter.DatasetFormatter(
-        master_folder_path="/mnt/data1/adsp_data/formatted_complete_colombaset/",
+        master_folder_path=FORMATTED_COMPLETE_EMS_PATH,
         log_file_path="Log/",
         log_filename="master_folder_log_complete_colombaset.csv",
         master_dict_path="Log/",
         master_dict_filename="master_dict_complete_colombaset.json",
         tile_height=512,
         tile_width=512,
-        thr_pixels=0,
+        thr_pixels=112,
         use_pre=True,
         dataset="colombaset",
         verbose=1
@@ -87,14 +90,12 @@ if __name__ == "__main__":
 
     dataformatter.tiling()
 
-    ds = colombaset.ColombaDataset(
+    ds = colombadataset.ColombaDataset(
         model_type="ben",
-        formatted_folder_path="/mnt/data1/adsp_data/formatted_complete_colombaset/",
+        formatted_folder_path=FORMATTED_COMPLETE_EMS_PATH,
         log_folder="Log",
         master_dict="master_dict.json",
         transformations=test_transforms,
-        use_pre=False,
-        verbose=1,
         specific_indeces=None,
         return_path=False
     )
@@ -110,7 +111,7 @@ if __name__ == "__main__":
     criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(3.0))
     module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
     logger = TensorBoardLogger("tb_logs", name="effis_vanilla_net")
-    trainer = Trainer(max_epochs=3, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
+    trainer = Trainer(max_epochs=5, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
     trainer.fit(model=module, train_dataloaders=train_loader, val_dataloaders=val_loader)
     trainer.test(model=module, dataloaders=test_loader)
     print("Saving model...")

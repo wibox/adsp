@@ -1,6 +1,5 @@
 import os
 import sys
-import glob
 import json
 import traceback
 
@@ -10,7 +9,7 @@ import torch
 import numpy as np
 import random
 import rasterio as rio
-from rasterio.merge import merge
+from termcolor import colored
 
 def read_tile(bands : List[int], tile_path : str = None) -> Union[np.ndarray, None]:
     current_image = None
@@ -26,20 +25,6 @@ def read_tile(bands : List[int], tile_path : str = None) -> Union[np.ndarray, No
         return current_image
 
 def format_image(img : np.ndarray = None) -> Union[None, np.ndarray]:
-    # _formatted_image = list()
-    # #_formatted_image.append(img[0, :, :])
-    # _formatted_image.append(img[1, :, :])
-    # _formatted_image.append(img[2, :, :])
-    # _formatted_image.append(img[3, :, :])
-    # _formatted_image.append(img[4, :, :])
-    # _formatted_image.append(img[5, :, :])
-    # _formatted_image.append(img[6, :, :])
-    # _formatted_image.append(img[7, :, :])
-    # _formatted_image.append(img[8, :, :])
-    # #_formatted_image.append(img[9, :, :])
-    # _formatted_image.append(img[10, :, :])
-    # _formatted_image.append(img[11, :, :])
-    # _formatted_image = np.array(_formatted_image)
     return np.clip(img, 0, 1)
 
 def format_mask(mask : np.ndarray = None) -> Union[None, np.ndarray]:
@@ -60,14 +45,16 @@ class Configurator():
         completed = False
         try:
             with open(os.path.join(self.filepath, self.filename), "r") as f:
-                self.config = json.load(f)
+                config = json.load(f)
+            print(colored("Configurations correctly loaded.", "green"))
         except Exception as e:
-            print(e.format_exc())
+            print(colored("Coulnd't load configurations properly.", "red"))
+            print(traceback.format_exc())
             sys.exit()
         finally:
-            return completed, self.config
+            return config
 
-    def get_config(self) -> dict:
+    def get_config(self) -> Dict[str, str]:
         return self.config
 
 def freeze_encoder(model):
