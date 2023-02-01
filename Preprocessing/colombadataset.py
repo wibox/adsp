@@ -9,6 +9,8 @@ import torch
 import numpy as np
 import rasterio as rio
 
+from tqdm import tqdm
+
 class ColombaDataset(Dataset):
     def __init__(
         self,
@@ -33,7 +35,7 @@ class ColombaDataset(Dataset):
         self.mask_tiles = list()
         self.activations = os.listdir(self.formatted_folder_path)
         self.bands = {
-                "B01": 0,
+                # "B01": 0,
                 "B02": 1,
                 "B03": 2,
                 "B04": 3,
@@ -43,12 +45,12 @@ class ColombaDataset(Dataset):
                 "B08": 7,
                 "B8A": 8,
                 "B09": 9,
-                # "B10": 10,
+                "B10": 10,
                 "B11": 11,
                 "B12": 12,
         }
         if self.model_type == "vanilla" or self.model_type == "ben":
-            self.bands_name = ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B11", "B12"]
+            self.bands_name = ["B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B10", "B11", "B12"]
         else:
             self.bands_name = ["B04", "B03", "B02", "B05", "B06", "B07", "B08", "B8A", "B11", "B12"]
         self.bands_idx = [self.bands[x]+1 for x in self.bands_name]
@@ -94,6 +96,13 @@ class ColombaDataset(Dataset):
         finally:
             return None
 
+    def _check_tiles_integrity(self) -> None:
+        for tile_idx in tqdm(range(len(self.post_tiles))):
+            curr_mask_tile = rio.open(self.mask_tiles[tile_idx], "r").read()
+            if np.all(np.all(curr_mask_tile)):
+                self.mask_tiles.pop(tile_idx)
+                self.post_tiles.pop(tile_idx)
+
     def _load_tiles(self) -> bool:
         """
         Questa funzione deve caricare nell'istanza della classe le liste di tutti i path di post e mask per ogni attivazione.
@@ -106,6 +115,7 @@ class ColombaDataset(Dataset):
                 current_key = list(self.loaded_tile_data['processing_info'][activation_idx].keys())[0]
                 self.post_tiles.extend(self.loaded_tile_data['processing_info'][activation_idx][current_key]["tile_info_post"][0])
                 self.mask_tiles.extend(self.loaded_tile_data['processing_info'][activation_idx][current_key]["tile_info_mask"][0])
+            self._check_tiles_integrity()
             completed = True
             print(colored("Tiles loaded successfully!", "green"))
 
@@ -163,7 +173,8 @@ class ColombaDataset(Dataset):
         return torch.clip(img, 0, 1)
 
     def _format_mask(self, mask : np.ndarray = None) -> Union[None, torch.Tensor]:
-        return torch.clip(mask, 0, 1)
+        mask = (mask>32).astype(np.uint8)
+        return torch.clip(torch.tensor(mask), 0, 1)
 
     def __len__(self) -> int:
         if len(self.post_tiles) == len(self.mask_tiles):
@@ -205,8 +216,7 @@ class ColombaDataset(Dataset):
                 my_image = applied_transform['image']
                 my_mask = applied_transform['mask']
                 my_mask = self._make_channels_first(mask=my_mask)
-                my_mask = self._format_mask(mask=my_mask)
+                my_mask = self._format_mask(mask=my_mask.numpy())
                 my_image = self._format_image(img=my_image)
-                # my_mask = (my_mask>0).astype(np.uint8)
                 
             return my_image, my_mask

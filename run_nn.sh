@@ -13,4 +13,4 @@ python3 test_bigearthnet.py
 python3 test_imagenet.py
 
 # echo "Training on EFFIS and testing on EMS"
-python3 test_effis_format.py
+# python3 test_effis_format.py

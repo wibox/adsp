@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
 	my_transformer = lhtransformer.OptimusPrime()
 	train_transforms = my_transformer.compose([
-		# my_transformer.shift_scale_rotate(),
+		my_transformer.shift_scale_rotate(),
 		my_transformer.post_transforms_bigearthnet()
 	])
 	test_transforms = my_transformer.compose([
@@ -121,12 +121,12 @@ if __name__ == "__main__":
 
 	tb_logger = TensorBoardLogger(save_dir="logs/")
 	model = smp.Unet(encoder_name="resnet50", in_channels=12, encoder_weights=None, classes=1)
-	model.load_state_dict(torch.load("models/checkpoints/checkpoint-30.pth.tar"), strict=False)
+	model.encoder.load_state_dict(torch.load("models/checkpoints/checkpoint-30.pth.tar"), strict=False)
 	freeze_encoder(model=model)
-	criterion = torch.nn.BCEWithLogitsLoss()  #pos_weight=torch.tensor(3.0)
-	module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
+	criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(1.0))  #pos_weight=torch.tensor(3.0)
+	module = UNetModule(model=model, criterion=criterion, learning_rate=0.5e-3)
 	logger = TensorBoardLogger("tb_logs", name="ben_net")
-	trainer = Trainer(max_epochs=3, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
+	trainer = Trainer(max_epochs=2, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
 	trainer.fit(model=module, train_dataloaders=train_loader)
 	trainer.test(model=module, dataloaders=test_loader)
 	print("Saving model...")
