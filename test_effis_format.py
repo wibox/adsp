@@ -17,7 +17,7 @@ from termcolor import colored
 INITIAL_DATASET_PATH = "/mnt/data1/adsp_data/effis"
 
 if __name__ == "__main__":
-    print(colored("Fine-Tuning and testing UNET over BigEarthNet pretrain", "green"))
+    print(colored("Training a UNet over Effis and testing it on EMS.", "green"))
     configurator = Configurator(filepath="config", filename="config.json")
     config = configurator.get_config()
     EFFIS_PATH = config["EFFIS_PATH"]
@@ -102,9 +102,9 @@ if __name__ == "__main__":
 
     ds._load_tiles()
 
-    train_loader = DataLoader(effis_train, batch_size=5, shuffle=True, num_workers=10, worker_init_fn=seed_worker, generator=g)
-    val_loader = DataLoader(effis_val, batch_size=5, shuffle=False, num_workers=10, worker_init_fn=seed_worker, generator=g)
-    test_loader = DataLoader(ds, batch_size=5, shuffle=False, num_workers=10, persistent_workers=True, worker_init_fn=seed_worker, generator=g)
+    train_loader = DataLoader(effis_train, batch_size=4, shuffle=True, num_workers=10, worker_init_fn=seed_worker, generator=g)
+    val_loader = DataLoader(effis_val, batch_size=4, shuffle=False, num_workers=10, worker_init_fn=seed_worker, generator=g)
+    test_loader = DataLoader(ds, batch_size=4, shuffle=False, num_workers=10, persistent_workers=True, worker_init_fn=seed_worker, generator=g)
 
     tb_logger = TensorBoardLogger(save_dir="logs/")
     model = smp.Unet(encoder_name="resnet50", in_channels=12, encoder_weights=None)

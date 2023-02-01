@@ -10,9 +10,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/pre/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/pre/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/pre/tile_512_830.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/pre/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/pre/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/pre/tile_1024_830.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/pre/tile_1125_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/pre/tile_1125_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/pre/tile_1125_830.tif"
@@ -26,9 +23,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/post/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/post/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/post/tile_512_830.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/post/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/post/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/post/tile_1024_830.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/post/tile_1125_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/post/tile_1125_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/post/tile_1125_830.tif"
@@ -42,9 +36,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/mask/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/mask/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/mask/tile_512_830.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/mask/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/mask/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/mask/tile_1024_830.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/mask/tile_1125_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/mask/tile_1125_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_07ALVAIAZERE_02GRADING_MAP_v2_vector/mask/tile_1125_830.tif"
@@ -62,9 +53,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/pre/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/pre/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/pre/tile_512_829.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/pre/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/pre/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/pre/tile_1024_829.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/pre/tile_1120_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/pre/tile_1120_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/pre/tile_1120_829.tif"
@@ -78,9 +66,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/post/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/post/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/post/tile_512_829.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/post/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/post/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/post/tile_1024_829.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/post/tile_1120_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/post/tile_1120_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/post/tile_1120_829.tif"
@@ -94,9 +79,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/mask/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/mask/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/mask/tile_512_829.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/mask/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/mask/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/mask/tile_1024_829.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/mask/tile_1120_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/mask/tile_1120_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_02LOUSA_02GRADING_MAP_v2_vector/mask/tile_1120_829.tif"
@@ -166,9 +148,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/pre/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/pre/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/pre/tile_512_829.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/pre/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/pre/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/pre/tile_1024_829.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/pre/tile_1123_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/pre/tile_1123_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/pre/tile_1123_829.tif"
@@ -182,9 +161,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/post/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/post/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/post/tile_512_829.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/post/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/post/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/post/tile_1024_829.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/post/tile_1123_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/post/tile_1123_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/post/tile_1123_829.tif"
@@ -198,9 +174,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/mask/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/mask/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/mask/tile_512_829.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/mask/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/mask/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/mask/tile_1024_829.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/mask/tile_1123_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/mask/tile_1123_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_03PAMPILHOSADASERRA_02GRADING_MAP_v2_vector/mask/tile_1123_829.tif"
@@ -218,9 +191,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_512_835.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_1024_835.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_1124_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_1124_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/pre/tile_1124_835.tif"
@@ -234,9 +204,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_512_835.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_1024_835.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_1124_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_1124_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/post/tile_1124_835.tif"
@@ -250,9 +217,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_512_835.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_1024_835.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_1124_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_1124_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_08CERNACHEDOBONJARDIM_02GRADING_MAP_v2_vector/mask/tile_1124_835.tif"
@@ -356,9 +320,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/pre/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/pre/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/pre/tile_512_829.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/pre/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/pre/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/pre/tile_1024_829.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/pre/tile_1123_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/pre/tile_1123_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/pre/tile_1123_829.tif"
@@ -372,9 +333,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/post/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/post/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/post/tile_512_829.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/post/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/post/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/post/tile_1024_829.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/post/tile_1123_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/post/tile_1123_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/post/tile_1123_829.tif"
@@ -388,9 +346,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/mask/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/mask/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/mask/tile_512_829.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/mask/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/mask/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/mask/tile_1024_829.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/mask/tile_1123_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/mask/tile_1123_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_01MIRANDADOCORVO_02GRADING_MAP_v2_vector/mask/tile_1123_829.tif"
@@ -451,9 +406,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/pre/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/pre/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/pre/tile_512_839.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/pre/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/pre/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/pre/tile_1024_839.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/pre/tile_1126_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/pre/tile_1126_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/pre/tile_1126_839.tif"
@@ -467,9 +419,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/post/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/post/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/post/tile_512_839.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/post/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/post/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/post/tile_1024_839.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/post/tile_1126_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/post/tile_1126_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/post/tile_1126_839.tif"
@@ -483,9 +432,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/mask/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/mask/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/mask/tile_512_839.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/mask/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/mask/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/mask/tile_1024_839.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/mask/tile_1126_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/mask/tile_1126_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_04AVELAR_02GRADING_MAP_v2_vector/mask/tile_1126_839.tif"
@@ -555,9 +501,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_512_845.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_1024_845.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_1124_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_1124_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/pre/tile_1124_845.tif"
@@ -571,9 +514,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_512_845.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_1024_845.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_1124_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_1124_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/post/tile_1124_845.tif"
@@ -587,9 +527,6 @@
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_512_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_512_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_512_845.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_1024_0.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_1024_512.tif",
-                        "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_1024_845.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_1124_0.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_1124_512.tif",
                         "/mnt/data1/adsp_data/formatted_test_colombaset/processed_EMSR207_05PEDROGAOGRANDE_02GRADING_MAP_v2_vector/mask/tile_1124_845.tif"

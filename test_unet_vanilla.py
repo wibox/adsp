@@ -20,7 +20,7 @@ TEST_DATASET_PATH = "/mnt/data1/adsp_data/test_colombaset"
 FORMATTED_TEST_DATASET_PATH = "/mnt/data1/adsp_data/formatted_test_colombaset"
 
 if __name__ == "__main__":
-    print(colored("Fine-Tuning and testing UNET over BigEarthNet pretrain", "green"))
+    print(colored("Training and testing a UNet from scratch.", "green"))
     configurator = Configurator(filepath="config", filename="config.json")
     config = configurator.get_config()
     INITIAL_DATASET_PATH = config["EMS_DATASET_PATH"]
@@ -126,10 +126,10 @@ if __name__ == "__main__":
 
     model = smp.Unet(encoder_name="resnet50", encoder_weights=None, in_channels=12, classes=1)
     tb_logger = TensorBoardLogger(save_dir="logs/")
-    criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(3.0))
+    criterion = torch.nn.BCEWithLogitsLoss()
     module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
     logger = TensorBoardLogger("tb_logs", name="vanilla_net")
-    trainer = Trainer(max_epochs=5, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
+    trainer = Trainer(max_epochs=3, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
     trainer.fit(model=module, train_dataloaders=train_loader)
     trainer.test(model=module, dataloaders=test_loader)
     print("Saving model...")

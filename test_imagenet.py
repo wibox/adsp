@@ -15,7 +15,7 @@ import numpy as np
 from termcolor import colored
 
 if __name__ == "__main__":
-	print(colored("Fine-Tuning and testing UNET over BigEarthNet pretrain", "green"))
+	print(colored("Fine-Tuning and testing UNET over ImageNet pretrain.", "green"))
 	configurator = Configurator(filepath="config", filename="config.json")
 	config = configurator.get_config()
 	INITIAL_DATASET_PATH = config["EMS_DATASET_PATH"]
@@ -123,10 +123,10 @@ if __name__ == "__main__":
 	tb_logger = TensorBoardLogger(save_dir="logs/")
 	model = smp.Unet(encoder_name="resnet50", in_channels=10, encoder_weights="imagenet", classes=1)
 	model.encoder.load_state_dict(torch.load("models/checkpoints/10bandsimagenet.pth"))
-	criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(3.0))
+	criterion = torch.nn.BCEWithLogitsLoss()
 	module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
 	logger = TensorBoardLogger("tb_logs", name="image_net")
-	trainer = Trainer(max_epochs=5, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
+	trainer = Trainer(max_epochs=3, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
 	trainer.fit(model=module, train_dataloaders=train_loader)
 	trainer.test(model=module, dataloaders=test_loader)
 	print("Saving model...")

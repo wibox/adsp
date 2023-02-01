@@ -170,7 +170,7 @@ def make_predictions(model : Any, model_type : str, tiles_path : str = "tmp/tile
         prediction = model(torch.tensor(current_tile))
         prediction = torch.sigmoid(prediction.detach())
         prediction = prediction.numpy()
-        prediction = np.where(prediction[0] > .5, 0, 1).astype(np.float32)
+        prediction = np.where(prediction[0] > 0.5, 1, 0).astype(np.float32)
         # show(prediction, cmap="gray")
         with rio.open(f"tmp/predictions/pred_{bound1}_{bound2}.tif", "w", driver="GTiff", height=512, width=512, count=1, dtype=str(prediction.dtype)) as outds:
             outds.write(prediction)
