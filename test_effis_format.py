@@ -108,7 +108,7 @@ if __name__ == "__main__":
 
     tb_logger = TensorBoardLogger(save_dir="logs/")
     model = smp.Unet(encoder_name="resnet50", in_channels=12, encoder_weights=None)
-    criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(3.0))
+    criterion = torch.nn.BCEWithLogitsLoss()
     module = UNetModule(model=model, criterion=criterion, learning_rate=1e-4)
     logger = TensorBoardLogger("tb_logs", name="effis_vanilla_net")
     trainer = Trainer(max_epochs=5, accelerator="gpu", devices=1, num_nodes=1, logger=logger)

@@ -135,7 +135,6 @@ def merge_tiles(test_img_path : str) -> bool:
         columns.append(initial_canvas[:, 512:, :])
     empty_final_canvas = np.empty(shape=(1, starting_img.shape[1], 512))
     for column in columns:
-        print(column.shape)
         empty_final_canvas = np.concatenate((empty_final_canvas, column[:, :, :]), axis=2)
     return empty_final_canvas, starting_img.shape[2]
 
