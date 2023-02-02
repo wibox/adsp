@@ -115,6 +115,7 @@ class ColombaDataset(Dataset):
                 current_key = list(self.loaded_tile_data['processing_info'][activation_idx].keys())[0]
                 self.post_tiles.extend(self.loaded_tile_data['processing_info'][activation_idx][current_key]["tile_info_post"][0])
                 self.mask_tiles.extend(self.loaded_tile_data['processing_info'][activation_idx][current_key]["tile_info_mask"][0])
+            print(colored("Checking tiles integrity...", "red"))
             self._check_tiles_integrity()
             completed = True
             print(colored("Tiles loaded successfully!", "green"))

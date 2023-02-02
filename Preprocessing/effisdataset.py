@@ -27,12 +27,15 @@ class EffisDataset(Dataset):
         self.post_tiles : List[str] = list()
         self.mask_tiles : List[str] = list()
 
-    def _check_tiles_integrity(self) -> None:
-        for tile_idx in tqdm(range(len(self.post_tiles))):
-            curr_mask_tile = rio.open(self.mask_tiles[tile_idx], "r").read()
-            if np.all(np.all(curr_mask_tile)):
-                self.mask_tiles.pop(tile_idx)
-                self.post_tiles.pop(tile_idx)
+    # def _check_tiles_integrity(self) -> None:
+    #     for tile_idx in tqdm(range(len(self.post_tiles))):
+    #         try:
+    #             curr_mask_tile = rio.open(self.mask_tiles[tile_idx], "r").read()
+    #             if np.all(np.all(curr_mask_tile)):
+    #                 self.mask_tiles.pop(tile_idx)
+    #                 self.post_tiles.pop(tile_idx)
+    #         except:
+    #             pass
 
     def _load_tiles(self) -> Tuple[bool, Dict[Any, Any]]:
         completed = False
@@ -45,7 +48,8 @@ class EffisDataset(Dataset):
                 self.num_tiles += len(self.loaded_tile_data[act]["tile_info_post"])
                 self.post_tiles.extend(self.loaded_tile_data[act]["tile_info_post"])
                 self.mask_tiles.extend(self.loaded_tile_data[act]["tile_info_mask"])
-            self._check_tiles_integrity()
+            # print(colored("Checking tiles integrity...", "red"))
+            # self._check_tiles_integrity()
             completed = True
             print(colored("Effis informations loaded successfully", "green"))
         except Exception as e:

@@ -129,7 +129,7 @@ if __name__ == "__main__":
     criterion = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(1.0))
     module = UNetModule(model=model, criterion=criterion, learning_rate=0.5e-3)
     logger = TensorBoardLogger("tb_logs", name="vanilla_net")
-    trainer = Trainer(max_epochs=2, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
+    trainer = Trainer(max_epochs=3, accelerator="gpu", devices=1, num_nodes=1, logger=logger)
     trainer.fit(model=module, train_dataloaders=train_loader)
     trainer.test(model=module, dataloaders=test_loader)
     print("Saving model...")

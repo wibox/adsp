@@ -40,6 +40,9 @@ class Configurator():
         self.filepath = filepath
         self.filename = filename
         self.config = self._load_config()
+        self.names = ["LoSbengh", "Rora", "Manta", "Bepi", "Cerbiatto"]
+        self.colors = ["red", "magenta", "yellow", "green", "blue"]
+        print(colored(self._easter_egg(), np.random.choice(self.colors)))
 
     def _load_config(self) -> Tuple[bool, Dict[str, str]]:
         completed = False
@@ -53,6 +56,9 @@ class Configurator():
             sys.exit()
         finally:
             return config
+
+    def _easter_egg(self) -> str:
+        return np.random.choice(self.names)
 
     def get_config(self) -> Dict[str, str]:
         return self.config

@@ -1,7 +1,7 @@
 echo "Removing previously saved models..."
 rm models/trained_models/*
-echo "Removing previous logs..."
-rm -rf tb_logs/*
+# echo "Removing previous logs..."
+# rm -rf tb_logs/*
 
 # echo "Training and testing vanilla unet"
 python3 test_unet_vanilla.py
