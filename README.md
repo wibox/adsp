@@ -4,8 +4,8 @@
 <br />
 <div align="center">
     <p float="left">
-    <img src="logo/logo_post.png" width="100" />
-    <img src="logo/logo_mask.png" width="100" /> 
+    <img src="logo/logo_post.png" width="300", height="300" />
+    <img src="logo/logo_mask.png" width="300", height="300" /> 
     </p>
 
   <h3 align="center">Weakly supervised burnt area discrimination pipeline <br /> PoliTo 2022/2023</h3>
