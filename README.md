@@ -20,6 +20,10 @@
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#preprocessing">Preprocessing engine</a></li>
+    <li><a href="#tests">Tests</a></li>
+    <li><a href="#presentation">Presentation Instruction</a></li>
+    <li><a href="#interface">Train your own model: interface.py</a></li>
   </ol>
 </details>
 
@@ -55,4 +59,4 @@ Francesco Pagano  s299266@studenti.polito.it <br />
 Sofia Fanigliulo  s300751@studenti.polito.it <br />
 Giuseppe Esposito  s302179@studenti.polito.it <br />
 Aurora Gensale  s303535@studenti.polito.it <br />
-Elena Di Felice s303499 @studenti.polito.it <br />
+Elena Di Felice s303499@studenti.polito.it <br />
