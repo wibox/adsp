@@ -9,6 +9,7 @@ import glob
 import torch
 from tqdm import tqdm
 import traceback
+from PIL import Image
 
 def offset_tiles(img : Union[np.ndarray, None] = None, tile_dim : Tuple[int, int] = (512, 512)) -> Tuple[Union[List[float], Any], Union[List[float], Any]]:
     """
@@ -180,8 +181,12 @@ def format_image(img : np.ndarray = None) -> Union[None, np.ndarray]:
 def format_mask(mask : np.ndarray = None) -> Union[None, np.ndarray]:
     return np.clip(mask, 0, 1)
 
-def write_results(final_img : np.ndarray) -> bool:
+def write_results(final_img : np.ndarray, label : str) -> bool:
     height = final_img.shape[1]
     width = final_img.shape[2]
-    with rio.open("tmp/example.tif", "w", driver="GTiff", height=height, width=width, count=1, dtype=str(final_img.dtype)) as outds:
+    with rio.open(f"tmp/example_{label}.tif", "w", driver="GTiff", height=height, width=width, count=1, dtype=str(final_img.dtype)) as outds:
         outds.write(final_img)
+
+# def save_prediction_as_png(prediction : str) -> None:
+#     with Image.open(prediction) as im:
+#         im.save(f"tmp/{prediction}", "PNG")
