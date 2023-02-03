@@ -1,6 +1,5 @@
 *.tif
 *.tiff
-*.png
 *.jpg
 *.onnx
 *.xml
