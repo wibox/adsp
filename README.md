@@ -29,27 +29,27 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-test
+This project is about Image Segmentation, a machine learning task which consists in delineating specific shapes and patterns in input images. To produce trained models for further use, please referd to run_nn.sh or test_*.py; make sure to create the folders models/ and models/trained_models/ first. To see an example of segmentation, please refer to presentation_notebook.ipynb, in which all the necessary steps (if a suitably trained model is provided) are contained.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Preprocessing
-test
+The preprocessing engine handles the input datasets selected. datasetscanner.py and datasetformatter.py take care of producing logs necessary for effisdataset.py and colombadataset.py in order for the dataloaders to work properly.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Tests
-test
+test_*.py files handle the training or fine-tuning of a U-Net over specific datasets/foundation models, if one wishes to produce results all at once, run_nn.sh will do the job. At the current state of the implementation no pre-trained models are present and will be added with suitable sources in later updates.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Presentation
-test
+The Jupyter Notebook presentation_notebook.ipynb contains just a live demostration of the complete pipeline, from tiling, through predictions and eventually assembling of the final activation. (Smooth merging to be added on later releases.)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Interface
-test
+If one wishes to train, validate and test a specific model over a selected dataset (whose paths have to be appropriately configured  in config/config.json), interface.py comes in handy. Please run python3 interface.py --help for a set of instruction regarding the possible parameters to be used.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
