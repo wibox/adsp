@@ -49,7 +49,11 @@ The Jupyter Notebook presentation_notebook.ipynb contains just a live demostrati
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Interface
-If one wishes to train, validate and test a specific model over a selected dataset (whose paths have to be appropriately configured  in config/config.json), interface.py comes in handy. Please run python3 interface.py --help for a set of instruction regarding the possible parameters to be used.
+If one wishes to train, validate and test a specific model over a selected dataset (whose paths have to be appropriately configured  in config/config.json), interface.py comes in handy. Please run
+```sh
+python3 interface.py --help
+```
+for a set of instruction regarding the possible parameters to be used.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
