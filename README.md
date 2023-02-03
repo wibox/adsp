@@ -29,6 +29,30 @@ test
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+## Preprocessing
+test
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Tests
+test
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Presentation
+test
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Interface
+test
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 <!-- CONTACTS -->
 ## CONTACTS
 Francesco Pagano  s299266@studenti.polito.it <br />
+Sofia Fanigliulo  s300751@studenti.polito.it <br />
+Giuseppe Esposito  s302179@studenti.polito.it <br />
+Aurora Gensale  s303535@studenti.polito.it <br />
+Elena Di Felice s303499 @studenti.polito.it <br />
