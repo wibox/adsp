@@ -9,9 +9,17 @@ from tqdm import tqdm
 from Utils.errors import *
 
 class DatasetScanner():
-    """
-    This class logs informations relative to the absolute position of each image into a log file.
+    """This class logs informations relative to the absolute position of each image into a log file.
     For each of the three datasets we are supposed to use there is a specific function suitable for handling each one of them.
+
+    Args:
+        - master_folder_path : str -> absolute path of data folder to scan
+        - log_file_path : str -> relative fp to logfile
+        - validation_file_path : str -> global validation file from which to extract self.valid_list
+        - valid_list : List[int] -> list of activations suitable for training
+        - ignore_list : List[int] -> list of activations to be ignored 
+        - dataset : str -> dataset type
+        - verbose : int -> verbosity level for logging purposes
     """
     def __init__(self, master_folder_path=None, log_file_path=None, validation_file_path=None, valid_list=None, ignore_list=None, dataset=None, verbose=0):
         self.master_folder_path=master_folder_path

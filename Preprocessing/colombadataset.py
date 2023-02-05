@@ -12,6 +12,18 @@ import rasterio as rio
 from tqdm import tqdm
 
 class ColombaDataset(Dataset):
+    """Wrapper around C-Effis dataset according to Pytorch's requirements
+
+    Args:
+        - model_type : str -> defines channels sampling in function of working model
+        - formatter_folder_path : str -> absolute path to formatted dataset folder
+        - log_folder : str -> relative path to log folder
+        - master_dict : json.obj -> dic containing patches information
+        - transformations : List[Any] -> list of transformations for data augmentation
+        - specific indeces : List[int] -> list of indeces for train/val/test split
+        - return path : bool -> returns paths instead of torch.tensor s of mask and activation tile. used for debugging, always False.
+    
+    """
     def __init__(
         self,
         model_type : str,

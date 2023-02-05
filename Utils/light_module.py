@@ -6,6 +6,15 @@ from torch.optim import AdamW, Optimizer
 from torchmetrics.classification import BinaryF1Score, BinaryJaccardIndex
 
 class UNetModule(pl.LightningModule):
+    """PytorchLightning trainer built upon conventions to train and log information relative to the model
+
+    Args:
+        - model : Any -> model instance from smp
+        - criterion : Any -> loss function
+        - lr : float -> learning rate
+        - plot_every : int -> frequency at which images should be logger in self.Logger
+
+    """
 
     def __init__(self, model: nn.Module, criterion: nn.Module, learning_rate: float = 1e-3, plot_every: int = 10):
         super().__init__()
@@ -13,6 +22,7 @@ class UNetModule(pl.LightningModule):
         self.criterion = criterion
         self.lr = learning_rate
         self.plot_every = plot_every
+
         self.iou = BinaryJaccardIndex()
         self.f1 = BinaryF1Score()
 

@@ -14,8 +14,22 @@ import numpy as np
 from Utils.errors import *
 
 class DatasetFormatter():
-    """
-    This class performs tiling over appropriately formatted images according to input dimensions.
+    """Performs tiling from data recovered from datasetscanner.py logfiles
+
+    Args:
+        - self.master_folder_path : str -> formatted master folder absolute path
+        - self.log_file_path : str -> relative path for logfile
+        - self.log_filename : str -> log filname to be analyzed
+        - self.master_dict_path : str -> absolute path of master folder corresponding json file
+        - self.master_dict_filename : str -> global dict containing tiles info from which patches are recovered
+        - self.valid_list : List[int] -> validated list of suitable activations
+        - self.tile_height : int -> tile height
+        - self.tile_width : int -> tile width
+        - self.thr_pixels  : int -> threshold necessary for overlapping patches
+        - self.use_pre : bool -> wheater to use activation's pre or not
+        - self.dataset : str -> dataset type
+        - self.verbose : int -> verbosity level for logging purposes
+    
     """
     def __init__(self, master_folder_path=None, log_file_path=None, log_filename=None, master_dict_path=None, master_dict_filename=None, valid_list=None, tile_height=512, tile_width=512, thr_pixels = 112, use_pre=False, dataset=None, verbose=0):
         self.master_folder_path=master_folder_path

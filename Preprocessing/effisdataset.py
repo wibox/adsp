@@ -13,6 +13,14 @@ from tqdm import tqdm
 from termcolor import colored
 
 class EffisDataset(Dataset):
+    """Wrapper around sub-effis dataset.
+
+    Args:
+        - log_folder : str -> relative path to log folder
+        - master_dict : json.obj -> dict containing tiles informations
+        - transformations : List[Any] -> list of transformations for data augmentation
+    
+    """
     def __init__(
         self,
         log_folder : str,
